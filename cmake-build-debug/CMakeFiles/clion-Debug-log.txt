@@ -1,1 +1,13 @@
+/snap/clion/250/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /home/nelson/AED/AED2324_PRJ1_G109 -B /home/nelson/AED/AED2324_PRJ1_G109/cmake-build-debug
+-- Configuring done (0.0s)
+CMake Error at CMakeLists.txt:6 (add_executable):
+  Cannot find source file:
 
+    cmake-build-debug/DataModel/Class.cpp
+
+
+CMake Error at CMakeLists.txt:6 (add_executable):
+  No SOURCES given to target: AED2324_PRJ1_G_109_
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.
