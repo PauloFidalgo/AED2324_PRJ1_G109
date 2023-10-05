@@ -1,0 +1,3 @@
+/Users/paulofidalgo/AED2324_PRJ1_G109/cmake-build-debug/CMakeFiles/AED2324_PRJ1_G_109_.dir
+/Users/paulofidalgo/AED2324_PRJ1_G109/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/paulofidalgo/AED2324_PRJ1_G109/cmake-build-debug/CMakeFiles/rebuild_cache.dir
