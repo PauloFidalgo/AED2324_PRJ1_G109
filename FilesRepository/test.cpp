@@ -7,33 +7,21 @@
 using namespace std;
 
 map<string, vector<string>> openClassPerUc(string fileName) {
-    cout << "estou dentro" << endl;
-    ifstream iff(fileName);
-
-    if (!iff.is_open()) {
-        cout << "não consegui abrir" << endl;
-    }
-
     map<string, vector<string>> classPerUC;
+    fstream iff;
+    try {
+        iff.open(fileName, ios::in);
+        string line, word, temp, ucCode, classCode;
 
-    string line;
-    getline(iff, line);
-
-    if (line != "UcCode,ClassCode") {
-    }
-
-
-    while (getline(iff, line)) {
-        size_t firstComma = line.find_first_of(',');
-        
-        if (firstComma != string::npos) {
-
-            string ucCode = line.substr(0, firstComma);
-            string classCode = line.substr(firstComma + 1);
-            cout << ucCode << " " << classCode << " ";
-
+        while (iff >> temp) {
+            stringstream s(temp);
+            getline(s, ucCode, ',');
+            getline(s, classCode);
             classPerUC[ucCode].push_back(classCode);
         }
+    }
+    catch (const ifstream::failure& e){
+        cout << "Failed to open file." << endl;
     }
 
     iff.close();
