@@ -1,0 +1,3 @@
+/Users/wagner/Desktop/project/cmake-build-debug/CMakeFiles/project.dir
+/Users/wagner/Desktop/project/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/wagner/Desktop/project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
