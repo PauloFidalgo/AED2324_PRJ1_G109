@@ -3,4 +3,6 @@ project(AED2324_PRJ1_G_109_)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(AED2324_PRJ1_G_109_ main.cpp)
+add_executable(AED2324_PRJ1_G_109_ main.cpp
+        cmake-build-debug/DataModel/Class.cpp
+        cmake-build-debug/DataModel/Class.h)
