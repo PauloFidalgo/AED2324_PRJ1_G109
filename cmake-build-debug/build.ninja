@@ -54,6 +54,15 @@ build CMakeFiles/AED2324_PRJ1_G_109_.dir/main.cpp.o: CXX_COMPILER__AED2324_PRJ1_
   FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=13.0 -fcolor-diagnostics
   OBJECT_DIR = CMakeFiles/AED2324_PRJ1_G_109_.dir
   OBJECT_FILE_DIR = CMakeFiles/AED2324_PRJ1_G_109_.dir
+<<<<<<< HEAD
+=======
+
+build CMakeFiles/AED2324_PRJ1_G_109_.dir/DataModel/Class.cpp.o: CXX_COMPILER__AED2324_PRJ1_G_109__unscanned_Debug /Users/paulofidalgo/AED2324_PRJ1_G109/cmake-build-debug/DataModel/Class.cpp || cmake_object_order_depends_target_AED2324_PRJ1_G_109_
+  DEP_FILE = CMakeFiles/AED2324_PRJ1_G_109_.dir/DataModel/Class.cpp.o.d
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=13.0 -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/AED2324_PRJ1_G_109_.dir
+  OBJECT_FILE_DIR = CMakeFiles/AED2324_PRJ1_G_109_.dir/DataModel
+>>>>>>> #1-CreateClassDataModel
 
 
 # =============================================================================
@@ -63,7 +72,7 @@ build CMakeFiles/AED2324_PRJ1_G_109_.dir/main.cpp.o: CXX_COMPILER__AED2324_PRJ1_
 #############################################
 # Link the executable AED2324_PRJ1_G_109_
 
-build AED2324_PRJ1_G_109_: CXX_EXECUTABLE_LINKER__AED2324_PRJ1_G_109__Debug CMakeFiles/AED2324_PRJ1_G_109_.dir/main.cpp.o
+build AED2324_PRJ1_G_109_: CXX_EXECUTABLE_LINKER__AED2324_PRJ1_G_109__Debug CMakeFiles/AED2324_PRJ1_G_109_.dir/main.cpp.o CMakeFiles/AED2324_PRJ1_G_109_.dir/DataModel/Class.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=13.0
   OBJECT_DIR = CMakeFiles/AED2324_PRJ1_G_109_.dir
   POST_BUILD = :
