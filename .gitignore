@@ -6,3 +6,4 @@ latex/
 what_to_do.txt
 .idea
 *.o
+.cmake-build-debug
