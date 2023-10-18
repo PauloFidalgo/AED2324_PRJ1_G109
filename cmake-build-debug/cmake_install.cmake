@@ -1,4 +1,4 @@
-# Install script for directory: /Users/wagner/Desktop/project
+# Install script for directory: /Users/paulofidalgo/Downloads/LEIC/2º Ano - 1º Semestre/AED/Proj1/AED2324_PRJ1_G109
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/wagner/Desktop/project/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/paulofidalgo/Downloads/LEIC/2º Ano - 1º Semestre/AED/Proj1/AED2324_PRJ1_G109/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

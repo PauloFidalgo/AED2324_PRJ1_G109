@@ -1,4 +1,4 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/ninja -G Ninja -S /Users/wagner/Desktop/project -B /Users/wagner/Desktop/project/cmake-build-debug
--- Configuring done (0.1s)
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S "/Users/paulofidalgo/Downloads/LEIC/2º Ano - 1º Semestre/AED/Proj1/AED2324_PRJ1_G109" -B "/Users/paulofidalgo/Downloads/LEIC/2º Ano - 1º Semestre/AED/Proj1/AED2324_PRJ1_G109/cmake-build-debug"
+-- Configuring done (0.0s)
 -- Generating done (0.0s)
--- Build files have been written to: /Users/wagner/Desktop/project/cmake-build-debug
+-- Build files have been written to: /Users/paulofidalgo/Downloads/LEIC/2º Ano - 1º Semestre/AED/Proj1/AED2324_PRJ1_G109/cmake-build-debug

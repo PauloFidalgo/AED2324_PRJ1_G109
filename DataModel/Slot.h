@@ -6,15 +6,15 @@
 #define AED2324_PRJ1_G_109__CLASSDATEDURATION_H
 #include <string>
 
-class ClassDateDuration {
+class Slot {
 private:
     std::string weekday;
     float startHour;
     float duration;
 
 public:
-    ClassDateDuration(const std::string weekday, const float startHour, const float duration);
-    const bool classDateOverlap(const ClassDateDuration classDateDuration);
+    Slot(const std::string weekday, const float startHour, const float duration);
+    const bool classDateOverlap(const Slot classDateDuration);
     const float getEndHour() const;
     const std::string getWeekday();
 };

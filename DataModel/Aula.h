@@ -6,18 +6,17 @@
 #define AED2324_PRJ1_G_109__COURSEUNIT_H
 #include <string>
 #include <iostream>
-#include "ClassDateDuration.h"
+#include "Slot.h"
 
 enum Type {TP, P, PL};
 
-class CourseUnit {
+class Aula {
 private:
-    std::string ucCode;
-    ClassDateDuration classDateDuration;
+    Slot slot;
     std::string type;
 
 public:
-    CourseUnit(const std::string ucCode, const std::string weekday, const float startTime, const float duration, std::string type);
+    Aula(const std::string &type, const Slot &slot);
 };
 
 

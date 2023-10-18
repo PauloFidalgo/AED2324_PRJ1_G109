@@ -1,0 +1,17 @@
+
+
+Construir menu com opções:
+    - Obter Horário para um determinado Estudante;
+    - Obter Turma de um estudante;
+    - Obter Horário de uma UC;
+    - Obter Horário para uma Turma;
+    - Listar alunos por Turma;
+    - Listar alunos por ano curricular;
+    - Listar alunos por UC;
+    - Obter turmas por UC;
+    - Pedir trocas diretas de UC's;
+    - Inscrição de nova UC (com compatibilidade de horário);
+    - Anular uma UC e (atualizar horário);
+    - Obter o ano curricular de um aluno;
+    - Trocar uma UC com horário compatível (anular + inscrever);
+    - Consultar o número de estudantes em pelo menos n UC's;

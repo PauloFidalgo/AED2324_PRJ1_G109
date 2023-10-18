@@ -5,19 +5,22 @@
 #ifndef AED2324_PRJ1_G_109__STUDENT_H
 #define AED2324_PRJ1_G_109__STUDENT_H
 #include <string>
+#include "TurmaUC.h"
+#include <set>
 #include "Schedule.h"
 
-class Student {
+class Estudante {
 private:
-    int studentNumber;
-    std::string studentName;
-    Schedule schedule;
+    int numero;
+    std::string nome;
+    std::set<TurmaUC> turmas;
+    int ano;
 
 public:
-    Student(const int studentNumber, const std::string studentName, const Schedule schedule);
+    Estudante(const int& numero, const std::string& nome, const std::set<TurmaUC>& turmas, const int& ano);
     const int getStudentNumber();
     const std::string getStudentName();
-    const Schedule getSchedule();
+    const std::list<TurmaUC> getStudentClassUc();
 };
 
 
