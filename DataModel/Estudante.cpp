@@ -13,3 +13,7 @@ int const Estudante::getStudentNumber(){
 std::string const Estudante::getStudentName(){
     return nome;
 }
+
+bool Estudante::operator<(const Estudante &estudante) const{
+    return this->numero < estudante.numero;
+}

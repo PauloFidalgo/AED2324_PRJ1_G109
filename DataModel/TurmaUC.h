@@ -17,7 +17,7 @@ private:
     std::list<Aula> aulas;
 
 public:
-
+    TurmaUC(const std::string &nomeUC, const std::string &nomeTurma);
     TurmaUC(const std::string &nomeUc, const std::string &nomeTurma, const std::set<int> &numeroEstudante,
             const std::list<Aula> &aulas);
 

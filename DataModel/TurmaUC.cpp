@@ -4,7 +4,7 @@
 
 #include "TurmaUC.h"
 
-
+TurmaUC::TurmaUC(const std::string &nomeUC, const std::string &nomeTurma) : nomeUC(nomeUC), nomeTurma(nomeTurma){}
 
 TurmaUC::TurmaUC(const std::string &nomeUc, const std::string &nomeTurma, const std::set<int> &numeroEstudante,
                  const std::list<Aula> &aulas) : nomeUC(nomeUc), nomeTurma(nomeTurma), numeroEstudante(numeroEstudante),

@@ -7,7 +7,7 @@
 #include <string>
 #include "TurmaUC.h"
 #include <set>
-#include "Schedule.h"
+
 
 class Estudante {
 private:
@@ -21,6 +21,7 @@ public:
     const int getStudentNumber();
     const std::string getStudentName();
     const std::list<TurmaUC> getStudentClassUc();
+    bool operator<(const Estudante &estudante) const;
 };
 
 
