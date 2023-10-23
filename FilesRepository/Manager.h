@@ -18,6 +18,7 @@ private:
 
 public:
     void readFiles();
+    void printStudents();
 
 
 

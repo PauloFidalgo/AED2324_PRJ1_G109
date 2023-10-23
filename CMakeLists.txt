@@ -4,8 +4,13 @@ project(project)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(project main.cpp
-        DataModel/TurmaUC.cpp
-        DataModel/TurmaUC.h
         DataModel/UC.cpp
         DataModel/UC.h
+        DataModel/Estudante.cpp
+        DataModel/Estudante.h
+        DataModel/Aula.cpp
+        DataModel/Aula.h
+        DataModel
+        FilesRepository/Manager.h
+        FilesRepository/Manager.cpp
 )

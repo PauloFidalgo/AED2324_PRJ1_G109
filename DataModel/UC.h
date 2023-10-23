@@ -5,15 +5,23 @@
 #ifndef PROJECT_UC_H
 #define PROJECT_UC_H
 #include <string>
-#include "TurmaUC.h"
+#include <unordered_map>
+#include <set>
+#include "Aula.h"
+
+struct TurmaInfo {
+    std::set<int> estudantes;
+    Aula teorica;
+    Aula pratica;
+};
 
 class UC {
 private:
     std::string codigoUC;
-    std::set<TurmaUC> turmas;
+    std::unordered_map<std::string, std::unordered_map<std::string, TurmaInfo>> ucTurma;
 
 public:
-    UC(const std::string &codigoUc, const std::set<TurmaUC> &turmas);
+    UC(const std::string &codigoUc, const std::unordered_map<std::string, std::unordered_map<std::string, TurmaInfo>> &ucTurma);
 };
 
 

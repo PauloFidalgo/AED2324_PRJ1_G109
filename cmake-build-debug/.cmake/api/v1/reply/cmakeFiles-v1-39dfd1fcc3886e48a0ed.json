@@ -54,21 +54,6 @@
 		{
 			"isCMake" : true,
 			"isExternal" : true,
-			"path" : "/Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeFindCodeBlocks.cmake"
-		},
-		{
-			"isCMake" : true,
-			"isExternal" : true,
-			"path" : "/Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeExtraGeneratorDetermineCompilerMacrosAndIncludeDirs.cmake"
-		},
-		{
-			"isCMake" : true,
-			"isExternal" : true,
-			"path" : "/Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/ProcessorCount.cmake"
-		},
-		{
-			"isCMake" : true,
-			"isExternal" : true,
 			"path" : "/Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeCInformation.cmake"
 		},
 		{
@@ -165,8 +150,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "/Users/paulofidalgo/Downloads/LEIC/2\u00ba Ano - 1\u00ba Semestre/AED/Proj1/AED2324_PRJ1_G109/cmake-build-debug",
-		"source" : "/Users/paulofidalgo/Downloads/LEIC/2\u00ba Ano - 1\u00ba Semestre/AED/Proj1/AED2324_PRJ1_G109"
+		"build" : "/Users/paulofidalgo/Downloads/LEIC/2\u00ba Ano - 1\u00ba Semestre/AED/PJ1/AED2324_PRJ1_G109/cmake-build-debug",
+		"source" : "/Users/paulofidalgo/Downloads/LEIC/2\u00ba Ano - 1\u00ba Semestre/AED/PJ1/AED2324_PRJ1_G109"
 	},
 	"version" : 
 	{
