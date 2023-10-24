@@ -26,6 +26,14 @@ const std::unordered_map<std::string, TurmaInfo> UC::getUcTurma() {
     return this->ucTurma;
 }
 
-const std::string UC::getCodigoUc() {
+void UC::addEstudante(const std::string &turma, int &estudante) {
+    auto it = ucTurma.find(turma);
+
+    if (it != ucTurma.end()) {
+        it -> second.estudantes.push_back(estudante);
+    }
+}
+
+std::string &UC::getCodigoUc() {
     return this->codigoUC;
 }

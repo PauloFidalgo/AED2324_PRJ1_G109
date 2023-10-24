@@ -11,3 +11,7 @@ Aula::Aula() : dia(""), inicio(0), duracao(0), tipo(""){}
 const void Aula::printData() {
     std::cout << "Dia: " << dia << " Hora: " << inicio << " Até: " << inicio + duracao << " Tipo: " << tipo << std::endl;
 }
+
+const bool Aula::mesmoHorario(const Aula &aula) {
+    return this->dia == aula.dia && this->inicio == aula.inicio && this->duracao == aula.duracao;
+}

@@ -21,6 +21,7 @@ public:
     Aula(std::string dia, float inicio, float duracao, std::string tipo);
 
     const void printData();
+    const bool mesmoHorario(const Aula &aula);
 };
 
 

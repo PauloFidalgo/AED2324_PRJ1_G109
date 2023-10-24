@@ -26,7 +26,9 @@ public:
     const std::unordered_map<std::string, TurmaInfo> getUcTurma();
     void addTurma(const std::string &turma, const TurmaInfo &turmaInfo);
     void addEstudantes(const std::string &turma, const std::list<int> &estudantes);
-    const std::string getCodigoUc();
+    void addEstudante(const std::string &turma, int &estudante);
+    std::string &getCodigoUc();
+
 };
 
 
