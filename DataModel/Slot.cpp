@@ -6,8 +6,11 @@
 
 Slot::Slot(const std::string weekday, const float startHour, const float duration) : weekday(weekday), startHour(startHour), duration(duration) {}
 
+Slot::Slot() : weekday(""), startHour(0), duration(0) {}
+
 const float Slot::getEndHour() const {return startHour + duration;}
 
-const bool Slot::classDateOverlap(const Slot classDateDuration) {
-    return ((this->getEndHour() <= classDateDuration.startHour) || (startHour >= classDateDuration.getEndHour())) ? false : true;
+const bool Slot::slotOverlap(const Slot slot) {
+    return ((this->getEndHour() <= slot.startHour) || (startHour >= slot.getEndHour())) ? false : true;
 }
+

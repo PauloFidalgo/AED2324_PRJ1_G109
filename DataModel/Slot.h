@@ -14,7 +14,8 @@ private:
 
 public:
     Slot(const std::string weekday, const float startHour, const float duration);
-    const bool classDateOverlap(const Slot classDateDuration);
+    Slot();
+    const bool slotOverlap(const Slot slot);
     const float getEndHour() const;
     const std::string getWeekday();
 };

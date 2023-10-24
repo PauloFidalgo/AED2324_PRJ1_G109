@@ -7,7 +7,7 @@
 #include "sstream"
 #include "string"
 #include <iostream>
-using namespace std;
+
 
 void Manager::readFiles()
 {
@@ -60,6 +60,49 @@ void Manager::readFiles()
 
     iff.close();
 
+    try {
+        iff.open("../CSV/classes.csv", ios::in);
+        string line, uc, turma, dia, tipo, lastUc;
+        float inicio, duracao;
+        bool first = true;
+
+        getline(iff, line);
+
+        unordered_map<string,TurmaInfo> turmaUc;
+
+        while (getline(iff,line)) {
+            stringstream s(line);
+            getline(s,turma,',');
+            getline(s,uc,',');
+            getline(s,dia,',');
+            s >> inicio;
+            s >> duracao;
+            getline(s,tipo);
+            TurmaInfo turmaInfo;
+            turmaInfo.pratica = (tipo == "TP") ? Aula(dia, inicio, duracao, tipo) : Aula();
+            turmaInfo.teorica = (tipo == "T") ? Aula(dia, inicio, duracao, tipo) : Aula();
+
+            if (first) {
+                lastUc = uc;
+                first = false;
+            }
+
+           if (lastUc == uc) {
+               turmaUc.insert({turma,turmaInfo});
+           }
+
+           else {
+               ucs.emplace_back(uc,turmaUc);
+               turmaUc.clear();
+               lastUc = uc;
+           }
+        }
+    }
+    catch (const ifstream::failure& e){
+        cout << "Failed to open file." << endl;
+    }
+
+    iff.close();
 }
 
 void Manager::printStudents() {
@@ -72,3 +115,16 @@ void Manager::printStudents() {
         cout << endl;
     }
 }
+
+void Manager::printUc() {
+
+    for (auto uc : ucs) {
+        cout << "UC: " << uc.getCodigoUc() << endl;
+        cout << "-----------------------" << endl;
+        for (auto a: uc.getUcTurma()) {
+            cout << a.first << endl;
+        }
+        cout << "-----------------------" << endl;
+    }
+}
+
