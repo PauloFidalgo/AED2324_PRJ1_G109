@@ -6,6 +6,7 @@
 
 
 Aula::Aula(std::string dia, float inicio, float duracao, std::string tipo) : dia(dia), inicio(inicio), duracao(duracao), tipo(tipo) {}
+
 Aula::Aula() : dia(""), inicio(0), duracao(0), tipo(""){}
 
 const void Aula::printData() const {

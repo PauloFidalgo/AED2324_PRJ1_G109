@@ -14,10 +14,23 @@
 
 using namespace std;
 
+struct CompareByNumber {
+    bool operator()(const Estudante& a, const Estudante& b) const {
+        return a.getStudentNumber() < b.getStudentNumber();
+    }
+};
+
+struct CompareByName{
+    bool operator()(const Estudante& a, const Estudante& b) const {
+        return a.getStudentName() < b.getStudentName();
+    }
+};
+
 
 class Manager {
 private:
-    set<Estudante> estudantes;
+    set<Estudante,CompareByNumber> estudantesNumero;
+    set<Estudante,CompareByName> estudantesNome;
     set<UC> ucs;
     queue<Pedido> pedidos;
     stack<Pedido> historico;
@@ -43,6 +56,11 @@ public:
     void printHorario();
     void printHorarioEstudante(Estudante estudante);
     void fakeTroca();
+    void printEstudantesPorTurma(const string& uc, const string& turma, bool orderByNumber = true, bool ascending = true) const;
+    void printEstudantesPorUC(const string& uc, const bool& orderByNumber = true, const bool& ascending = true) const;
+    void printEstudantesPorAno(const int& ano, const bool& orderByNumber = true, const bool& ascending = true) const;
+    void printTurmasPorUC(const string& uc, const bool& ascending = true) const;
+    void numeroEstudantesEmPeloMenosNUCS(const int& nUcs, const bool& orderByNumber = true, const bool& ascending = true) const;
 
 };
 

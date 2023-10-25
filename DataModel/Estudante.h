@@ -25,7 +25,7 @@ public:
     const std::set<std::pair<std::string, std::string>> getTurmas() const;
     const bool inscrito(std::string &uc) const;
     void changeTurma(const std::string &uc, const std::string &turmaNova);
-    bool operator<(const Estudante &estudante) const;
+    //bool operator<(const Estudante &estudante) const;
     const std::string getTurma(const std::string &uc) const;
 };
 

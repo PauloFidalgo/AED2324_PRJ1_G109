@@ -91,7 +91,8 @@ void Manager::readFiles()
 
             }
             else {
-                estudantes.insert(Estudante(lastCode,nomeEstudante,turmas,ano));
+                estudantesNumero.insert(Estudante(lastCode,nomeEstudante,turmas,ano));
+                estudantesNome.insert(Estudante(lastCode,nomeEstudante,turmas,ano));
                 lastCode = studentCode;
                 turmas.clear();
                 getline(s, word, ',');
@@ -303,19 +304,248 @@ Aula Manager::obterPraticaUc(const string &uc, const string &turma) const {
 
 Estudante Manager::getEstudante(const int &numero) const {
     Estudante res;
-    auto it = estudantes.lower_bound(numero);
+    auto it = estudantesNumero.lower_bound(numero);
     if (it->getStudentNumber() == numero) {
         res = *it;
     }
     return res;
 }
 
+auto compareFirstElement = [](const std::pair<int, std::string>& a, const std::pair<int, std::string>& b) {
+    return a.first < b.first;
+};
+auto compareSecondElement = [](const std::pair<int, std::string>& a, const std::pair<int, std::string>& b)  {
+    return a.second < b.second;
+};
+
+void Manager::printEstudantesPorTurma(const string &uc, const string &turma, bool order_by_number, bool ascending) const {
+    auto it = ucs.find(uc);
+
+    if (it != ucs.end()) {
+        unordered_map<string,TurmaInfo> turmaInfo = it->getUcTurma();
+        auto iterator = turmaInfo.find(turma);
+
+        if (iterator != turmaInfo.end()) {
+            cout << "UC: " << it->getCodigoUc() << " Turma: " << iterator->first << endl;
+            cout << "-----------------------------------"  << endl;
+            list<pair<int,string>> studentList = iterator->second.estudantes;
+
+            if (order_by_number) studentList.sort(compareFirstElement);
+
+            else studentList.sort(compareSecondElement);
+
+            if (ascending){
+                for (const auto& element : studentList){
+                    cout << element.first << ' ' << element.second << endl;
+                }
+            }
+            else{
+                for (auto i = studentList.rbegin(); i != studentList.rend(); ++i){
+                    cout << i->first << ' ' << i->second << endl;
+                }
+            }
+        }
+        cout << "-----------------------------------"  << endl;
+    }
+}
+
+struct CompareByFirst{
+    bool operator()(const pair<int, string>& a, const pair<int, string>& b) const {
+        return a.first < b.first;
+    }
+};
+
+
+struct CompareBySecond{
+    bool operator()(const pair<int, string>& a, const pair<int, string>& b) const {
+        return a.second < b.second;
+    }
+};
+
+void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, const bool& ascending) const {
+
+    if (orderByNumber) {
+        set<pair<int, string>, CompareByFirst> studentList;
+        auto it = ucs.find(uc);
+
+        if (it != ucs.end()) {
+            cout << "Estudantes inscritos na UC: " << it->getCodigoUc() << endl;
+            cout << "-----------------------------------"  << endl;
+            for (const auto& turma : it->getUcTurma()){
+                for (const auto& element : turma.second.estudantes){
+                    studentList.insert(element);
+                }
+            }
+        }
+
+        if (studentList.empty()){
+            cout << "There are no students in UC: " << uc << endl;
+            return;
+        }
+
+        if (ascending){
+            for (const auto& element : studentList){
+                cout << element.first << ' ' << element.second << endl;
+            }
+        }
+        else{
+            for (auto i = studentList.rbegin(); i != studentList.rend(); ++i){
+                cout << i->first << ' ' << i->second << endl;
+            }
+        }
+        cout << "-----------------------------------"  << endl;
+    } else {
+        set<pair<int, string>, CompareBySecond> studentList;
+        auto it = ucs.find(uc);
+
+        if (it != ucs.end()) {
+            cout << "Estudantes inscritos na UC: " << it->getCodigoUc() << endl;
+            cout << "-----------------------------------"  << endl;
+            for (const auto& turma : it->getUcTurma()){
+                for (const auto& element : turma.second.estudantes){
+                    studentList.insert(element);
+                }
+            }
+        }
+
+        if (studentList.empty()){
+            cout << "There are no students in UC: " << uc << endl;
+            return;
+        }
+
+        if (ascending){
+            for (const auto& element : studentList){
+                cout << element.first << ' ' << element.second << endl;
+            }
+        }
+        else{
+            for (auto i = studentList.rbegin(); i != studentList.rend(); ++i){
+                cout << i->first << ' ' << i->second << endl;
+            }
+        }
+        cout << "-----------------------------------"  << endl;
+    }
+
+}
+
+void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, const bool &ascending) const {
+
+    if (ano < 1 or ano > 3) {
+        cout << "Ano Inválido.";
+        return;
+    }
+    cout << "Estudantes do " << ano << "º ano: " << endl;
+    cout << "-----------------------------------"  << endl;
+    if (orderByNumber){
+        if (ascending){
+            for (const auto& estudante : estudantesNumero){
+                if (estudante.getAno() == ano){
+                    cout << estudante.getStudentNumber() << ' ' << estudante.getStudentName() << endl;
+                }
+            }
+        }
+        else {
+            for (auto i = estudantesNumero.rbegin(); i != estudantesNumero.rend(); ++i){
+                cout << i->getStudentNumber() << ' ' << i->getStudentName() << endl;
+            }
+        }
+    }
+    else {
+        if (ascending){
+            for (const auto& estudante : estudantesNome){
+                if (estudante.getAno() == ano){
+                    cout << estudante.getStudentNumber() << ' ' << estudante.getStudentName() << endl;
+                }
+            }
+        }
+        else {
+            for (auto i = estudantesNome.rbegin(); i != estudantesNome.rend(); ++i){
+                cout << i->getStudentNumber() << ' ' << i->getStudentName() << endl;
+            }
+        }
+    }
+    cout << "-----------------------------------"  << endl;
+}
+
+void Manager::printTurmasPorUC(const std::string &uc, const bool &ascending) const {
+    set<string> turmas;
+    cout << "Turmas da UC: " << uc << endl;
+    cout << "-----------------------------------"  << endl;
+    auto it = ucs.find(uc);
+
+    if (it != ucs.end()) {
+        for (const auto& element : it->getUcTurma()){
+            turmas.insert(element.first);
+        }
+    }
+
+    if (ascending){
+        for (auto turma : turmas){
+            cout << turma << endl;
+        }
+    }
+    else {
+        for (auto i = turmas.rbegin(); i != turmas.rend(); ++i){
+            cout << *i << endl;
+        }
+    }
+    cout << "-----------------------------------"  << endl;
+}
+
+void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& orderByNumber, const bool& ascending) const{
+    if (nUcs < 0 || nUcs > ucs.size()) {
+        cout << "Número inválido de Unidades Curriculares" << endl;
+        return;
+    }
+    stringstream ss;
+    list<Estudante> students;
+    if (orderByNumber) {
+        if (ascending) {
+            for (auto& estudante : estudantesNumero){
+                if (estudante.getTurmas().size() >= nUcs){
+                    students.push_back(estudante);
+                    ss << estudante.getStudentNumber() << ' ' << estudante.getStudentName() << endl;
+                }
+            }
+        }
+        else {
+            for (auto i = estudantesNumero.rbegin(); i != estudantesNumero.rend(); ++i){
+                if (i->getTurmas().size() >= nUcs){
+                    students.push_back(*i);
+                    ss << i->getStudentNumber() << ' ' << i->getStudentName() << endl;
+                }
+            }
+        }
+    }
+    else {
+        if (ascending) {
+            for (auto& estudante : estudantesNome){
+                if (estudante.getTurmas().size() >= nUcs){
+                    students.push_back(estudante);
+                    ss << estudante.getStudentNumber() << ' ' << estudante.getStudentName() << endl;
+                }
+            }
+        }
+        else {
+            for (auto i = estudantesNome.rbegin(); i != estudantesNome.rend(); ++i){
+                if (i->getTurmas().size() >= nUcs){
+                    students.push_back(*i);
+                    ss << i->getStudentNumber() << ' ' << i->getStudentName() << endl;
+                }
+            }
+        }
+    }
+    cout << "Estão inscritos " << students.size() << " alunos em pelo menos " << nUcs << " Unidades Curriculares." << endl;
+    cout << "-----------------------------------"  << endl;
+    cout << ss.str();
+    cout << "-----------------------------------"  << endl;
+}
 
 // ------------------------------------------------------------------------------------------------
 
 void Manager::printStudents() {
 
-    for (const auto& estudante : estudantes) {
+    for (const auto& estudante : estudantesNumero) {
         cout << "Nº: " << estudante.getStudentNumber() << " Nome: " << estudante.getStudentName() << " Ano: " << estudante.getAno() << " ";
         for (const auto& turma : estudante.getTurmas()) {
             cout << " UC: " << turma.first << " Turma: " << turma.second << " ";
@@ -343,7 +573,7 @@ void Manager::printUc() {
 
 void Manager::printHorario() {
     int i = 0;
-    for (const auto& est : estudantes) {
+    for (const auto& est : estudantesNumero) {
         cout << est.getStudentNumber() << endl;
         cout << est.getStudentName() << endl;
         unordered_map<string,list<Aula>> horario = obterHorarioEstudante(est);

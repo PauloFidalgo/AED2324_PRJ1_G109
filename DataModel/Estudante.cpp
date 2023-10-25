@@ -47,7 +47,3 @@ const bool Estudante::inscrito(std::string &uc) const {
     }
     return false;
 }
-
-bool Estudante::operator<(const Estudante &estudante) const{
-    return this->numero < estudante.numero;
-}
