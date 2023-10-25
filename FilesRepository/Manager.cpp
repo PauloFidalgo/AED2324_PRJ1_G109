@@ -318,7 +318,7 @@ auto compareSecondElement = [](const std::pair<int, std::string>& a, const std::
     return a.second < b.second;
 };
 
-void Manager::printEstudantesPorTurma(const string &uc, const string &turma, bool order_by_number, bool ascending) const {
+void Manager::printEstudantesPorTurma(const string &uc, const string &turma, bool orderByNumber, bool ascending) const {
     auto it = ucs.find(uc);
 
     if (it != ucs.end()) {
@@ -330,7 +330,7 @@ void Manager::printEstudantesPorTurma(const string &uc, const string &turma, boo
             cout << "-----------------------------------"  << endl;
             list<pair<int,string>> studentList = iterator->second.estudantes;
 
-            if (order_by_number) studentList.sort(compareFirstElement);
+            if (orderByNumber) studentList.sort(compareFirstElement);
 
             else studentList.sort(compareSecondElement);
 
