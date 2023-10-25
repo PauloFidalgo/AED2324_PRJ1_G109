@@ -14,4 +14,5 @@ add_executable(project main.cpp
         FilesRepository/Manager.cpp
         FilesRepository/Pedido.cpp
         FilesRepository/Pedido.h
+        FilesRepository/Menu.cpp
 )
