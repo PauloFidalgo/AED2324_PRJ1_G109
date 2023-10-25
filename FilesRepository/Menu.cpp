@@ -99,7 +99,7 @@ void Menu::printTableUC() {
 
 void Menu::iniciar() {
     bool exitMenu = false;
-    bool showMainMenu = true;  // Control whether to show the main menu initially
+    bool showMainMenu = true;
 
     while (!exitMenu) {
         if (showMainMenu) {
@@ -107,22 +107,28 @@ void Menu::iniciar() {
             cout << "1 - Horário da turma" << endl;
             cout << "2 - Horário da UC" << endl;
             cout << "q - Quit" << endl;
+            cout << "Escolha a opção: ";
         }
 
         char entrada;
-        cout << "Escolha a opção: ";
         cin >> entrada;
 
         switch (entrada) {
             case '1':
                 createTable();
                 printTableTurma();
+                cout << "b - Back" << endl;
+                cout << "q - Quit" << endl;
+                cout << "Voltar ao menu principal: ";
                 showMainMenu = false;
                 break;
 
             case '2':
                 createTable();
                 printTableUC();
+                cout << "b - Back" << endl;
+                cout << "q - Quit" << endl;
+                cout << "Voltar ao menu principal: ";
                 showMainMenu = false;
                 break;
 
@@ -136,6 +142,9 @@ void Menu::iniciar() {
 
             default:
                 cout << "Opção inválida. Tente novamente." << endl;
+                cin.clear();  // Clear the fail state
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                showMainMenu = true; // Display the menu again
         }
     }
 }
