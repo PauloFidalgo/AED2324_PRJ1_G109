@@ -12,7 +12,7 @@ void UC::addTurma(const std::string &turma, const TurmaInfo &turmaInfo) {
     this->ucTurma.insert({turma,turmaInfo});
 }
 
-void UC::addEstudantes(const std::string &turma, const std::list<int> &estudantes) {
+void UC::addEstudantes(const std::string &turma, const std::list<std::pair<int,std::string>> &estudantes) {
     auto it = ucTurma.find(turma);
 
     if (it != ucTurma.end()) {
@@ -26,11 +26,11 @@ const std::unordered_map<std::string, TurmaInfo> UC::getUcTurma() {
     return this->ucTurma;
 }
 
-void UC::addEstudante(const std::string &turma, int &estudante) {
+void UC::addEstudante(const std::string &turma, int &estudante, std::string &nome) {
     auto it = ucTurma.find(turma);
 
     if (it != ucTurma.end()) {
-        it -> second.estudantes.push_back(estudante);
+        it -> second.estudantes.push_back({estudante,nome});
     }
 }
 

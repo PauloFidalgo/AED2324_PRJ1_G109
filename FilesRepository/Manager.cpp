@@ -31,19 +31,14 @@ void Manager::readFiles()
             getline(s,duracao,',');
             getline(s,tipo,'\r');
             TurmaInfo turmaInfo;
-            turmaInfo.pratica = (tipo == "TP" || tipo == "PL") ? Aula(dia, stof(inicio), stof(duracao), tipo) : Aula();
+            turmaInfo.aulas.emplace_back(dia, stof(inicio), stof(duracao), tipo);
 
             if (tipo == "T") {
                 auto it = turmaUc.find(turma);
 
                 if (it != turmaUc.end()) {
-                    it -> second.teorica = Aula(dia, stof(inicio), stof(duracao), tipo);
-                } /*
-                for (auto &ele: turmaUc) {
-                    if (ele.first == turma) {
-                        ele.second.teorica = Aula(dia, stof(inicio), stof(duracao), tipo);
-                    }
-                } */
+                    it -> second.aulas.emplace_back(dia, stof(inicio), stof(duracao), tipo);
+                }
             }
 
             if (first) {
@@ -110,7 +105,7 @@ void Manager::readFiles()
 
             for (auto &ele : ucs) {
                 if (ele.getCodigoUc() == uc) {
-                    ele.addEstudante(turma,studentCode);
+                    ele.addEstudante(turma,studentCode,nomeEstudante);
                 }
             }
         }
@@ -122,11 +117,70 @@ void Manager::readFiles()
     iff.close();
 }
 
+void Manager::addPedido(Pedido &pedido) {
+    pedidos.push(pedido);
+}
+
+void Manager::executarPedido() {
+    Pedido pedido = pedidos.front();
+    Estudante estudante = pedido.getEstudante();
+    Estudante outro = pedido.getOutroEstudante();
+    std::string uc = pedido.getUc();
+
+    if (!(estudante.inscrito(uc) && outro.inscrito(uc))) {
+        // Pelo menos um dos alunos não esta inscrito na UC
+        pedidos.pop();
+        return;
+    }
+
+    std::string turma = estudante.getTurma(uc);
+    std::string outraTurma = outro.getTurma(uc);
+
+    if (!(turma != outraTurma)) {
+        // Já são de turmas iguais
+        pedidos.pop();
+        return;
+    }
+
+    // Verificar o horário de cada estudante;
+    set<pair<string,string>> ucsAluno = estudante.getTurmas();
+    set<pair<string,string>> ucsOutro = outro.getTurmas();
+
+
+}
+
+unordered_map<string,list<Aula>> Manager::obterHorarioEstudante(Estudante &estudante) {
+    set<pair<string,string>> turmas = estudante.getTurmas();
+    unordered_map<string,list<Aula>> res;
+    for (const auto& par : turmas) {
+        TurmaInfo turmaInfo = obterInfoUc(par.first, par.second);
+        res.insert({par.first, turmaInfo.aulas});
+    }
+
+    return res;
+}
+
+TurmaInfo Manager::obterInfoUc(const string &uc, const string &turma) {
+    TurmaInfo res;
+
+    for (auto u : ucs) {
+        if (uc == u.getCodigoUc()) {
+            unordered_map<string, TurmaInfo> turmaInfo = u.getUcTurma();
+            auto it = turmaInfo.find(turma);
+            if (it->first == turma) {
+                res = it->second;
+            }
+        }
+    }
+
+    return res;
+}
+
 void Manager::printStudents() {
 
     for (auto estudante : estudantes) {
         cout << "Nº: " << estudante.getStudentNumber() << " Nome: " << estudante.getStudentName() << " Ano: " << estudante.getAno() << " ";
-        for (auto turma : estudante.getTurmas()) {
+        for (const auto& turma : estudante.getTurmas()) {
             cout << " UC: " << turma.first << " Turma: " << turma.second << " ";
         }
         cout << endl;
@@ -136,13 +190,38 @@ void Manager::printStudents() {
 void Manager::printUc() {
 
     for (auto uc : ucs) {
-        cout << "UC: " << uc.getCodigoUc() << endl;
+        cout << "UC: " << uc.getCodigoUc() << endl; /*
         cout << "-----------------------" << endl;
-        for (auto a: uc.getUcTurma()) {
+        for (const auto& a: uc.getUcTurma()) {
+            cout << "-----------------------" << endl;
             cout << a.first << endl;
-            a.second.teorica.printData();
+            for (auto b : a.second.estudantes) {
+                cout << b << endl;
+            }
+            cout << "-----------------------" << endl;
         }
-        cout << "-----------------------" << endl;
+        cout << "-----------------------" << endl;*/
     }
 }
+
+void Manager::printHorario() {
+    int i = 0;
+    for (auto est : estudantes) {
+        cout << est.getStudentNumber() << endl;
+        cout << est.getStudentName() << endl;
+        unordered_map<string,list<Aula>> horario = obterHorarioEstudante(est);
+        for (auto h : horario) {
+            cout << "UC: " << h.first << endl;
+            for (auto i : h.second) {
+                i.printData();
+            }
+        }
+        i++;
+        if (i == 1) break;
+    }
+}
+
+
+
+
 

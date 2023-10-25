@@ -73,12 +73,6 @@ build CMakeFiles/project.dir/DataModel/Aula.cpp.o: CXX_COMPILER__project_unscann
   OBJECT_DIR = CMakeFiles/project.dir
   OBJECT_FILE_DIR = CMakeFiles/project.dir/DataModel
 
-build CMakeFiles/project.dir/DataModel/Slot.cpp.o: CXX_COMPILER__project_unscanned_Debug /Users/paulofidalgo/Downloads/LEIC/2º$ Ano$ -$ 1º$ Semestre/AED/PJ1/AED2324_PRJ1_G109/DataModel/Slot.cpp || cmake_object_order_depends_target_project
-  DEP_FILE = CMakeFiles/project.dir/DataModel/Slot.cpp.o.d
-  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=13.0 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/project.dir
-  OBJECT_FILE_DIR = CMakeFiles/project.dir/DataModel
-
 build CMakeFiles/project.dir/FilesRepository/Manager.cpp.o: CXX_COMPILER__project_unscanned_Debug /Users/paulofidalgo/Downloads/LEIC/2º$ Ano$ -$ 1º$ Semestre/AED/PJ1/AED2324_PRJ1_G109/FilesRepository/Manager.cpp || cmake_object_order_depends_target_project
   DEP_FILE = CMakeFiles/project.dir/FilesRepository/Manager.cpp.o.d
   FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=13.0 -fcolor-diagnostics
@@ -99,7 +93,7 @@ build CMakeFiles/project.dir/FilesRepository/Pedido.cpp.o: CXX_COMPILER__project
 #############################################
 # Link the executable project
 
-build project: CXX_EXECUTABLE_LINKER__project_Debug CMakeFiles/project.dir/main.cpp.o CMakeFiles/project.dir/DataModel/UC.cpp.o CMakeFiles/project.dir/DataModel/Estudante.cpp.o CMakeFiles/project.dir/DataModel/Aula.cpp.o CMakeFiles/project.dir/DataModel/Slot.cpp.o CMakeFiles/project.dir/FilesRepository/Manager.cpp.o CMakeFiles/project.dir/FilesRepository/Pedido.cpp.o
+build project: CXX_EXECUTABLE_LINKER__project_Debug CMakeFiles/project.dir/main.cpp.o CMakeFiles/project.dir/DataModel/UC.cpp.o CMakeFiles/project.dir/DataModel/Estudante.cpp.o CMakeFiles/project.dir/DataModel/Aula.cpp.o CMakeFiles/project.dir/FilesRepository/Manager.cpp.o CMakeFiles/project.dir/FilesRepository/Pedido.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=13.0
   OBJECT_DIR = CMakeFiles/project.dir
   POST_BUILD = :

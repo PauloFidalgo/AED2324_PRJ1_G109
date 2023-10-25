@@ -10,8 +10,6 @@ add_executable(project main.cpp
         DataModel/Estudante.h
         DataModel/Aula.cpp
         DataModel/Aula.h
-        DataModel/Slot.h
-        DataModel/Slot.cpp
         FilesRepository/Manager.h
         FilesRepository/Manager.cpp
         FilesRepository/Pedido.cpp

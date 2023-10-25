@@ -6,13 +6,20 @@
 #define PROJECT_PEDIDO_H
 
 
+#include "../DataModel/Estudante.h"
+#include <stack>
+
 class Pedido {
 private:
-    int id;
+    std::string uc;
+    Estudante estudante, outroEstudante;
 
 public:
-
-
+    Pedido(std::string uc, Estudante estudante, Estudante outroEstudante);
+    bool executar();
+    Estudante getEstudante();
+    Estudante getOutroEstudante();
+    std::string getUc();
 };
 
 

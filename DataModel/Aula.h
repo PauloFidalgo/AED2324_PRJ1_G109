@@ -22,6 +22,7 @@ public:
 
     const void printData();
     const bool mesmoHorario(const Aula &aula);
+    const bool sobreposta(const Aula &aula);
 };
 
 

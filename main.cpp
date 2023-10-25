@@ -18,6 +18,6 @@ int main() {
     cout<< count; */
     Manager manager;
     manager.readFiles();
-    manager.printUc();
+    manager.printHorario();
     return 0;
 }

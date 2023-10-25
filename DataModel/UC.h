@@ -7,12 +7,12 @@
 #include <string>
 #include <unordered_map>
 #include <list>
+
 #include "Aula.h"
 
 struct TurmaInfo {
-    std::list<int> estudantes;
-    Aula teorica;
-    Aula pratica;
+    std::list<std::pair<int,std::string>> estudantes;
+    std::list<Aula> aulas;
 };
 
 class UC {
@@ -25,8 +25,8 @@ public:
     UC(const std::string &codigoUc);
     const std::unordered_map<std::string, TurmaInfo> getUcTurma();
     void addTurma(const std::string &turma, const TurmaInfo &turmaInfo);
-    void addEstudantes(const std::string &turma, const std::list<int> &estudantes);
-    void addEstudante(const std::string &turma, int &estudante);
+    void addEstudantes(const std::string &turma, const std::list<std::pair<int,std::string>> &estudantes);
+    void addEstudante(const std::string &turma, int &estudante, std::string &nome);
     std::string &getCodigoUc();
 
 };
