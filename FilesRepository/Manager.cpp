@@ -118,19 +118,21 @@ void Manager::readFiles()
 }
 
 void Manager::addPedido(Pedido &pedido) {
-    pedidos.push(pedido);
+    if (pedidoValido(pedido)) {
+        pedidos.push(pedido);
+    }
 }
 
-void Manager::executarPedido() {
-    Pedido pedido = pedidos.front();
+bool Manager::pedidoValido(Pedido &pedido) {
     Estudante estudante = pedido.getEstudante();
     Estudante outro = pedido.getOutroEstudante();
     std::string uc = pedido.getUc();
 
+
     if (!(estudante.inscrito(uc) && outro.inscrito(uc))) {
         // Pelo menos um dos alunos não esta inscrito na UC
-        pedidos.pop();
-        return;
+        cout << "Troca inválida, a Unidade curricular não é comum" << endl;
+        return false;
     }
 
     std::string turma = estudante.getTurma(uc);
@@ -138,20 +140,82 @@ void Manager::executarPedido() {
 
     if (!(turma != outraTurma)) {
         // Já são de turmas iguais
-        pedidos.pop();
-        return;
+        cout << "Troca inválida, já são da mesma turma" << endl;
+        return false;
     }
 
-    // Verificar o horário de cada estudante;
-    set<pair<string,string>> ucsAluno = estudante.getTurmas();
-    set<pair<string,string>> ucsOutro = outro.getTurmas();
+    // Verificar o horário de cada estudante
+    list<Aula> horarioUm = obterHorarioEstudantePraticas(estudante);
+    Aula aula = obterPraticaUc(uc,outraTurma);
+    list<Aula> horarioOutro = obterHorarioEstudantePraticas(outro);
+    Aula aulaNova = obterPraticaUc(uc,turma);
 
+    return verificarAulaSobreposta(horarioUm,aula) && verificarAulaSobreposta(horarioOutro, aulaNova);
+
+    /*
+    for (auto &aula : horarioUm) {
+        aula.printData();
+        if (aula.sobreposta(aulaNova)) {
+            cout << "Troca inválida, aula Prática sobreposta" << endl;
+            return false;
+        }
+    }
+    list<Aula> horarioOutro = obterHorarioEstudantePraticas(outro);
+    aulaNova = obterPraticaUc(uc,turma);
+
+    for (auto &aula : horarioOutro) {
+        if (aula.sobreposta(aulaNova)) {
+            cout << "Troca inválida, aula Prática sobreposta" << endl;
+            return false;
+        }
+    }*/
+
+    return true;
 
 }
 
-unordered_map<string,list<Aula>> Manager::obterHorarioEstudante(Estudante &estudante) {
+bool Manager::verificarAulaSobreposta(const list<Aula> &horario, const Aula &aulaNova) const {
+    for (auto &aula : horario) {
+        aula.printData();
+        if (aula.sobreposta(aulaNova)) {
+            cout << "Alteração inválida, aula Prática sobreposta" << endl;
+            return false;
+        }
+    }
+    return true;
+}
+
+void Manager::executarPedido(Pedido &pedido) {
+    Estudante estudante = pedido.getEstudante();
+    Estudante outro = pedido.getOutroEstudante();
+    string uc = pedido.getUc();
+    string temp = estudante.getTurma(uc);
+    estudante.changeTurma(uc,outro.getTurma(uc));
+    outro.changeTurma(uc,temp);
+}
+
+void Manager::proximoPedido() {
+    if (!(pedidos.empty())) {
+        executarPedido(pedidos.front());
+        historico.push(pedidos.front());
+        pedidos.pop();
+    }
+}
+
+
+
+void Manager::reverterPedido() {
+    if (!(historico.empty())) {
+        Pedido last = historico.top();
+        executarPedido(last);
+        historico.pop();
+    }
+}
+
+unordered_map<string,list<Aula>> Manager::obterHorarioEstudante(const Estudante &estudante) const {
     set<pair<string,string>> turmas = estudante.getTurmas();
     unordered_map<string,list<Aula>> res;
+
     for (const auto& par : turmas) {
         TurmaInfo turmaInfo = obterInfoUc(par.first, par.second);
         res.insert({par.first, turmaInfo.aulas});
@@ -160,7 +224,18 @@ unordered_map<string,list<Aula>> Manager::obterHorarioEstudante(Estudante &estud
     return res;
 }
 
-TurmaInfo Manager::obterInfoUc(const string &uc, const string &turma) {
+list<Aula> Manager::obterHorarioEstudantePraticas(const Estudante &estudante) const {
+    set<pair<string,string>> turmas = estudante.getTurmas();
+    list<Aula> res;
+    for (const auto& par : turmas) {
+        res.push_back(obterPraticaUc(par.first, par.second));
+
+    }
+
+    return res;
+}
+
+TurmaInfo Manager::obterInfoUc(const string &uc, const string &turma) const {
     TurmaInfo res;
 
     for (auto u : ucs) {
@@ -176,9 +251,30 @@ TurmaInfo Manager::obterInfoUc(const string &uc, const string &turma) {
     return res;
 }
 
+Aula Manager::obterPraticaUc(const string &uc, const string &turma) const {
+    Aula res;
+
+    for (auto u : ucs) {
+        if (uc == u.getCodigoUc()) {
+            res = u.getPratica(turma);
+        }
+    }
+
+    return res;
+}
+
+Estudante Manager::getEstudante(const int &numero) const {
+    Estudante res;
+    auto it = estudantes.lower_bound(numero);
+    if (it->getStudentNumber() == numero) {
+        res = *it;
+    }
+    return res;
+}
+
 void Manager::printStudents() {
 
-    for (auto estudante : estudantes) {
+    for (const auto& estudante : estudantes) {
         cout << "Nº: " << estudante.getStudentNumber() << " Nome: " << estudante.getStudentName() << " Ano: " << estudante.getAno() << " ";
         for (const auto& turma : estudante.getTurmas()) {
             cout << " UC: " << turma.first << " Turma: " << turma.second << " ";
@@ -190,30 +286,30 @@ void Manager::printStudents() {
 void Manager::printUc() {
 
     for (auto uc : ucs) {
-        cout << "UC: " << uc.getCodigoUc() << endl; /*
+        cout << "UC: " << uc.getCodigoUc() << endl;
         cout << "-----------------------" << endl;
         for (const auto& a: uc.getUcTurma()) {
             cout << "-----------------------" << endl;
             cout << a.first << endl;
-            for (auto b : a.second.estudantes) {
-                cout << b << endl;
+            for (const auto& b : a.second.estudantes) {
+                cout << b.first << endl;
             }
             cout << "-----------------------" << endl;
         }
-        cout << "-----------------------" << endl;*/
+        cout << "-----------------------" << endl;
     }
 }
 
 void Manager::printHorario() {
     int i = 0;
-    for (auto est : estudantes) {
+    for (const auto& est : estudantes) {
         cout << est.getStudentNumber() << endl;
         cout << est.getStudentName() << endl;
         unordered_map<string,list<Aula>> horario = obterHorarioEstudante(est);
-        for (auto h : horario) {
+        for (const auto& h : horario) {
             cout << "UC: " << h.first << endl;
-            for (auto i : h.second) {
-                i.printData();
+            for (const auto& j : h.second) {
+                j.printData();
             }
         }
         i++;
@@ -222,6 +318,51 @@ void Manager::printHorario() {
 }
 
 
+void Manager::testGet() const {
+    int num = 202044272;
+    Estudante estudante = getEstudante(num);
+    cout << estudante.getStudentNumber() << " " << estudante.getStudentName() << endl;
+}
+void Manager::printHorarioEstudante(Estudante estudante) {
+        cout << estudante.getStudentNumber() << endl;
+        cout << estudante.getStudentName() << endl;
+        unordered_map<string,list<Aula>> horario = obterHorarioEstudante(estudante);
+        for (const auto& h : horario) {
+            cout << "UC: " << h.first << endl;
+            for (const auto &j: h.second) {
+                j.printData();
+            }
+        }
+}
 
+void Manager::fakeTroca() {
+    int numero1 = 202025232;
+    int numero2 = 202024127;
+    Estudante estudante1 = getEstudante(numero1);
+    Estudante estudante2 = getEstudante(numero2);
+    string uc = "L.EIC002";
+    bool validUc = false;
 
+    for (auto a : ucs) {
+        if (a.getCodigoUc() == uc) validUc = (numero1 != numero2);
+    }
+
+    if (estudante1.getStudentNumber() != 0 && estudante2.getStudentNumber() != 0 && validUc) {
+        cout << "Pedidos: " << pedidos.size() << endl;
+        cout << "Antes pedido: " << endl;
+        printHorarioEstudante(estudante1);
+        cout << "-------------------------" << endl;
+        printHorarioEstudante(estudante2);
+        cout << endl << endl;
+        Pedido pedido = Pedido(uc, estudante1, estudante2);
+        this->addPedido(pedido);
+        cout << "Pedidos: " << pedidos.size() << endl;
+        this->proximoPedido();
+        cout << "Pedidos: " << pedidos.size() << endl;
+        cout << "Depois pedido: " << endl;
+        printHorarioEstudante(estudante1);
+        cout << "-------------------------" << endl;
+        printHorarioEstudante(estudante2);
+    }
+}
 

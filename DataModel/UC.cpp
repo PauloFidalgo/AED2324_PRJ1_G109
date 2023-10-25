@@ -4,9 +4,11 @@
 
 #include "UC.h"
 
-UC::UC(const std::string &codigoUc, const std::unordered_map<std::string, TurmaInfo> &ucTurma) : codigoUC(codigoUc), ucTurma(ucTurma) {}
+#include <utility>
 
-UC::UC(const std::string &codigoUc) : codigoUC(codigoUc) {}
+UC::UC(std::string &codigoUc, const std::unordered_map<std::string, TurmaInfo> &ucTurma) : codigoUC(std::move(codigoUc)), ucTurma(ucTurma) {}
+
+UC::UC(std::string &codigoUc) : codigoUC(std::move(codigoUc)) {}
 
 void UC::addTurma(const std::string &turma, const TurmaInfo &turmaInfo) {
     this->ucTurma.insert({turma,turmaInfo});
@@ -22,15 +24,28 @@ void UC::addEstudantes(const std::string &turma, const std::list<std::pair<int,s
     }
 }
 
-const std::unordered_map<std::string, TurmaInfo> UC::getUcTurma() {
+std::unordered_map<std::string, TurmaInfo> UC::getUcTurma() {
     return this->ucTurma;
+}
+
+Aula UC::getPratica(const std::string &turma) const {
+    Aula res;
+    auto it = this->ucTurma.find(turma);
+    if (it != this->ucTurma.end()) {
+        for (const auto& element : it->second.aulas) {
+            if (element.getTipo() != "T") {
+                res = element;
+            }
+        }
+    }
+    return res;
 }
 
 void UC::addEstudante(const std::string &turma, int &estudante, std::string &nome) {
     auto it = ucTurma.find(turma);
 
     if (it != ucTurma.end()) {
-        it -> second.estudantes.push_back({estudante,nome});
+        it -> second.estudantes.emplace_back(estudante,nome);
     }
 }
 

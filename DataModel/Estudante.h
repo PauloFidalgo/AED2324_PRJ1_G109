@@ -16,15 +16,17 @@ private:
     int ano;
 
 public:
+    Estudante();
+    Estudante(const int& numero);
     Estudante(const int& numero, const std::string& nome, const std::set<std::pair<std::string, std::string>> &turmas, const int& ano);
-    const int getStudentNumber();
-    const std::string getStudentName();
-    const int getAno();
-    const std::set<std::pair<std::string, std::string>> getTurmas();
-    const bool inscrito(std::string &uc);
-    bool changeTurma(const std::string uc, const std::string turmaNova);
+    const int getStudentNumber() const;
+    const std::string getStudentName() const;
+    const int getAno() const;
+    const std::set<std::pair<std::string, std::string>> getTurmas() const;
+    const bool inscrito(std::string &uc) const;
+    void changeTurma(const std::string &uc, const std::string &turmaNova);
     bool operator<(const Estudante &estudante) const;
-    const std::string getTurma(const std::string &uc);
+    const std::string getTurma(const std::string &uc) const;
 };
 
 

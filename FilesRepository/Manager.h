@@ -9,7 +9,6 @@
 #include "../DataModel/Estudante.h"
 #include"../DataModel/UC.h"
 #include <unordered_map>
-#include "../DataModel/Slot.h"
 #include "Pedido.h"
 #include <stack>
 
@@ -28,10 +27,20 @@ public:
     void printStudents();
     void printUc();
     void addPedido(Pedido &pedido);
-    void executarPedido();
-    unordered_map<string,list<Aula>> obterHorarioEstudante(Estudante &estudante);
-    TurmaInfo obterInfoUc(const std::string &uc, const std::string &turma);
+    void executarPedido(Pedido &pedido);
+    void proximoPedido();
+    bool pedidoValido(Pedido &pedido);
+    void reverterPedido();
+    void testGet() const;
+    Estudante getEstudante(const int &numero) const;
+    unordered_map<string,list<Aula>> obterHorarioEstudante(const Estudante &estudante) const;
+    bool verificarAulaSobreposta(const list<Aula> &horario, const Aula &aulaNova) const;
+    list<Aula> obterHorarioEstudantePraticas(const Estudante &estudante) const;
+    TurmaInfo obterInfoUc(const std::string &uc, const std::string &turma) const;
+    Aula obterPraticaUc(const string &uc, const string &turma) const;
     void printHorario();
+    void printHorarioEstudante(Estudante estudante);
+    void fakeTroca();
 
 };
 

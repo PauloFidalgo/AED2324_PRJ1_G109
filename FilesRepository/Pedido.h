@@ -15,8 +15,7 @@ private:
     Estudante estudante, outroEstudante;
 
 public:
-    Pedido(std::string uc, Estudante estudante, Estudante outroEstudante);
-    bool executar();
+    Pedido(std::string &uc, Estudante &estudante, Estudante &outroEstudante);
     Estudante getEstudante();
     Estudante getOutroEstudante();
     std::string getUc();

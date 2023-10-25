@@ -6,7 +6,7 @@
 #define AED2324_PRJ1_G_109__COURSEUNIT_H
 #include <string>
 #include <iostream>
-#include "Slot.h"
+
 
 enum Type {TP, P, PL};
 
@@ -20,9 +20,9 @@ public:
     Aula();
     Aula(std::string dia, float inicio, float duracao, std::string tipo);
 
-    const void printData();
-    const bool mesmoHorario(const Aula &aula);
-    const bool sobreposta(const Aula &aula);
+    const void printData() const;
+    const bool sobreposta(const Aula &aula) const;
+    const std::string getTipo() const;
 };
 
 

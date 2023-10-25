@@ -21,13 +21,14 @@ private:
     std::unordered_map<std::string, TurmaInfo> ucTurma;
 
 public:
-    UC(const std::string &codigoUc, const std::unordered_map<std::string, TurmaInfo> &ucTurma);
-    UC(const std::string &codigoUc);
-    const std::unordered_map<std::string, TurmaInfo> getUcTurma();
+    UC(std::string &codigoUc, const std::unordered_map<std::string, TurmaInfo> &ucTurma);
+    UC(std::string &codigoUc);
+    std::unordered_map<std::string, TurmaInfo> getUcTurma();
     void addTurma(const std::string &turma, const TurmaInfo &turmaInfo);
     void addEstudantes(const std::string &turma, const std::list<std::pair<int,std::string>> &estudantes);
     void addEstudante(const std::string &turma, int &estudante, std::string &nome);
     std::string &getCodigoUc();
+    Aula getPratica(const std::string &turma) const;
 
 };
 
