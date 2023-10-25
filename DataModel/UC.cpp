@@ -6,9 +6,14 @@
 
 #include <utility>
 
-UC::UC(std::string &codigoUc, const std::unordered_map<std::string, TurmaInfo> &ucTurma) : codigoUC(std::move(codigoUc)), ucTurma(ucTurma) {}
+UC::UC(const UC &other) {
+    this->codigoUC = other.codigoUC;
+    this->ucTurma = other.ucTurma;
+}
 
-UC::UC(std::string &codigoUc) : codigoUC(std::move(codigoUc)) {}
+UC::UC(const std::string &codigoUc, const std::unordered_map<std::string, TurmaInfo> &ucTurma) : codigoUC(std::move(codigoUc)), ucTurma(ucTurma) {}
+
+UC::UC(const std::string &codigoUc) : codigoUC(std::move(codigoUc)) {}
 
 void UC::addTurma(const std::string &turma, const TurmaInfo &turmaInfo) {
     this->ucTurma.insert({turma,turmaInfo});
@@ -24,7 +29,7 @@ void UC::addEstudantes(const std::string &turma, const std::list<std::pair<int,s
     }
 }
 
-std::unordered_map<std::string, TurmaInfo> UC::getUcTurma() {
+std::unordered_map<std::string, TurmaInfo> UC::getUcTurma() const {
     return this->ucTurma;
 }
 
@@ -41,7 +46,7 @@ Aula UC::getPratica(const std::string &turma) const {
     return res;
 }
 
-void UC::addEstudante(const std::string &turma, int &estudante, std::string &nome) {
+void UC::addEstudante(const std::string &turma, const int &estudante, const std::string &nome) {
     auto it = ucTurma.find(turma);
 
     if (it != ucTurma.end()) {
@@ -49,6 +54,18 @@ void UC::addEstudante(const std::string &turma, int &estudante, std::string &nom
     }
 }
 
-std::string &UC::getCodigoUc() {
+std::string UC::getCodigoUc() const {
     return this->codigoUC;
+}
+
+void UC::removeEstudante(const std::string &turma, const int &numero) {
+    auto it = ucTurma.find(turma);
+
+    if (it != ucTurma.end()) {
+        it -> second.estudantes.remove({numero,""});
+    }
+}
+
+bool UC::operator<(const UC uc) const {
+    return this->codigoUC < uc.codigoUC;
 }

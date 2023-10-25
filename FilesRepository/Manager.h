@@ -18,7 +18,7 @@ using namespace std;
 class Manager {
 private:
     set<Estudante> estudantes;
-    vector<UC> ucs;
+    set<UC> ucs;
     queue<Pedido> pedidos;
     stack<Pedido> historico;
 
@@ -38,6 +38,8 @@ public:
     list<Aula> obterHorarioEstudantePraticas(const Estudante &estudante) const;
     TurmaInfo obterInfoUc(const std::string &uc, const std::string &turma) const;
     Aula obterPraticaUc(const string &uc, const string &turma) const;
+    void addEstudanteToUc(const string &uc, const string &turma, const int &numero, const string &nome);
+    void removeEstudanteFromUc(const string &uc, const string& turma, const int &numero);
     void printHorario();
     void printHorarioEstudante(Estudante estudante);
     void fakeTroca();

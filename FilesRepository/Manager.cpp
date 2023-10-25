@@ -51,7 +51,7 @@ void Manager::readFiles()
            }
 
            else {
-               ucs.emplace_back(lastUc,turmaUc);
+               ucs.insert(UC(lastUc,turmaUc));
                turmaUc.clear();
                turmaUc.insert({turma,turmaInfo});
                lastUc = uc;
@@ -103,10 +103,12 @@ void Manager::readFiles()
                 if (turma[0] > ano) ano = turma[0] - '0';
             }
 
-            for (auto &ele : ucs) {
-                if (ele.getCodigoUc() == uc) {
-                    ele.addEstudante(turma,studentCode,nomeEstudante);
-                }
+            auto it = ucs.find(UC(uc));
+            if (it != ucs.end()) {
+                UC atualizada = UC(*it);
+                atualizada.addEstudante(turma,studentCode,nomeEstudante);
+                ucs.erase(it);
+                ucs.insert(atualizada);
             }
         }
     }
@@ -186,12 +188,48 @@ bool Manager::verificarAulaSobreposta(const list<Aula> &horario, const Aula &aul
 }
 
 void Manager::executarPedido(Pedido &pedido) {
-    Estudante estudante = pedido.getEstudante();
-    Estudante outro = pedido.getOutroEstudante();
     string uc = pedido.getUc();
-    string temp = estudante.getTurma(uc);
+    Estudante estudante = pedido.getEstudante();
+    string turmaEstudante = estudante.getTurma(uc);
+    int numeroEstudante = estudante.getStudentNumber();
+
+    Estudante outro = pedido.getOutroEstudante();
+    string turmaOutro = outro.getTurma(uc);
+    int numeroOutro = outro.getStudentNumber();
+
+    //Alterar UCs
+    addEstudanteToUc(uc, turmaOutro, numeroEstudante, estudante.getStudentName());
+    addEstudanteToUc(uc, turmaEstudante, numeroOutro, outro.getStudentName());
+    removeEstudanteFromUc(uc, turmaEstudante, numeroEstudante);
+    removeEstudanteFromUc(uc, turmaOutro, numeroOutro);
+
+
+    //Alterar Estudante
     estudante.changeTurma(uc,outro.getTurma(uc));
-    outro.changeTurma(uc,temp);
+    outro.changeTurma(uc,turmaEstudante);
+
+}
+
+void Manager::addEstudanteToUc(const string &uc, const string& turma, const int &numero, const string &nome) {
+    auto it = ucs.find(UC(uc));
+
+    if (it != ucs.end()) {
+        UC atualizada = UC(*it);
+        atualizada.addEstudante(turma, numero, nome);
+        ucs.erase(it);
+        ucs.insert(atualizada);
+    }
+}
+
+void Manager::removeEstudanteFromUc(const string &uc, const string& turma, const int &numero) {
+    auto it = ucs.find(UC(uc));
+
+    if (it != ucs.end()) {
+        UC atualizada = UC(*it);
+        atualizada.removeEstudante(turma, numero);
+        ucs.erase(it);
+        ucs.insert(atualizada);
+    }
 }
 
 void Manager::proximoPedido() {
@@ -272,6 +310,9 @@ Estudante Manager::getEstudante(const int &numero) const {
     return res;
 }
 
+
+// ------------------------------------------------------------------------------------------------
+
 void Manager::printStudents() {
 
     for (const auto& estudante : estudantes) {
@@ -323,6 +364,7 @@ void Manager::testGet() const {
     Estudante estudante = getEstudante(num);
     cout << estudante.getStudentNumber() << " " << estudante.getStudentName() << endl;
 }
+
 void Manager::printHorarioEstudante(Estudante estudante) {
         cout << estudante.getStudentNumber() << endl;
         cout << estudante.getStudentName() << endl;
