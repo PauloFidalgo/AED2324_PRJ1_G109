@@ -18,6 +18,6 @@ int main() {
     cout<< count; */
     Manager manager;
     manager.readFiles();
-    manager.printStudents();
+    manager.printUc();
     return 0;
 }

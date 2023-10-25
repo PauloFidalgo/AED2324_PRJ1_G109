@@ -8,17 +8,22 @@
 #include <queue>
 #include "../DataModel/Estudante.h"
 #include"../DataModel/UC.h"
+#include <unordered_map>
+#include "../DataModel/Slot.h"
+
+using namespace std;
 
 
 class Manager {
 private:
-    std::set<Estudante> estudantes;
-    //std::queue<Pedido> pedidos;
-    std::set<UC> uc;
+    set<Estudante> estudantes;
+    vector<UC> ucs;
+    //queue<Pedido> pedidos;
 
 public:
     void readFiles();
     void printStudents();
+    void printUc();
 
 
 

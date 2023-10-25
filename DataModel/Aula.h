@@ -12,11 +12,16 @@ enum Type {TP, P, PL};
 
 class Aula {
 private:
-    Slot slot;
-    std::string type;
+    std::string dia;
+    float inicio, duracao;
+    std::string tipo;
 
 public:
-    Aula(const std::string &type, const Slot &slot);
+    Aula();
+    Aula(std::string dia, float inicio, float duracao, std::string tipo);
+
+    const void printData();
+    const bool mesmoHorario(const Aula &aula);
 };
 
 
