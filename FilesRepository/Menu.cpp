@@ -11,9 +11,10 @@ using namespace std;
 Menu::Menu() {
     // inicia a tabela com o tambho 24 linhas e 6 colunas
     table = std::vector<std::vector<std::string>>(24, std::vector<std::string>(6));
+
 }
 void Menu::createTable() {
-    // Fill the first row with days of the week
+    // preenche o cabeçalho da tabela com os dias da semana
     vector<string> days = {"     Hours", "    Monday", "    Tuesday", "   Wednesday", "   Thursday", "    Friday"};
     for (int col = 0; col < 6; col++) {
         table[0][col] = days[col];
@@ -97,23 +98,70 @@ void Menu::printTableUC() {
     }
 }
 
+Menu::~Menu() {
+    exitTimeThread=true;
+    // Join the time update thread in the destructor
+    if (timeThread.joinable()) {
+        timeThread.join();
+    }
+}
+
+void Menu::updateTime() {
+    while (!exitTimeThread) {
+        // Get the current time
+        data = std::time(0);
+        hora = std::localtime(&data);
+
+        // Sleep for one second (adjust as needed for your desired refresh rate)
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+}
+
+void Menu::printmenuincial(const tm* hora) {
+
+
+    cout << "_____________________________________________________________________________________________________" << endl;
+    cout << "|  "<< hora->tm_mday<< "/" << (hora->tm_mon+1) << "/" << (hora->tm_year+1900)<<"                                                                              "<< hora->tm_hour << ":" << hora->tm_min<<"    |" << endl;
+    cout << "|                                                                                                   |" << endl;
+    cout << "|                                                                                                   |" << endl;
+    cout << "|                                                                                                   |" << endl;
+    cout << "|" << "                                          1 - Horário turma" << "                                        |" << endl;
+    cout << "|" << "                                          2 - Horário UC" <<"                                           |" << endl;
+    cout << "|" << "                                          3 - Turmas por UC" <<"                                        |" << endl;
+    cout << "|" << "                                          4 - Alteração de turma" <<"                                   |" << endl;
+    cout << "|                                                                                                   |" << endl;
+    cout << "|                                                                                                   |" << endl;
+    cout << "|                                                                                                   |" << endl;
+    cout << "|" << "  Q - Exit" << "                                                                                         |" << endl;
+    cout << "-----------------------------------------------------------------------------------------------------" << endl;
+    cout << endl;
+    cout << "Escolha a opção: ";
+
+}
+
 void Menu::iniciar() {
     bool exitMenu = false;
     bool showMainMenu = true;
+    hora = std::localtime(&data);
+
+    timeThread = std::thread(&Menu::updateTime, this);
 
     while (!exitMenu) {
         if (showMainMenu) {
-            cout << "Menu: " << endl;
-            cout << "1 - Horário da turma" << endl;
-            cout << "2 - Horário da UC" << endl;
-            cout << "q - Quit" << endl;
-            cout << "Escolha a opção: ";
+            printmenuincial(hora);
         }
 
-        char entrada;
+        string entrada;
         cin >> entrada;
 
-        switch (entrada) {
+        if(entrada.length()!=1){
+            cout << "Opção inválida. Tente novamente." << endl;
+            showMainMenu = true;
+            continue;
+        }
+
+        char ent=entrada[0];
+        switch (ent) {
             case '1':
                 createTable();
                 printTableTurma();
@@ -134,6 +182,7 @@ void Menu::iniciar() {
 
             case 'b':
                 showMainMenu = true;
+                cout << setw(0);
                 break;
 
             case 'q':
