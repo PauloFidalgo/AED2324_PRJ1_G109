@@ -40,15 +40,19 @@ public:
     void printStudents();
     void printUc();
     void addPedido(Pedido &pedido);
-    void executarPedido(Pedido &pedido);
+    void executarPedidoTrocaHorario(Pedido &pedido);
+    bool estudanteValido(const int &numero) const;
     void proximoPedido();
-    bool pedidoValido(Pedido &pedido);
+    bool trocaValida(Pedido &pedido);
     void reverterPedido();
     void testGet() const;
     Estudante getEstudante(const int &numero) const;
     unordered_map<string,list<Aula>> obterHorarioEstudante(const Estudante &estudante) const;
     bool verificarAulaSobreposta(const list<Aula> &horario, const Aula &aulaNova) const;
+    void removerEstudanteDaUc(const string &uc, Estudante &estudante);
+    void trocaTurma(const string &uc, const string& turma1, const int &numero1, const string &nome1, const string& turma2, const int &numero2, const string &nome2);
     list<Aula> obterHorarioEstudantePraticas(const Estudante &estudante) const;
+    list<Aula> obterHorarioEstudantePraticasExceto(const Estudante &estudante, const string &uc) const;
     TurmaInfo obterInfoUc(const std::string &uc, const std::string &turma) const;
     Aula obterPraticaUc(const string &uc, const string &turma) const;
     void addEstudanteToUc(const string &uc, const string &turma, const int &numero, const string &nome);
@@ -61,7 +65,6 @@ public:
     void printEstudantesPorAno(const int& ano, const bool& orderByNumber = true, const bool& ascending = true) const;
     void printTurmasPorUC(const string& uc, const bool& ascending = true) const;
     void numeroEstudantesEmPeloMenosNUCS(const int& nUcs, const bool& orderByNumber = true, const bool& ascending = true) const;
-
 };
 
 #endif //PROJECT_MANAGER_H

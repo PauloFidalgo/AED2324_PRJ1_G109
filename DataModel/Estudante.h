@@ -18,6 +18,7 @@ private:
 public:
     Estudante();
     Estudante(const int& numero);
+    Estudante(const Estudante &estudante);
     Estudante(const int& numero, const std::string& nome, const std::set<std::pair<std::string, std::string>> &turmas, const int& ano);
     const int getStudentNumber() const;
     const std::string getStudentName() const;
@@ -27,6 +28,8 @@ public:
     void changeTurma(const std::string &uc, const std::string &turmaNova);
     //bool operator<(const Estudante &estudante) const;
     const std::string getTurma(const std::string &uc) const;
+    void removerUc(const std::string &uc);
+    void adicionarUc(const std::string &uc, const std::string &turma);
 };
 
 

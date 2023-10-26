@@ -121,12 +121,19 @@ void Manager::readFiles()
 }
 
 void Manager::addPedido(Pedido &pedido) {
-    if (pedidoValido(pedido)) {
-        pedidos.push(pedido);
+    bool res = false;
+    switch (pedido.getTipoAlteracao()) {
+        case TipoAlteracao::H: res = trocaValida(pedido);
+            break;/*
+        case TipoAlteracao::R removerEstudanteDaUc();
+            break;
+            case TipoAlteracao::A adionarEstudanteUc();
+            break;*/
     }
+    if (res) pedidos.push(pedido);
 }
 
-bool Manager::pedidoValido(Pedido &pedido) {
+bool Manager::trocaValida(Pedido &pedido) {
     Estudante estudante = pedido.getEstudante();
     Estudante outro = pedido.getOutroEstudante();
     std::string uc = pedido.getUc();
@@ -148,33 +155,12 @@ bool Manager::pedidoValido(Pedido &pedido) {
     }
 
     // Verificar o horário de cada estudante
-    list<Aula> horarioUm = obterHorarioEstudantePraticas(estudante);
+    list<Aula> horarioUm = obterHorarioEstudantePraticasExceto(estudante,uc);
     Aula aula = obterPraticaUc(uc,outraTurma);
-    list<Aula> horarioOutro = obterHorarioEstudantePraticas(outro);
+    list<Aula> horarioOutro = obterHorarioEstudantePraticasExceto(outro,uc);
     Aula aulaNova = obterPraticaUc(uc,turma);
 
     return verificarAulaSobreposta(horarioUm,aula) && verificarAulaSobreposta(horarioOutro, aulaNova);
-
-    /*
-    for (auto &aula : horarioUm) {
-        aula.printData();
-        if (aula.sobreposta(aulaNova)) {
-            cout << "Troca inválida, aula Prática sobreposta" << endl;
-            return false;
-        }
-    }
-    list<Aula> horarioOutro = obterHorarioEstudantePraticas(outro);
-    aulaNova = obterPraticaUc(uc,turma);
-
-    for (auto &aula : horarioOutro) {
-        if (aula.sobreposta(aulaNova)) {
-            cout << "Troca inválida, aula Prática sobreposta" << endl;
-            return false;
-        }
-    }*/
-
-    return true;
-
 }
 
 bool Manager::verificarAulaSobreposta(const list<Aula> &horario, const Aula &aulaNova) const {
@@ -188,7 +174,8 @@ bool Manager::verificarAulaSobreposta(const list<Aula> &horario, const Aula &aul
     return true;
 }
 
-void Manager::executarPedido(Pedido &pedido) {
+
+void Manager::executarPedidoTrocaHorario(Pedido &pedido) {
     string uc = pedido.getUc();
     Estudante estudante = pedido.getEstudante();
     string turmaEstudante = estudante.getTurma(uc);
@@ -198,21 +185,83 @@ void Manager::executarPedido(Pedido &pedido) {
     string turmaOutro = outro.getTurma(uc);
     int numeroOutro = outro.getStudentNumber();
 
-    //Alterar UCs
-    addEstudanteToUc(uc, turmaOutro, numeroEstudante, estudante.getStudentName());
-    addEstudanteToUc(uc, turmaEstudante, numeroOutro, outro.getStudentName());
-    removeEstudanteFromUc(uc, turmaEstudante, numeroEstudante);
-    removeEstudanteFromUc(uc, turmaOutro, numeroOutro);
 
+    trocaTurma(uc, turmaEstudante, numeroEstudante, estudante.getStudentName(), turmaOutro, numeroOutro, outro.getStudentName());
 
-    //Alterar Estudante
-    estudante.changeTurma(uc,outro.getTurma(uc));
-    outro.changeTurma(uc,turmaEstudante);
+    auto it = estudantesNumero.find(estudante);
+    auto itO = estudantesNumero.find(outro);
+
+    if (it != estudantesNumero.end() && itO != estudantesNumero.end()) {
+        Estudante estudanteAtualizado = Estudante(*it);
+        Estudante estudanteMandelao = Estudante(*itO);
+        estudanteAtualizado.changeTurma(uc,turmaOutro);
+        estudanteMandelao.changeTurma(uc,turmaEstudante);
+        estudantesNumero.erase(it);
+        estudantesNumero.erase(itO);
+        estudantesNumero.insert(estudanteAtualizado);
+        estudantesNumero.insert(estudanteMandelao);
+    }
+
+    auto it1 = estudantesNome.find(estudante);
+    auto it2 = estudantesNome.find(outro);
+
+    if (it != estudantesNome.end() && itO != estudantesNome.end()) {
+        Estudante estudanteAtualizado = Estudante(*it);
+        Estudante estudanteMandelao = Estudante(*itO);
+        estudanteAtualizado.changeTurma(uc,turmaOutro);
+        estudanteMandelao.changeTurma(uc,turmaEstudante);
+        estudantesNome.erase(it);
+        estudantesNome.erase(itO);
+        estudantesNome.insert(estudanteAtualizado);
+        estudantesNome.insert(estudanteMandelao);
+    }
+}
+
+void Manager::removerEstudanteDaUc(const string &uc, Estudante &estudante) {
+    auto it = ucs.find(uc);
+
+    if (it != ucs.end()) {
+        UC atualizada = UC(*it);
+        atualizada.removeEstudante(estudante.getTurma(uc), estudante.getStudentNumber());
+        ucs.erase(it);
+        ucs.insert(atualizada);
+    }
+
+    auto iterator = estudantesNumero.find(estudante);
+
+    if (iterator != estudantesNumero.end()) {
+        Estudante atualizado = Estudante(*iterator);
+        atualizado.removerUc(uc);
+        estudantesNumero.erase(iterator);
+        estudantesNumero.insert(atualizado);
+    }
+
+    auto iteratorNome = estudantesNome.find(estudante);
+    if (iteratorNome != estudantesNome.end()) {
+        Estudante atualizadoNome = Estudante(*iteratorNome);
+        atualizadoNome.removerUc(uc);
+        estudantesNome.erase(iteratorNome);
+        estudantesNome.insert(atualizadoNome);
+    }
+}
+
+void Manager::trocaTurma(const string &uc, const string& turma1, const int &numero1, const string &nome1, const string& turma2, const int &numero2, const string &nome2) {
+    auto it = ucs.find(uc);
+
+    if (it != ucs.end()) {
+        UC atualizada = UC(*it);
+        atualizada.removeEstudante(turma1, numero1);
+        atualizada.removeEstudante(turma2, numero2);
+        atualizada.addEstudante(turma2, numero1, nome1);
+        atualizada.addEstudante(turma1,numero2,nome2);
+        ucs.erase(it);
+        ucs.insert(atualizada);
+    }
 
 }
 
 void Manager::addEstudanteToUc(const string &uc, const string& turma, const int &numero, const string &nome) {
-    auto it = ucs.find(UC(uc));
+    auto it = ucs.find(uc);
 
     if (it != ucs.end()) {
         UC atualizada = UC(*it);
@@ -235,10 +284,23 @@ void Manager::removeEstudanteFromUc(const string &uc, const string& turma, const
 
 void Manager::proximoPedido() {
     if (!(pedidos.empty())) {
-        executarPedido(pedidos.front());
+        switch (pedidos.front().getTipoAlteracao()) {
+            case TipoAlteracao::H: executarPedidoTrocaHorario(pedidos.front());
+                break;/*
+            case TipoAlteracao::R removerEstudanteDaUc(pedidos.);
+                break;
+            case TipoAlteracao::A adicionarUcAoEstudante();
+                break;*/
+        }
         historico.push(pedidos.front());
         pedidos.pop();
     }
+}
+
+
+bool Manager::estudanteValido(const int &numero) const {
+    auto it = estudantesNumero.find(numero);
+    return it != estudantesNumero.end();
 }
 
 
@@ -246,7 +308,14 @@ void Manager::proximoPedido() {
 void Manager::reverterPedido() {
     if (!(historico.empty())) {
         Pedido last = historico.top();
-        executarPedido(last);
+        switch (last.getTipoAlteracao()) {
+            case TipoAlteracao::H: executarPedidoTrocaHorario(last);
+                break;/*
+            case TipoAlteracao::R removerEstudanteDaUc();
+                break;
+            case TipoAlteracao::A adionarEstudanteUc();
+                break;*/
+        }
         historico.pop();
     }
 }
@@ -274,6 +343,19 @@ list<Aula> Manager::obterHorarioEstudantePraticas(const Estudante &estudante) co
     return res;
 }
 
+list<Aula> Manager::obterHorarioEstudantePraticasExceto(const Estudante &estudante, const string &uc) const {
+    set<pair<string,string>> turmas = estudante.getTurmas();
+    list<Aula> res;
+    for (const auto& par : turmas) {
+         if (par.first != uc) {
+             res.push_back(obterPraticaUc(par.first, par.second));
+         }
+
+    }
+
+    return res;
+}
+
 TurmaInfo Manager::obterInfoUc(const string &uc, const string &turma) const {
     TurmaInfo res;
 
@@ -293,7 +375,7 @@ TurmaInfo Manager::obterInfoUc(const string &uc, const string &turma) const {
 Aula Manager::obterPraticaUc(const string &uc, const string &turma) const {
     Aula res;
 
-    for (auto u : ucs) {
+    for (const auto& u : ucs) {
         if (uc == u.getCodigoUc()) {
             res = u.getPratica(turma);
         }
