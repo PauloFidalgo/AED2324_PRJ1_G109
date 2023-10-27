@@ -11,8 +11,93 @@ using namespace std;
 Menu::Menu() {
     // inicia a tabela com o tambho 24 linhas e 6 colunas
     table = std::vector<std::vector<std::string>>(24, std::vector<std::string>(6));
+    Manager manager;
+    this->manager = manager;
+    this->manager.readFiles();
 
 }
+
+Menu::~Menu() {
+    exitTimeThread=true;
+    // Join the time update thread in the destructor
+    if (timeThread.joinable()) {
+        timeThread.join();
+    }
+}
+
+char Menu::getUserInput() {
+    while (true) {
+        try {
+            cout << "Escolha a opção: ";
+            cin >> navegar_menu;
+
+            if (navegar_menu.length() == 1) {
+                userInput = navegar_menu[0];
+                return userInput;
+            } else {
+                throw std::runtime_error("escolha invalida. Tente outra vez.");
+            }
+        } catch (const std::exception& e) {
+            cerr << e.what() << std::endl;
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+}
+
+int Menu::getStudentNumber() {
+    while (true) {
+        try {
+            cout << "Numero Estudante: ";
+            cin >> numero_estudante;
+
+            if (to_string(numero_estudante).length() == 9) {
+                while (!manager.estudanteValido(numero_estudante)) {
+                    cout << "Aluno não encontrado! " << endl;
+                    cout << "Numero do aluno: ";
+                    cin >> numero_estudante;
+                }
+                return numero_estudante;
+            } else {
+                cout << "Número deve ter 9 dígitos. Tente novamente." << endl;
+                continue;
+            }
+        }
+        catch (std::exception &e) {
+            cout << "Numero invalido. Tente novamente." << endl;
+            cin.clear();  // Clear any error flags from cin
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+}
+
+string Menu::getUC() {
+    while (true) {
+        try {
+            cout << "UC: ";
+            getline(cin,uc);
+
+            if (uc.length() == 8) {
+                while (!manager.ucValido(uc)) {
+                    cout << "UC não encontrada! " << endl;
+                    cout << "UC: ";
+                    getline(cin,uc);
+                }
+                return uc;
+            } else {
+                cout << "UC deve ter 8 dígitos. Tente novamente." << endl;
+                continue;
+            }
+        }
+        catch (std::exception &e) {
+            cout << "UC invalido. Tente novamente." << endl;
+            cin.clear();  // Clear any error flags from cin
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+}
+
+
 void Menu::createTable() {
     // preenche o cabeçalho da tabela com os dias da semana
     vector<string> days = {"     Hours", "    Monday", "    Tuesday", "   Wednesday", "   Thursday", "    Friday"};
@@ -56,55 +141,6 @@ void Menu::createTable() {
     }
 
 }
-void Menu::printTableTurma() {
-    cout << endl;
-    cout << "Horário do aluno:" << endl;
-    cout << endl;
-    cout << "_________________________________________________________________________________________________" << endl;
-
-    for (int col = 0; col < 6; col++) {
-        cout << left << "|" << setw(15) << table[0][col];
-    }
-    cout << "|" << endl;
-    cout << "-------------------------------------------------------------------------------------------------" << endl;
-
-    for (int row = 1; row < 24; row++) {
-        for (int col = 0; col < 6; col++) {
-            cout << left << "|" << setw(15) << table[row][col];
-        }
-        cout << "|" << endl;
-        cout << "-------------------------------------------------------------------------------------------------" << endl;
-    }
-}
-
-
-void Menu::printTableUC() {
-    cout << endl;
-    cout << "Horário da UC:" << endl;
-    cout << endl;
-    cout<< "_________________________________________________________________________________________________"<< endl;
-    for (int col = 0; col < 6; col++) {
-        cout << left << "|" << setw(15) << table[0][col];
-    }
-    cout << "|" << endl;
-    cout<<"-------------------------------------------------------------------------------------------------"<<endl;
-
-    for (int row = 1; row < 24; row++) {
-        for (int col = 0; col < 6; col++) {
-            cout << left << "|" << setw(15) << table[row][col];
-        }
-        cout << "|" << endl;
-        cout<<"-------------------------------------------------------------------------------------------------"<<endl;
-    }
-}
-
-Menu::~Menu() {
-    exitTimeThread=true;
-    // Join the time update thread in the destructor
-    if (timeThread.joinable()) {
-        timeThread.join();
-    }
-}
 
 void Menu::updateTime() {
     while (!exitTimeThread) {
@@ -117,84 +153,144 @@ void Menu::updateTime() {
     }
 }
 
-void Menu::printmenuincial(const tm* hora) {
+void Menu::menuInicial(const tm* hora) {
 
 
     cout << "_____________________________________________________________________________________________________" << endl;
-    cout << "|  "<< hora->tm_mday<< "/" << (hora->tm_mon+1) << "/" << (hora->tm_year+1900)<<"                                                                              "<< hora->tm_hour << ":" << hora->tm_min<<"    |" << endl;
+    cout << "|  "<< std::setfill('0') << std::setw(2)<<hora->tm_mday<< "/" <<std::setfill('0') << std::setw(2)<< (hora->tm_mon+1) << "/" <<std::setfill('0') << std::setw(2)<<(hora->tm_year+1900)<<"                                                                             "<<std::setfill('0') << std::setw(2)<< hora->tm_hour<< ":" <<std::setfill('0') << std::setw(2)<< hora->tm_min<<"     |" << endl;
+    cout << "|                                                                                                   |" << endl;
+    cout << "|                         Consulta                          Gestão de Horário                       |" << endl;
+    cout << "|                                                                                                   |" << endl;
+    cout << "|                   1 - Horário Estudante                  6 - Fazer pedido                         |" << endl;
+    cout << "|                   2 - Horário UC                         7 - Executar Pedido                      |" << endl;
+    cout << "|                   3 - Horário Turma                      8 - Ver histórico                        |" << endl;
+    cout << "|                   4 - Listagens                          9 - Andar para trás                      |" << endl;
     cout << "|                                                                                                   |" << endl;
     cout << "|                                                                                                   |" << endl;
     cout << "|                                                                                                   |" << endl;
-    cout << "|" << "                                          1 - Horário turma" << "                                        |" << endl;
-    cout << "|" << "                                          2 - Horário UC" <<"                                           |" << endl;
-    cout << "|" << "                                          3 - Turmas por UC" <<"                                        |" << endl;
-    cout << "|" << "                                          4 - Alteração de turma" <<"                                   |" << endl;
-    cout << "|                                                                                                   |" << endl;
-    cout << "|                                                                                                   |" << endl;
-    cout << "|                                                                                                   |" << endl;
-    cout << "|" << "  Q - Exit" << "                                                                                         |" << endl;
+    cout << "|     Q - Exit                                                                                      |" << endl;
     cout << "-----------------------------------------------------------------------------------------------------" << endl;
     cout << endl;
-    cout << "Escolha a opção: ";
+
+    getUserInput();
 
 }
 
+void Menu::menuOrdenacaoTotal() {
+
+    cout << "________________________________________________________________________________________________________" <<endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                   1 - Ordenar por nº e ordem crescente                               |" << endl;
+    cout << "|                                   2 - Ordenar por nº e ordem decrescente                             |" << endl;
+    cout << "|                                   3 - Ordenar por nome e ordem crescente                             |" << endl;
+    cout << "|                                   4 - Ordenar por nome e ordem decrescente                           |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "--------------------------------------------------------------------------------------------------------" << endl;
+
+    getUserInput();
+
+}
+void Menu::menuOrdenacaoParcial(){
+
+    cout << "________________________________________________________________________________________________________" <<endl;
+    cout << "|  Ordenação                                                                                           |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                            1 - Ordem crescente                                       |" << endl;
+    cout << "|                                            2 - Ordem decrescente                                     |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "--------------------------------------------------------------------------------------------------------" << endl;
+
+    getUserInput();
+};
+
+void Menu::menuListagens(){
+
+    cout << "________________________________________________________________________________________________________" <<endl;
+    cout << "|    Listagens                                                                                         |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                   1 - Turmas por UC                                                  |" << endl;
+    cout << "|                                   2 - Estudantes por ano                                             |" << endl;
+    cout << "|                                   3 - Estudantes por UC                                              |" << endl;
+    cout << "|                                   4 - Estudantes por turma                                           |" << endl;
+    cout << "|                                   5 - Estudantes em pelo menos N ucs                                 |" << endl;
+    cout << "|                                   6 -                                                                |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "--------------------------------------------------------------------------------------------------------" << endl;
+
+    getUserInput();
+}
+
+
 void Menu::iniciar() {
+
     bool exitMenu = false;
     bool showMainMenu = true;
     hora = std::localtime(&data);
-
     timeThread = std::thread(&Menu::updateTime, this);
 
     while (!exitMenu) {
         if (showMainMenu) {
-            printmenuincial(hora);
+            menuInicial(hora);
         }
 
-        string entrada;
-        cin >> entrada;
-
-        if(entrada.length()!=1){
-            cout << "Opção inválida. Tente novamente." << endl;
-            showMainMenu = true;
-            continue;
-        }
-
-        char ent=entrada[0];
-        switch (ent) {
-            case '1':
-                createTable();
-                printTableTurma();
-                cout << "b - Back" << endl;
-                cout << "q - Quit" << endl;
-                cout << "Voltar ao menu principal: ";
-                showMainMenu = false;
+        switch (userInput) {
+            case '1': // Hórario da Estudante
+                getStudentNumber();
+                cout << " o hórario do estudante é o seguinte : "<< endl;
                 break;
-
-            case '2':
-                createTable();
-                printTableUC();
-                cout << "b - Back" << endl;
-                cout << "q - Quit" << endl;
-                cout << "Voltar ao menu principal: ";
-                showMainMenu = false;
+            case '2': // Horário por UC
+                // getUCNumber();
+                cout << " o hórario da uc é o seguinte: " << endl;
                 break;
-
-            case 'b':
-                showMainMenu = true;
-                cout << setw(0);
+            case '3': // Hórario por turma
+                // getTurmaNumber();
+                cout << "o hórario da turma é o seguinte: " << endl;
                 break;
+            case '4': // Listagens
+                menuListagens();
+                switch (userInput) {
+                    case '1':// turmas por uc
+                        menuOrdenacaoParcial();
+                        switch(userInput){
+                            case '1':
+                                cout << "0";
+                                getUC();
+                               manager.printTurmasPorUC(uc,true);
+                        }
+                        break;
+                    case 'b':
+                        showMainMenu = true;
+                        cout << setw(0);
+                        break;
 
-            case 'q':
-                exitMenu = true;
-                break;
+                    case 'q':
+                        exitMenu = true;
+                        break;
 
+                    default:
+                        cout << "Opção inválida. Tente novamente." << endl;
+                        cin.clear();  // Clear the fail state
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        showMainMenu = true; // Display the menu again
+                }
             default:
-                cout << "Opção inválida. Tente novamente." << endl;
-                cin.clear();  // Clear the fail state
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                showMainMenu = true; // Display the menu again
+                cout<< "Escolha uma opção valdia"<<endl;
+
+
         }
     }
-}
 
+}
