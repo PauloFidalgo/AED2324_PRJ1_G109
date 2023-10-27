@@ -4,7 +4,7 @@
 
 #include "Pedido.h"
 
-TipoAlteracao stringToTipo(std::string &tipo) {
+TipoAlteracao stringToTipo(const std::string &tipo) {
     if (tipo == "R") {
         return TipoAlteracao::R;
     }
@@ -16,17 +16,18 @@ TipoAlteracao stringToTipo(std::string &tipo) {
     return TipoAlteracao::H;
 }
 
-Pedido::Pedido(std::string &uc, Estudante &estudante, Estudante &outroEstudante) {
+Pedido::Pedido(const std::string &uc, const Estudante &estudante, const Estudante &outroEstudante) {
     this->uc = uc;
     this->estudante = estudante;
     this->outroEstudante = outroEstudante;
     this->tipo = TipoAlteracao::H;
 }
 
-Pedido::Pedido(std::string &uc, Estudante &estudante, std::string &tipo) {
+Pedido::Pedido(const std::string &uc, const Estudante &estudante, const std::string &tipo, const std::string &turma) {
     this->uc = uc;
     this->estudante = estudante;
     this->tipo = stringToTipo(tipo);
+    this->turma = turma;
 }
 
 Estudante Pedido::getEstudante() {
@@ -37,8 +38,12 @@ Estudante Pedido::getOutroEstudante() {
     return this->outroEstudante;
 }
 
-std::string Pedido::getUc() {
+std::string Pedido::getUc() const {
     return this->uc;
+}
+
+std::string Pedido::getTurma() const {
+    return this->turma;
 }
 
 TipoAlteracao Pedido::getTipoAlteracao() const {

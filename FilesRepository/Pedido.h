@@ -13,16 +13,18 @@ enum TipoAlteracao {H, A, R};
 
 class Pedido {
 private:
-    std::string uc;
+    std::string uc, turma;
     Estudante estudante, outroEstudante;
     TipoAlteracao tipo;
 
+
 public:
-    Pedido(std::string &uc, Estudante &estudante, Estudante &outroEstudante);
-    Pedido(std::string &uc, Estudante &estudante, std::string &tipo);
+    Pedido(const std::string &uc, const Estudante &estudante, const Estudante &outroEstudante);
+    Pedido(const std::string &uc, const Estudante &estudante, const std::string &tipo, const std::string &turma = "");
     Estudante getEstudante();
     Estudante getOutroEstudante();
-    std::string getUc();
+    std::string getUc() const;
+    std::string getTurma() const;
     TipoAlteracao getTipoAlteracao() const;
 };
 

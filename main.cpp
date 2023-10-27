@@ -5,8 +5,6 @@
 int main() {
     Manager manager;
     manager.readFiles();
-    manager.numeroEstudantesEmPeloMenosNUCS(7);
-    Menu menu;
-    menu.iniciar();
+    manager.printUCS();
     return 0;
 }
