@@ -24,6 +24,7 @@ public:
     const std::string getStudentName() const;
     const int getAno() const;
     const std::set<std::pair<std::string, std::string>> getTurmas() const;
+    const std::set<std::pair<std::string, std::string>> setTurmas(std::set<std::pair<std::string, std::string>> &turmas);
     const bool inscrito(std::string &uc) const;
     void changeTurma(const std::string &uc, const std::string &turmaNova);
     //bool operator<(const Estudante &estudante) const;

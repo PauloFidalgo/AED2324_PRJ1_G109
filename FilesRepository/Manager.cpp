@@ -113,6 +113,8 @@ void Manager::readFiles()
                 ucs.insert(atualizada);
             }
         }
+        estudantesNumero.insert(Estudante(lastCode,nomeEstudante,turmas,ano));
+        estudantesNome.insert(Estudante(lastCode,nomeEstudante,turmas,ano));
     }
     catch (const ifstream::failure& e){
         cout << "Failed to open file." << endl;
@@ -170,7 +172,6 @@ bool Manager::trocaValida(Pedido &pedido) {
 
 bool Manager::verificarAulaSobreposta(const list<Aula> &horario, const Aula &aulaNova) const {
     for (auto &aula : horario) {
-        aula.printData();
         if (aula.sobreposta(aulaNova)) {
             return false;
         }
@@ -700,6 +701,11 @@ bool Manager::inputToPedido(const string& uc, const int &estudante, const string
     return true;
 }
 
+bool Manager::ucValida(const string &uc) const {
+    return (ucs.find(uc) != ucs.end());
+}
+
+
 // ------------------------------------------------------------------------------------------------
 
 void Manager::printStudents() {
@@ -754,10 +760,11 @@ void Manager::testGet() const {
     cout << estudante.getStudentNumber() << " " << estudante.getStudentName() << endl;
 }
 
-void Manager::printHorarioEstudante(Estudante estudante) {
-        cout << estudante.getStudentNumber() << endl;
-        cout << estudante.getStudentName() << endl;
-        unordered_map<string,list<Aula>> horario = obterHorarioEstudante(estudante);
+void Manager::printHorarioEstudante(int n) {
+        auto estudante = estudantesNumero.find(n);
+        cout << estudante->getStudentNumber() << endl;
+        cout << estudante->getStudentName() << endl;
+        unordered_map<string,list<Aula>> horario = obterHorarioEstudante(*estudante);
         for (const auto& h : horario) {
             cout << "UC: " << h.first << endl;
             for (const auto &j: h.second) {
@@ -766,6 +773,14 @@ void Manager::printHorarioEstudante(Estudante estudante) {
         }
 }
 
+void Manager::printPratica(int n) {
+    auto it = estudantesNumero.find(n);
+
+    for (auto t : obterHorarioEstudantePraticas(*it)) {
+        t.printData();
+    }
+}
+/*
 void Manager::fakeTroca() {
     int numero1 = 202025232;
     int numero2 = 202024127;
@@ -803,3 +818,4 @@ void Manager::printUCS() {
     }
 }
 
+*/

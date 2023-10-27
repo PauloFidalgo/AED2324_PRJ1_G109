@@ -45,6 +45,7 @@ public:
     void proximoPedido();
     bool trocaValida(Pedido &pedido);
     void reverterPedido();
+    bool ucValida(const string &uc) const;
     void testGet() const;
     Estudante getEstudante(const int &numero) const;
     void removerEstudanteDaUc(Pedido &pedido);
@@ -62,7 +63,7 @@ public:
     bool validarNovaUc(const string &uc, const Estudante &estudante);
     bool inputToPedido(const string& uc, const int &estudante, const string &tipo, const int &outro, const string &turma = "");
     void printHorario();
-    void printHorarioEstudante(Estudante estudante);
+    void printHorarioEstudante(int n);
     void fakeTroca();
     void printUCS();
     void printEstudantesPorTurma(const string& uc, const string& turma, bool orderByNumber = true, bool ascending = true) const;
@@ -70,6 +71,7 @@ public:
     void printEstudantesPorAno(const int& ano, const bool& orderByNumber = true, const bool& ascending = true) const;
     void printTurmasPorUC(const string& uc, const bool& ascending = true) const;
     void numeroEstudantesEmPeloMenosNUCS(const int& nUcs, const bool& orderByNumber = true, const bool& ascending = true) const;
+    void printPratica(int n);
 };
 
 #endif //PROJECT_MANAGER_H

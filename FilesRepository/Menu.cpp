@@ -48,13 +48,13 @@ char Menu::getUserInput() {
 int Menu::getStudentNumber() {
     while (true) {
         try {
-            cout << "Numero Estudante: ";
+            cout << "Número do Aluno: ";
             cin >> numero_estudante;
 
             if (to_string(numero_estudante).length() == 9) {
                 while (!manager.estudanteValido(numero_estudante)) {
                     cout << "Aluno não encontrado! " << endl;
-                    cout << "Numero do aluno: ";
+                    cout << "Número do Aluno: ";
                     cin >> numero_estudante;
                 }
                 return numero_estudante;
@@ -64,7 +64,7 @@ int Menu::getStudentNumber() {
             }
         }
         catch (std::exception &e) {
-            cout << "Numero invalido. Tente novamente." << endl;
+            cout << "Número invalido. Tente novamente." << endl;
             cin.clear();  // Clear any error flags from cin
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
@@ -78,7 +78,7 @@ string Menu::getUC() {
             getline(cin,uc);
 
             if (uc.length() == 8) {
-                while (!manager.ucValido(uc)) {
+                while (!manager.ucValida(uc)) {
                     cout << "UC não encontrada! " << endl;
                     cout << "UC: ";
                     getline(cin,uc);
@@ -287,10 +287,9 @@ void Menu::iniciar() {
                         showMainMenu = true; // Display the menu again
                 }
             default:
-                cout<< "Escolha uma opção valdia"<<endl;
+                cout<< "Escolha uma opção válida"<<endl;
 
 
         }
     }
-
 }

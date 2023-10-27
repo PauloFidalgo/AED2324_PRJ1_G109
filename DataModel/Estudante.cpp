@@ -47,6 +47,10 @@ const std::string Estudante::getTurma(const std::string &uc) const {
     return res;
 }
 
+const std::set<std::pair<std::string, std::string>> Estudante::setTurmas(std::set<std::pair<std::string, std::string>> &turmas) {
+    this->turmas = turmas;
+}
+
 const bool Estudante::inscrito(std::string &uc) const {
     auto it = turmas.lower_bound({uc,""});
     if (it != turmas.end()) {
