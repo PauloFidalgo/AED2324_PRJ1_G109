@@ -46,6 +46,7 @@ public:
     bool trocaValida(Pedido &pedido);
     void reverterPedido();
     bool ucValida(const string &uc) const;
+    bool turmaValidaNaUc(const string &uc, const string &turma);
     void testGet() const;
     Estudante getEstudante(const int &numero) const;
     void removerEstudanteDaUc(Pedido &pedido);
@@ -66,7 +67,7 @@ public:
     void printHorarioEstudante(int n);
     void fakeTroca();
     void printUCS();
-    void printEstudantesPorTurma(const string& uc, const string& turma, bool orderByNumber = true, bool ascending = true) const;
+    void printEstudantesPorTurmaNaUc(const string& uc, const string& turma, bool orderByNumber = true, bool ascending = true) const;
     void printEstudantesPorUC(const string& uc, const bool& orderByNumber = true, const bool& ascending = true) const;
     void printEstudantesPorAno(const int& ano, const bool& orderByNumber = true, const bool& ascending = true) const;
     void printTurmasPorUC(const string& uc, const bool& ascending = true) const;

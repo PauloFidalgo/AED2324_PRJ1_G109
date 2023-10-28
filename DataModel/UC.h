@@ -25,6 +25,7 @@ public:
     UC(const std::string &codigoUc);
     UC(const UC &other);
     std::unordered_map<std::string, TurmaInfo> getUcTurma() const;
+    bool verificarTurma(const std::string &turma) const;
     void addTurma(const std::string &turma, const TurmaInfo &turmaInfo);
     void addEstudantes(const std::string &turma, const std::list<std::pair<int,std::string>> &estudantes);
     void addEstudante(const std::string &turma, const int &estudante,const std::string &nome);

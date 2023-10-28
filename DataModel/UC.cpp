@@ -66,6 +66,12 @@ void UC::removeEstudante(const std::string &turma, const int &numero) {
     }
 }
 
+bool UC::verificarTurma(const std::string &turma) const {
+    auto it = ucTurma.find(turma);
+
+    return (it != ucTurma.end());
+}
+
 bool UC::operator<(const UC uc) const {
     return this->codigoUC < uc.codigoUC;
 }

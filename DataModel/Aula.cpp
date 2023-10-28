@@ -15,7 +15,7 @@ const void Aula::printData() const {
 
 
 const bool Aula::sobreposta(const Aula &aula) const {
-    return (((this->inicio + this->duracao) <= aula.inicio) || ((this->inicio >= aula.inicio + aula.duracao)) ? false : true);
+    return (this->dia != aula.dia || (((this->inicio + this->duracao) <= aula.inicio) || ((this->inicio >= aula.inicio + aula.duracao))) ? false : true);
 }
 
 const std::string Aula::getTipo() const {

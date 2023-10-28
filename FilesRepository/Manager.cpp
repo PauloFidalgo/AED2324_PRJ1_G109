@@ -458,7 +458,7 @@ auto compareSecondElement = [](const std::pair<int, std::string>& a, const std::
     return a.second < b.second;
 };
 
-void Manager::printEstudantesPorTurma(const string &uc, const string &turma, bool orderByNumber, bool ascending) const {
+void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma, bool orderByNumber, bool ascending) const {
     auto it = ucs.find(uc);
 
     if (it != ucs.end()) {
@@ -565,7 +565,6 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
         }
         cout << "-----------------------------------"  << endl;
     }
-
 }
 
 void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, const bool &ascending) const {
@@ -705,6 +704,21 @@ bool Manager::ucValida(const string &uc) const {
     return (ucs.find(uc) != ucs.end());
 }
 
+bool Manager::turmaValidaNaUc(const string &uc, const string &turma) {
+    auto it = ucs.find(uc);
+
+    if (it == ucs.end()) {
+        cout << "A UC não existe" << endl;
+        return false;
+    }
+
+    if (!(it->verificarTurma(turma))) {
+        cout << "A turma não existe nessa UC" << endl;
+        return false;
+    }
+
+    return true;
+}
 
 // ------------------------------------------------------------------------------------------------
 
