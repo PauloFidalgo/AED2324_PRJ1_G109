@@ -30,6 +30,8 @@ char Menu::getUserInput() {
         try {
             cout << "Escolha a opção: ";
             cin >> navegar_menu;
+            cin.ignore();
+            cin.clear();
 
             if (navegar_menu.length() == 1) {
                 userInput = navegar_menu[0];
@@ -73,59 +75,48 @@ int Menu::getStudentNumber() {
 
 void Menu::getUC() {
     while (true) {
-        try {
-            cout << "UC: ";
-            cin >> this->uc;
-            cin.clear();
-            cin.ignore();
-
-            if (uc.length() == 8) {
-                while (!manager.ucValido(uc)) {
-                    cout << "UC não encontrada! " << endl;
-                    cout << "UC: ";
-                    cin >> this->uc;
-                    cin.clear();
-                    cin.ignore();
-                }
-            } else {
-                cout << "UC deve ter 8 dígitos. Tente novamente." << endl;
-                continue;
-            }
-        }
-        catch (std::exception &e) {
-            cout << "UC invalido. Tente novamente." << endl;
-            cin.clear();  // Clear any error flags from cin
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-    }
-}
-
-void  Menu::getUC_Turma(){
-
         cout << "UC: ";
         cin >> this->uc;
         cin.clear();
         cin.ignore();
+
+        if (uc.length() != 8) {
+            cout << "UC deve ter 8 dígitos. Tente novamente." << endl;
+            continue;
+        }
+        if (!manager.ucValido(uc)) {
+            cout << "UC não encontrada! " << endl;
+            continue;
+        }
+        break;
+    }
+}
+
+void Menu::getUC_Turma() {
+    while (true) {
+        cout << "UC: ";
+        cin >> this->uc;
         cout << "Turma: ";
         cin >> this->turma;
-        cout << endl;
-        cin.clear();
-        cin.ignore();
 
-
-        while(!manager.turmaValidaNaUc(this->uc,this->turma)){
-            cout << "UC: ";
-            cin >> this->uc;
-            cin.clear();
-            cin.ignore();
-            cout << "Turma: ";
-            cin >> this->turma;
-            cout << endl;
-            cin.clear();
-            cin.ignore();
+        if (uc.length() != 8) {
+            cout << "A UC deve ter 8 caracteres" << endl;
+            continue;
         }
 
+        if (turma.length() != 7) {
+            cout << "A turma deve ter 7 caracteres" << endl;
+            continue;
+        }
+
+        if (!manager.turmaValidaNaUc(this->uc, this->turma)) {
+            cout << "UC ou turma inválida. Tente novamente." << endl;
+            continue;
+        }
+        break;
+    }
 }
+
 int Menu::getAno(){
     while(true){
         cout << "Ano: ";
@@ -309,13 +300,12 @@ void Menu::iniciar() {
                 switch (userInput) {
                     case '1':// turmas por uc
                         menuOrdenacaoParcial();
+                        getUC();
                         switch(userInput){
                             case '1': // listagem das turmas por uc orderm crescente
-                                getUC();
                                 manager.printTurmasPorUC(uc,true);
                                 break;
                             case '2': // listagem das turmas por uc orderm decrescente
-                                getUC();
                                 manager.printTurmasPorUC(uc,false);
                                 break;
                             case 'b': // back
@@ -328,21 +318,18 @@ void Menu::iniciar() {
                         break;
                     case '2': // estudantes por ano
                         menuOrdenacaoTotal();
+                        getAno();
                         switch(userInput){
                             case '1':
-                                getAno();
                                 manager.printEstudantesPorAno(ano,true,true);
                                 break;
                             case '2':
-                                getAno();
                                 manager.printEstudantesPorAno(ano,true,false);
                                 break;
                             case '3':
-                                getAno();
                                 manager.printEstudantesPorAno(ano, false,true);
                                 break;
                             case '4':
-                                getAno();
                                 manager.printEstudantesPorAno(ano,false,false);
                                 break;
                             case 'b' :
@@ -355,22 +342,18 @@ void Menu::iniciar() {
                         break;
                     case '3': // estudante por uc
                         menuOrdenacaoTotal();
+                        getUC();
                         switch(userInput){
                             case '1':
-                                getUC();
                                 manager.printEstudantesPorUC(uc,true,true);
                                 break;
                             case '2':
-                                getUC();
                                 manager.printEstudantesPorUC(uc,true,false);
                                 break;
                             case '3':
-                                getUC();
                                 manager.printEstudantesPorUC(uc,false,true);
                                 break;
                             case '4':
-                                getUC();
-                                cin.clear();
                                 manager.printEstudantesPorUC(uc,false,false);
                                 break;
                             case 'b' :
