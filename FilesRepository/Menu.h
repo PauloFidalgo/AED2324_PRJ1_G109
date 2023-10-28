@@ -17,7 +17,7 @@ private:
     std:: thread timeThread;
     bool exitTimeThread;
     Manager manager;
-
+    int estudante2;
 
 
     char userInput;
@@ -36,11 +36,14 @@ public:
     void menuOrdenacaoTotal();
     void menuOrdenacaoParcial();
     void menuListagens();
+    void menuOpcoesPedidos();
     void createTable();
     void printTableTurma();
     void printTableUC();
     void iniciar();
     void updateTime();
+    void getFirstStudent();
+    void getSecondStudent();
 
     char getUserInput();
     int getStudentNumber();

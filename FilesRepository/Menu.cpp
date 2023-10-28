@@ -51,15 +51,15 @@ int Menu::getStudentNumber() {
     while (true) {
         try {
             cout << "Numero Estudante: ";
-            cin >> numero_estudante;
+            cin >> this->numero_estudante;
 
-            if (to_string(numero_estudante).length() == 9) {
-                while (!manager.estudanteValido(numero_estudante)) {
+            if (to_string(this->numero_estudante).length() == 9) {
+                while (!manager.estudanteValido(this->numero_estudante)) {
                     cout << "Aluno não encontrado! " << endl;
                     cout << "Numero do aluno: ";
-                    cin >> numero_estudante;
+                    cin >> this->numero_estudante;
                 }
-                return numero_estudante;
+                return this->numero_estudante;
             } else {
                 cout << "Número deve ter 9 dígitos. Tente novamente." << endl;
                 continue;
@@ -134,6 +134,14 @@ int Menu::getAno(){
         }
 
     }
+}
+void Menu::getFirstStudent(){
+        cout << "Estudante 1: ";
+        cin >> this->numero_estudante;
+}
+void Menu::getSecondStudent(){
+        cout << "Estudante 2: ";
+        cin >> this->estudante2;
 }
 
 void Menu::createTable() {
@@ -227,7 +235,7 @@ void Menu::menuListagens(){
     cout << "|                                   5 - Estudantes em pelo menos N ucs                                 |" << endl;
     cout << "|                                   6 -                                                                |" << endl;
     cout << "|                                                                                                      |" << endl;
-    cout << "|                                                                                                      |" << endl;
+    cout << "|   Q - Exit                                                                                           |" << endl;
     cout << "--------------------------------------------------------------------------------------------------------" << endl;
 
     getUserInput();
@@ -246,7 +254,7 @@ void Menu::menuOrdenacaoTotal() {
     cout << "|                                                                                                      |" << endl;
     cout << "|                                                                                                      |" << endl;
     cout << "|                                                                                                      |" << endl;
-    cout << "|                                                                                                      |" << endl;
+    cout << "|  Q - Exit                                                                                            |" << endl;
     cout << "--------------------------------------------------------------------------------------------------------" << endl;
 
     getUserInput();
@@ -266,12 +274,29 @@ void Menu::menuOrdenacaoParcial(){
     cout << "|                                                                                                      |" << endl;
     cout << "|                                                                                                      |" << endl;
     cout << "|                                                                                                      |" << endl;
-    cout << "|                                                                                                      |" << endl;
+    cout << "|  Q - Exit                                                                                            |" << endl;
     cout << "--------------------------------------------------------------------------------------------------------" << endl;
 
     getUserInput();
 }
 
+void Menu::menuOpcoesPedidos(){
+    cout << "________________________________________________________________________________________________________" <<endl;
+    cout << "|  Opçoes pedidos                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                            1 - Troca hórario UC                                      |" << endl;
+    cout << "|                                            2 - Adicionar UC                                          |" << endl;
+    cout << "|                                            3 - Remover UC                                            |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|   Q - Exit                                                                                           |" << endl;
+    cout << "--------------------------------------------------------------------------------------------------------" << endl;
+
+    getUserInput();
+}
 void Menu::iniciar() {
 
     bool exitMenu = false;
@@ -393,8 +418,7 @@ void Menu::iniciar() {
 
                     case '5' : // estudante em pelo menos n Ucs
                         break;
-                    case '6' : // ucs com mais estudantes
-                        break;
+
                     case 'b':
                         showMainMenu = true;
                         cout << setw(0);
@@ -404,6 +428,7 @@ void Menu::iniciar() {
                         exitMenu = true;
                         break;
 
+
                     default:
                         cout << "Opção inválida. Tente novamente." << endl;
                         cin.clear();  // Clear the fail state
@@ -411,10 +436,27 @@ void Menu::iniciar() {
                         showMainMenu = true; // Display the menu again
                 }
                 break;
+            case '6' : // Fazer pedidos
+                menuOpcoesPedidos();
+                switch (userInput) {
+                    case '1':
+                        getUC();
+                        getFirstStudent();
+                        getSecondStudent();
+                        while (!manager.inputToPedido(this->uc, this->numero_estudante,"H",this->estudante2)){
+                            getUC();
+                            getFirstStudent();
+                            getSecondStudent();
+                        }
+                        break;
+                    case '2':
+                        break;
+                    case '3':
+                        break;
+                }
+                break;
             default:
                 cout<< "Escolha uma opção valdia 1 "<<endl;
-
-
         }
     }
 
