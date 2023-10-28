@@ -71,19 +71,22 @@ int Menu::getStudentNumber() {
     }
 }
 
-string Menu::getUC() {
+void Menu::getUC() {
     while (true) {
         try {
             cout << "UC: ";
-            getline(cin,uc);
+            cin >> this->uc;
+            cin.clear();
+            cin.ignore();
 
             if (uc.length() == 8) {
                 while (!manager.ucValido(uc)) {
                     cout << "UC não encontrada! " << endl;
                     cout << "UC: ";
-                    getline(cin,uc);
+                    cin >> this->uc;
+                    cin.clear();
+                    cin.ignore();
                 }
-                return uc;
             } else {
                 cout << "UC deve ter 8 dígitos. Tente novamente." << endl;
                 continue;
@@ -97,6 +100,48 @@ string Menu::getUC() {
     }
 }
 
+void  Menu::getUC_Turma(){
+
+        cout << "UC: ";
+        cin >> this->uc;
+        cin.clear();
+        cin.ignore();
+        cout << "Turma: ";
+        cin >> this->turma;
+        cout << endl;
+        cin.clear();
+        cin.ignore();
+
+
+        while(!manager.turmaValidaNaUc(this->uc,this->turma)){
+            cout << "UC: ";
+            cin >> this->uc;
+            cin.clear();
+            cin.ignore();
+            cout << "Turma: ";
+            cin >> this->turma;
+            cout << endl;
+            cin.clear();
+            cin.ignore();
+        }
+
+}
+int Menu::getAno(){
+    while(true){
+        cout << "Ano: ";
+        cin >> ano;
+
+        if (ano > 0 and ano < 3) {
+            return ano;
+        }
+        else
+        {
+            cout << "O ano deve ser maior que zero e menor que 3." << endl;
+            continue;
+        }
+
+    }
+}
 
 void Menu::createTable() {
     // preenche o cabeçalho da tabela com os dias da semana
@@ -139,7 +184,6 @@ void Menu::createTable() {
             minute = 0;
         }
     }
-
 }
 
 void Menu::updateTime() {
@@ -159,60 +203,23 @@ void Menu::menuInicial(const tm* hora) {
     cout << "_____________________________________________________________________________________________________" << endl;
     cout << "|  "<< std::setfill('0') << std::setw(2)<<hora->tm_mday<< "/" <<std::setfill('0') << std::setw(2)<< (hora->tm_mon+1) << "/" <<std::setfill('0') << std::setw(2)<<(hora->tm_year+1900)<<"                                                                             "<<std::setfill('0') << std::setw(2)<< hora->tm_hour<< ":" <<std::setfill('0') << std::setw(2)<< hora->tm_min<<"     |" << endl;
     cout << "|                                                                                                   |" << endl;
+    cout << "|  Menu Principal                                                                                   |" << endl;
     cout << "|                         Consulta                          Gestão de Horário                       |" << endl;
     cout << "|                                                                                                   |" << endl;
     cout << "|                   1 - Horário Estudante                  6 - Fazer pedido                         |" << endl;
     cout << "|                   2 - Horário UC                         7 - Executar Pedido                      |" << endl;
     cout << "|                   3 - Horário Turma                      8 - Ver histórico                        |" << endl;
     cout << "|                   4 - Listagens                          9 - Andar para trás                      |" << endl;
+    cout << "|                   5 - estatisticas                                                                |" << endl;
     cout << "|                                                                                                   |" << endl;
     cout << "|                                                                                                   |" << endl;
-    cout << "|                                                                                                   |" << endl;
-    cout << "|     Q - Exit                                                                                      |" << endl;
+    cout << "|    Q - Exit                                                                                       |" << endl;
     cout << "-----------------------------------------------------------------------------------------------------" << endl;
     cout << endl;
 
     getUserInput();
 
 }
-
-void Menu::menuOrdenacaoTotal() {
-
-    cout << "________________________________________________________________________________________________________" <<endl;
-    cout << "|                                                                                                      |" << endl;
-    cout << "|                                                                                                      |" << endl;
-    cout << "|                                                                                                      |" << endl;
-    cout << "|                                   1 - Ordenar por nº e ordem crescente                               |" << endl;
-    cout << "|                                   2 - Ordenar por nº e ordem decrescente                             |" << endl;
-    cout << "|                                   3 - Ordenar por nome e ordem crescente                             |" << endl;
-    cout << "|                                   4 - Ordenar por nome e ordem decrescente                           |" << endl;
-    cout << "|                                                                                                      |" << endl;
-    cout << "|                                                                                                      |" << endl;
-    cout << "|                                                                                                      |" << endl;
-    cout << "|                                                                                                      |" << endl;
-    cout << "--------------------------------------------------------------------------------------------------------" << endl;
-
-    getUserInput();
-
-}
-void Menu::menuOrdenacaoParcial(){
-
-    cout << "________________________________________________________________________________________________________" <<endl;
-    cout << "|  Ordenação                                                                                           |" << endl;
-    cout << "|                                                                                                      |" << endl;
-    cout << "|                                                                                                      |" << endl;
-    cout << "|                                                                                                      |" << endl;
-    cout << "|                                                                                                      |" << endl;
-    cout << "|                                            1 - Ordem crescente                                       |" << endl;
-    cout << "|                                            2 - Ordem decrescente                                     |" << endl;
-    cout << "|                                                                                                      |" << endl;
-    cout << "|                                                                                                      |" << endl;
-    cout << "|                                                                                                      |" << endl;
-    cout << "|                                                                                                      |" << endl;
-    cout << "--------------------------------------------------------------------------------------------------------" << endl;
-
-    getUserInput();
-};
 
 void Menu::menuListagens(){
 
@@ -233,6 +240,44 @@ void Menu::menuListagens(){
     getUserInput();
 }
 
+void Menu::menuOrdenacaoTotal() {
+
+    cout << "________________________________________________________________________________________________________" <<endl;
+    cout << "|  Ordenação                                                                                           |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                   1 - Ordenar por nº e ordem crescente                               |" << endl;
+    cout << "|                                   2 - Ordenar por nº e ordem decrescente                             |" << endl;
+    cout << "|                                   3 - Ordenar por nome e ordem crescente                             |" << endl;
+    cout << "|                                   4 - Ordenar por nome e ordem decrescente                           |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "--------------------------------------------------------------------------------------------------------" << endl;
+
+    getUserInput();
+
+}
+
+void Menu::menuOrdenacaoParcial(){
+
+    cout << "________________________________________________________________________________________________________" <<endl;
+    cout << "|  Ordenação                                                                                           |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                            1 - Ordem crescente                                       |" << endl;
+    cout << "|                                            2 - Ordem decrescente                                     |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "|                                                                                                      |" << endl;
+    cout << "--------------------------------------------------------------------------------------------------------" << endl;
+
+    getUserInput();
+}
 
 void Menu::iniciar() {
 
@@ -265,11 +310,105 @@ void Menu::iniciar() {
                     case '1':// turmas por uc
                         menuOrdenacaoParcial();
                         switch(userInput){
-                            case '1':
-                                cout << "0";
+                            case '1': // listagem das turmas por uc orderm crescente
                                 getUC();
-                               manager.printTurmasPorUC(uc,true);
+                                manager.printTurmasPorUC(uc,true);
+                                break;
+                            case '2': // listagem das turmas por uc orderm decrescente
+                                getUC();
+                                manager.printTurmasPorUC(uc,false);
+                                break;
+                            case 'b': // back
+                                menuListagens();
+                                break;
+                            case 'q': // fechar programa
+                                exitMenu = true;
+                                break;
                         }
+                        break;
+                    case '2': // estudantes por ano
+                        menuOrdenacaoTotal();
+                        switch(userInput){
+                            case '1':
+                                getAno();
+                                manager.printEstudantesPorAno(ano,true,true);
+                                break;
+                            case '2':
+                                getAno();
+                                manager.printEstudantesPorAno(ano,true,false);
+                                break;
+                            case '3':
+                                getAno();
+                                manager.printEstudantesPorAno(ano, false,true);
+                                break;
+                            case '4':
+                                getAno();
+                                manager.printEstudantesPorAno(ano,false,false);
+                                break;
+                            case 'b' :
+                                menuListagens();
+                                break;
+                            case 'q' :
+                                exitMenu = true;
+                                break;
+                        }
+                        break;
+                    case '3': // estudante por uc
+                        menuOrdenacaoTotal();
+                        switch(userInput){
+                            case '1':
+                                getUC();
+                                manager.printEstudantesPorUC(uc,true,true);
+                                break;
+                            case '2':
+                                getUC();
+                                manager.printEstudantesPorUC(uc,true,false);
+                                break;
+                            case '3':
+                                getUC();
+                                manager.printEstudantesPorUC(uc,false,true);
+                                break;
+                            case '4':
+                                getUC();
+                                cin.clear();
+                                manager.printEstudantesPorUC(uc,false,false);
+                                break;
+                            case 'b' :
+                                menuListagens();
+                                break;
+                            case 'q' :
+                                exitMenu = true;
+                                break;
+                        }
+                        break;
+                    case '4' : // estudante por turma por uc
+                        menuOrdenacaoTotal();
+                        getUC_Turma();
+                        switch(userInput) {
+                            case '1':
+                                manager.printEstudantesPorTurma(uc, turma, true, true);
+                                break;
+                            case '2':
+                                manager.printEstudantesPorTurma(uc, turma, true, false);
+                                break;
+                            case '3':
+                                manager.printEstudantesPorTurma(uc, turma, false, true);
+                                break;
+                            case '4':
+                                manager.printEstudantesPorTurma(uc, turma, false, false);
+                                break;
+                            case 'b':
+                                menuListagens();
+                                break;
+                            case 'q':
+                                exitMenu = true;
+                                break;
+                        }
+                        break;
+
+                    case '5' : // estudante em pelo menos n Ucs
+                        break;
+                    case '6' : // ucs com mais estudantes
                         break;
                     case 'b':
                         showMainMenu = true;
@@ -286,8 +425,9 @@ void Menu::iniciar() {
                         cin.ignore(numeric_limits<streamsize>::max(), '\n');
                         showMainMenu = true; // Display the menu again
                 }
+                break;
             default:
-                cout<< "Escolha uma opção valdia"<<endl;
+                cout<< "Escolha uma opção valdia 1 "<<endl;
 
 
         }

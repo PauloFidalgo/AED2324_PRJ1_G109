@@ -24,6 +24,8 @@ private:
     string navegar_menu;
     int numero_estudante;
     string uc;
+    string turma;
+    int ano;
 
 
 
@@ -42,7 +44,10 @@ public:
 
     char getUserInput();
     int getStudentNumber();
-    string getUC();
+    void getUC();
+    string getTurma();
+    void getUC_Turma();
+    int getAno();
 
 };
 
