@@ -34,11 +34,15 @@ private:
     set<UC> ucs;
     queue<Pedido> pedidos;
     stack<Pedido> historico;
+    set<pair<int,string>> printHist;
+    int nPedido;
 
 public:
+    Manager() {this->nPedido = 1;};
     void readFiles();
     void printStudents();
     int getPedidos() const;
+    void printHistorico() const;
     bool nUcValido(const int &n) const;
     void printUc();
     bool addPedido(Pedido pedido);

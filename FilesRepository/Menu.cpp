@@ -490,7 +490,9 @@ void Menu::iniciar() {
             case '7' : // Proximo pedido
                 manager.proximoPedido();
                 break;
-
+            case '8':
+                manager.printHistorico();
+                break;
             case '9':
                 manager.reverterPedido();
                 break;
