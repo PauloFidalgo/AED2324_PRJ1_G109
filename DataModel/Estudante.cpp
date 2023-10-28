@@ -19,15 +19,15 @@ Estudante::Estudante(const int& numero) : numero(numero) {}
 Estudante::Estudante(const int& numero, const std::string& nome, const std::set<std::pair<std::string, std::string>> &turmas, const int& ano)  : numero(numero), nome(nome), turmas(turmas), ano(ano) {}
 
 int const Estudante::getStudentNumber() const {
-    return numero;
+    return this->numero;
 }
 
 std::string const Estudante::getStudentName() const {
-    return nome;
+    return this->nome;
 }
 
 const std::set<std::pair<std::string, std::string>> Estudante::getTurmas() const {
-    return turmas;
+    return this->turmas;
 }
 
 int const Estudante::getAno() const {return ano;}
@@ -43,7 +43,10 @@ void Estudante::changeTurma(const std::string &uc, const std::string &turmaNova)
 
 const std::string Estudante::getTurma(const std::string &uc) const {
     auto it = turmas.lower_bound({uc,""});
-    std::string res = it->second;
+    std::string res;
+    if (it->first == uc) {
+        res = it->second;
+    }
     return res;
 }
 
@@ -53,7 +56,7 @@ const std::set<std::pair<std::string, std::string>> Estudante::setTurmas(std::se
 
 const bool Estudante::inscrito(std::string &uc) const {
     auto it = turmas.lower_bound({uc,""});
-    if (it != turmas.end()) {
+    if (it->first == uc) {
         return true;
     }
     return false;

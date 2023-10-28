@@ -151,7 +151,9 @@ bool Manager::trocaValida(Pedido &pedido) {
     std::string turma = estudante.getTurma(uc);
     std::string outraTurma = outro.getTurma(uc);
 
-    if (!(turma != outraTurma)) {
+    if (!turma.empty() && !outraTurma.empty()) return false;
+
+    if (turma == outraTurma) {
         // Já são de turmas iguais
         cout << "Troca inválida, já são da mesma turma" << endl;
         return false;
