@@ -9,6 +9,7 @@
 #include <iostream>
 #include "Manager.h"
 
+
 class Menu {
 private:
     time_t data = std::time(0);
@@ -28,10 +29,10 @@ private:
     int ano;
 
 
-
 public:
     Menu();
-    ~Menu(); // thread
+    ~Menu();
+    void run();// thread
     void menuInicial(const tm* hora);
     void menuOrdenacaoTotal();
     void menuOrdenacaoParcial();
@@ -43,6 +44,7 @@ public:
     void getSecondStudent();
     void getUserInput();
     void getStudentNumber();
+    void menuOpcoesTurmas(vector<string> lista);
     void getUC();
     void getNuc();
     string getTurma();

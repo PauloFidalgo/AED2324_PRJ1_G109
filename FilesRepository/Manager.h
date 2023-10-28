@@ -59,6 +59,7 @@ public:
     unordered_map<string,list<Aula>> obterHorarioEstudante(const Estudante &estudante) const;
     bool verificarAulaSobreposta(const list<Aula> &horario, const Aula &aulaNova) const;
     void adicionarUcAoEstudante(Pedido &pedido);
+    vector<string> enviaListaDeAulaPossivel(const string &uc, const int &estudante);
     void trocaTurma(const string &uc, const string& turma1, const int &numero1, const string &nome1, const string& turma2, const int &numero2, const string &nome2);
     list<Aula> obterHorarioEstudantePraticas(const Estudante &estudante) const;
     list<Aula> obterHorarioEstudantePraticasExceto(const Estudante &estudante, const string &uc) const;
@@ -67,7 +68,7 @@ public:
     Aula obterPraticaUc(const string &uc, const string &turma) const;
     void addEstudanteToUc(const string &uc, const string &turma, const int &numero, const string &nome);
     void removeEstudanteFromUc(const string &uc, const string& turma, const int &numero);
-    bool validarNovaUc(const string &uc, const Estudante &estudante);
+    bool validarNovaUc(const string &uc, const int &student);
     bool removerValida(Pedido &pedido);
     bool inputToPedido(const string& uc, const int &estudante, const string &tipo, const int outro = 0, const string &turma = "");
     void printHorario();

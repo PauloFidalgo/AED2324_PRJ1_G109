@@ -62,7 +62,6 @@ void UC::removeEstudante(const std::string &turma, const int &numero, const std:
     auto it = ucTurma.find(turma);
 
     if (it != ucTurma.end()) {
-        std::cout << turma << std::endl;
         it -> second.estudantes.remove({numero, nome});
     }
 }

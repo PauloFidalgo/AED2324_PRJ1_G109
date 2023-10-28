@@ -145,7 +145,7 @@ bool Manager::addPedido(Pedido pedido) {
             break;
         case TipoAlteracao::R: res = removerValida(pedido);
             break;
-        case TipoAlteracao::A: res = validarNovaUc(pedido.getUc(), pedido.getEstudante());
+        case TipoAlteracao::A: res = validarNovaUc(pedido.getUc(), pedido.getEstudante().getStudentNumber());
             break;
     }
     if (res) {
@@ -309,8 +309,21 @@ unordered_map<string,list<Aula>> Manager::getTurmasPossiveis(const string &uc, l
     return res;
 }
 
+vector<string> Manager::enviaListaDeAulaPossivel(const string &uc, const int &estudante) {
+    Estudante student = getEstudante(estudante);
+
+    list<Aula> praticas = obterHorarioEstudantePraticas(student);
+    unordered_map<string,list<Aula>> temp = getTurmasPossiveis(uc, praticas);
+    vector<string> res;
+    for (const auto& it : temp ) {
+        res.push_back(it.first);
+    }
+    return res;
+}
+
 // Verificar se o estudante tem possibilidade de se inscrever na nova turma
-bool Manager::validarNovaUc(const string &uc, const Estudante &estudante) {
+bool Manager::validarNovaUc(const string &uc, const int &student) {
+    auto estudante = getEstudante(student);
     if (estudante.inscrito(const_cast<string &>(uc))) {
         cout << "---------------------------------"  << endl;
         cout << "O estudante já está incrito na UC" << endl;
@@ -394,7 +407,7 @@ void Manager::proximoPedido() {
             case TipoAlteracao::H: {
                 executarPedidoTrocaHorario(pedidos.front());
                 ostringstream oss;
-                oss << "Troca de turma entre o estudante: " << pedidos.front().getEstudante().getStudentNumber() << " e o estudante: " << pedidos.front().getOutroEstudante().getStudentNumber() << " na UC " << pedidos.front().getUc() << endl;
+                oss << "Troca de turma entre o estudante " << pedidos.front().getEstudante().getStudentNumber() << " e o estudante " << pedidos.front().getOutroEstudante().getStudentNumber() << " na UC " << pedidos.front().getUc() << endl;
                 printHist.insert({this->nPedido, oss.str()});
                 this->nPedido++;
                 break;
@@ -402,7 +415,7 @@ void Manager::proximoPedido() {
             case TipoAlteracao::R: {
                 removerEstudanteDaUc(pedidos.front());
                 ostringstream oss;
-                oss << "Removeu o estudante: " << pedidos.front().getEstudante().getStudentNumber() << " da UC " << pedidos.front().getUc() << endl;
+                oss << "Removeu o estudante " << pedidos.front().getEstudante().getStudentNumber() << " da UC " << pedidos.front().getUc() << endl;
                 printHist.insert({this->nPedido, oss.str()});
                 this->nPedido++;
                 break;
@@ -410,7 +423,7 @@ void Manager::proximoPedido() {
             case TipoAlteracao::A: {
                 adicionarUcAoEstudante(pedidos.front());
                 ostringstream oss;
-                oss << "Adicionou o estudante: " << pedidos.front().getEstudante().getStudentNumber() << " da UC " << pedidos.front().getUc() << endl;
+                oss << "Adicionou o estudante " << pedidos.front().getEstudante().getStudentNumber() << " na UC " << pedidos.front().getUc() << endl;
                 printHist.insert({this->nPedido, oss.str()});
                 this->nPedido++;
                 break;
@@ -439,7 +452,7 @@ void Manager::reverterPedido() {
             case TipoAlteracao::H: {
                 executarPedidoTrocaHorario(last);
                 ostringstream oss;
-                oss << "Reverteu o Pedido: Troca de turma entre o estudante: " << last.getEstudante().getStudentNumber() << " e o estudante: " << last.getOutroEstudante().getStudentNumber() << " na UC " << last.getUc() << endl;
+                oss << "Reverteu o Pedido: Troca de turma entre o estudante " << last.getEstudante().getStudentNumber() << " e o estudante " << last.getOutroEstudante().getStudentNumber() << " na UC " << last.getUc() << endl;
                 printHist.insert({this->nPedido, oss.str()});
                 this->nPedido++;
                 break;
@@ -448,7 +461,7 @@ void Manager::reverterPedido() {
                 adicionarUcAoEstudante(last);
                 removerEstudanteDaUc(pedidos.front());
                 ostringstream oss;
-                oss << "Reverteu o Pedido: Removeu o estudante: " << last.getEstudante().getStudentNumber() << " da UC " << last.getUc() << endl;
+                oss << "Reverteu o Pedido: Removeu o estudante " << last.getEstudante().getStudentNumber() << " da UC " << last.getUc() << endl;
                 printHist.insert({this->nPedido, oss.str()});
                 this->nPedido++;
                 break;
@@ -456,7 +469,7 @@ void Manager::reverterPedido() {
             case TipoAlteracao::A: {
                 removerEstudanteDaUc(last);
                 ostringstream oss;
-                oss << "Reverteu o Pedido: Adicionou o estudante: " << last.getEstudante().getStudentNumber() << " da UC " << last.getUc() << endl;
+                oss << "Reverteu o Pedido: Adicionou o estudante " << last.getEstudante().getStudentNumber() << " da UC " << last.getUc() << endl;
                 printHist.insert({this->nPedido, oss.str()});
                 this->nPedido++;
                 break;

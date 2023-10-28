@@ -9,8 +9,6 @@
 
 using namespace std;
 Menu::Menu() {
-    // inicia a tabela com o tambho 24 linhas e 6 colunas
-    //table = std::vector<std::vector<std::string>>(24, std::vector<std::string>(6));
     Manager manager;
     this->manager = manager;
     this->manager.readFiles();
@@ -190,8 +188,6 @@ void Menu::updateTime() {
 void Menu::updatePedidos() {
     while (!exitPedidoThread) {
         pedidosAtivo = manager.getPedidos();
-
-        this_thread::sleep_for(std::chrono::seconds(1));
     }
 }
 
@@ -294,6 +290,29 @@ void Menu::menuOpcoesPedidos(){
 
     getUserInput();
 }
+
+void Menu::menuOpcoesTurmas(vector<string> lista) {
+    int i = 1;
+    int inicio = 0, fim = 0;
+    cout << "--------------------------------" << endl;
+    for (auto turma : lista) {
+        int total = 30 - (to_string(i).length() + 3 + turma.length());
+        if (total % 2 != 0) {
+            inicio = (total / 2) + 1;
+            fim = total / 2;
+
+        }
+        else {
+            inicio = total / 2;
+            fim = total / 2;
+        }
+        cout <<"|" << string(inicio, ' ') << i << " - " << turma << string(fim, ' ') << "|" << endl;
+        i++;
+    }
+    cout << "--------------------------------" << endl;
+}
+
+
 void Menu::iniciar() {
 
     bool exitMenu = false;
@@ -367,18 +386,21 @@ void Menu::iniciar() {
                         break;
                     case '3': // estudante por uc
                         menuOrdenacaoTotal();
-                        getUC();
                         switch(this->userInput){
                             case '1':
+                                getUC();
                                 manager.printEstudantesPorUC(uc,true,true);
                                 break;
                             case '2':
+                                getUC();
                                 manager.printEstudantesPorUC(uc,true,false);
                                 break;
                             case '3':
+                                getUC();
                                 manager.printEstudantesPorUC(uc,false,true);
                                 break;
                             case '4':
+                                getUC();
                                 manager.printEstudantesPorUC(uc,false,false);
                                 break;
                             case 'b' :
@@ -391,18 +413,21 @@ void Menu::iniciar() {
                         break;
                     case '4' : // estudante por turma por uc
                         menuOrdenacaoTotal();
-                        getUC_Turma();
                         switch(this->userInput) {
                             case '1':
+                                getUC_Turma();
                                 manager.printEstudantesPorTurmaNaUc(uc, turma, true, true);
                                 break;
                             case '2':
+                                getUC_Turma();
                                 manager.printEstudantesPorTurmaNaUc(uc, turma, true, false);
                                 break;
                             case '3':
+                                getUC_Turma();
                                 manager.printEstudantesPorTurmaNaUc(uc, turma, false, true);
                                 break;
                             case '4':
+                                getUC_Turma();
                                 manager.printEstudantesPorTurmaNaUc(uc, turma, false, false);
                                 break;
                             case 'b':
@@ -415,19 +440,22 @@ void Menu::iniciar() {
                         break;
 
                     case '5' :
-                        getNuc();
                         menuOrdenacaoTotal();
                         switch(this->userInput) {
                             case '1':
+                                getNuc();
                                 manager.numeroEstudantesEmPeloMenosNUCS(this->nU, true, true);
                                 break;
                             case '2':
+                                getNuc();
                                 manager.numeroEstudantesEmPeloMenosNUCS(this->nU, true, false);
                                 break;
                             case '3':
+                                getNuc();
                                 manager.numeroEstudantesEmPeloMenosNUCS(this->nU, false, true);
                                 break;
                             case '4':
+                                getNuc();
                                 manager.numeroEstudantesEmPeloMenosNUCS(this->nU, false, false);
                                 break;
                             case 'b':
@@ -472,9 +500,29 @@ void Menu::iniciar() {
                     case '2':
                         getUC();
                         getStudentNumber();
-                        while (!manager.inputToPedido(this->uc, this->numero_estudante, "A",0,"1LEIC11")) {
-                            getUC();
-                            getStudentNumber();
+                        if (manager.validarNovaUc(this->uc, this->numero_estudante)) {
+                            vector<string> turmas = manager.enviaListaDeAulaPossivel(this->uc, this->numero_estudante);
+                            menuOpcoesTurmas(turmas);
+
+                            while (true) {
+                                cout << "Escolha a turma: " << endl;
+                                string line;
+                                cin >> line;
+                                int idx;
+                                try {
+                                    idx = stoi(line);
+                                    if (idx >= 0 && idx < turmas.size()) {
+                                        string turma = turmas[idx];
+                                        manager.inputToPedido(this->uc, this->numero_estudante, "A", 0, turma);
+                                        break;
+                                    }
+                                }
+                                catch (exception e) {
+                                    cin.clear();
+                                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                                    cout << "Indique um número dentro de 0 até " << turmas.size() - 1 << endl;
+                                }
+                            }
                         }
                         break;
                     case '3':
@@ -485,6 +533,8 @@ void Menu::iniciar() {
                             getStudentNumber();
                         }
                         break;
+                    default:
+                        cout << "Opção inválida. Tente novamente." << endl;
                 }
                 break;
             case '7' : // Proximo pedido
