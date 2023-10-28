@@ -23,6 +23,7 @@ public:
     Pedido(const std::string &uc, const Estudante &estudante, const std::string &tipo, const std::string &turma = "");
     Estudante getEstudante();
     Estudante getOutroEstudante();
+    void setTurma(const std::string &turma);
     std::string getUc() const;
     std::string getTurma() const;
     TipoAlteracao getTipoAlteracao() const;

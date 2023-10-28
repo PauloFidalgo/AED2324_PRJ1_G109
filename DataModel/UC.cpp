@@ -50,7 +50,7 @@ void UC::addEstudante(const std::string &turma, const int &estudante, const std:
     auto it = ucTurma.find(turma);
 
     if (it != ucTurma.end()) {
-        it -> second.estudantes.emplace_back(estudante,nome);
+        it -> second.estudantes.push_back({estudante,nome});
     }
 }
 
@@ -58,11 +58,12 @@ std::string UC::getCodigoUc() const {
     return this->codigoUC;
 }
 
-void UC::removeEstudante(const std::string &turma, const int &numero) {
+void UC::removeEstudante(const std::string &turma, const int &numero, const std::string &nome) {
     auto it = ucTurma.find(turma);
 
     if (it != ucTurma.end()) {
-        it -> second.estudantes.remove({numero,""});
+        std::cout << turma << std::endl;
+        it -> second.estudantes.remove({numero, nome});
     }
 }
 

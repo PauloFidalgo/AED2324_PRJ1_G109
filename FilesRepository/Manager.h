@@ -38,8 +38,10 @@ private:
 public:
     void readFiles();
     void printStudents();
+    int getPedidos() const;
+    bool nUcValido(const int &n) const;
     void printUc();
-    void addPedido(Pedido pedido);
+    bool addPedido(Pedido pedido);
     void executarPedidoTrocaHorario(Pedido &pedido);
     bool estudanteValido(const int &numero) const;
     void proximoPedido();
@@ -62,7 +64,8 @@ public:
     void addEstudanteToUc(const string &uc, const string &turma, const int &numero, const string &nome);
     void removeEstudanteFromUc(const string &uc, const string& turma, const int &numero);
     bool validarNovaUc(const string &uc, const Estudante &estudante);
-    bool inputToPedido(const string& uc, const int &estudante, const string &tipo, const int &outro, const string &turma = "");
+    bool removerValida(Pedido &pedido);
+    bool inputToPedido(const string& uc, const int &estudante, const string &tipo, const int outro = 0, const string &turma = "");
     void printHorario();
     void printHorarioEstudante(int n);
     void fakeTroca();

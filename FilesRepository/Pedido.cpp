@@ -34,6 +34,10 @@ Estudante Pedido::getEstudante() {
     return this->estudante;
 }
 
+void Pedido::setTurma(const std::string &turma) {
+    this->turma = turma;
+}
+
 Estudante Pedido::getOutroEstudante() {
     return this->outroEstudante;
 }

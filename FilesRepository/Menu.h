@@ -11,19 +11,21 @@
 
 class Menu {
 private:
-    std::vector<std::vector<std::string>> table;
-    std::time_t data = std::time(0);
-    std:: tm* hora = localtime(&data);
-    std:: thread timeThread;
+    time_t data = std::time(0);
+    tm* hora = localtime(&data);
+    thread timeThread;
+    thread pedidoThread;
     bool exitTimeThread;
+    bool exitPedidoThread;
     Manager manager;
-
-
-
+    int estudante2;
+    int pedidosAtivo;
+    int nU;
     char userInput;
-    string navegar_menu;
     int numero_estudante;
     string uc;
+    string turma;
+    int ano;
 
 
 
@@ -34,16 +36,18 @@ public:
     void menuOrdenacaoTotal();
     void menuOrdenacaoParcial();
     void menuListagens();
-    void createTable();
-    void printTableTurma();
-    void printTableUC();
+    void menuOpcoesPedidos();
     void iniciar();
     void updateTime();
-
-    char getUserInput();
-    int getStudentNumber();
-    string getUC();
-
+    void updatePedidos();
+    void getSecondStudent();
+    void getUserInput();
+    void getStudentNumber();
+    void getUC();
+    void getNuc();
+    string getTurma();
+    void getUC_Turma();
+    void getAno();
 };
 
 #endif // PROJECT_MENU_H

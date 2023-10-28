@@ -8,6 +8,9 @@
 #include "string"
 #include <iostream>
 
+int Manager::getPedidos() const {
+    return this->pedidos.size();
+}
 
 void Manager::readFiles()
 {
@@ -60,7 +63,7 @@ void Manager::readFiles()
         ucs.insert(UC(lastUc,turmaUc));
     }
     catch (const ifstream::failure& e){
-        cout << "Failed to open file." << endl;
+        cout << "Falha a abrir o ficheiro" << endl;
     }
 
     iff.close();
@@ -117,23 +120,40 @@ void Manager::readFiles()
         estudantesNome.insert(Estudante(lastCode,nomeEstudante,turmas,ano));
     }
     catch (const ifstream::failure& e){
-        cout << "Failed to open file." << endl;
+        cout << "Falha a abrir o ficheiro" << endl;
     }
 
     iff.close();
 }
 
-void Manager::addPedido(Pedido pedido) {
+bool Manager::addPedido(Pedido pedido) {
     bool res = false;
     switch (pedido.getTipoAlteracao()) {
         case TipoAlteracao::H: res = trocaValida(pedido);
             break;
-        case TipoAlteracao::R: res = true;
+        case TipoAlteracao::R: res = removerValida(pedido);
             break;
         case TipoAlteracao::A: res = validarNovaUc(pedido.getUc(), pedido.getEstudante());
             break;
     }
-    if (res) pedidos.push(pedido);
+    if (res) {
+        cout << "-----------------------------------"  << endl;
+        cout << "Pedido adicionado à fila de espera" << endl;
+        cout << "-----------------------------------"  << endl;
+        pedidos.push(pedido);
+    }
+    return res;
+}
+
+bool Manager::removerValida(Pedido &pedido) {
+    Estudante estudante = pedido.getEstudante();
+    string uc = pedido.getUc();
+    if (!estudante.inscrito(uc)) {
+        cout << "O estudante não está inscrito à UC que pretende remover" << endl;
+        return false;
+    }
+    pedido.setTurma(estudante.getTurma(uc));
+    return true;
 }
 
 bool Manager::trocaValida(Pedido &pedido) {
@@ -144,18 +164,21 @@ bool Manager::trocaValida(Pedido &pedido) {
 
     if (!(estudante.inscrito(uc) && outro.inscrito(uc))) {
         // Pelo menos um dos alunos não esta inscrito na UC
+        cout << "------------------------------------------------"  << endl;
         cout << "Troca inválida, a Unidade curricular não é comum" << endl;
+        cout << "------------------------------------------------"  << endl;
         return false;
     }
 
     std::string turma = estudante.getTurma(uc);
     std::string outraTurma = outro.getTurma(uc);
 
-    if (!turma.empty() && !outraTurma.empty()) return false;
 
     if (turma == outraTurma) {
         // Já são de turmas iguais
+        cout << "-------------------------------------------"  << endl;
         cout << "Troca inválida, já são da mesma turma" << endl;
+        cout << "-------------------------------------------"  << endl;
         return false;
     }
 
@@ -166,7 +189,9 @@ bool Manager::trocaValida(Pedido &pedido) {
     Aula aulaNova = obterPraticaUc(uc,turma);
 
     if (!(verificarAulaSobreposta(horarioUm,aula) && verificarAulaSobreposta(horarioOutro, aulaNova))) {
+        cout << "-------------------------------------------"  << endl;
         cout << "Alteração inválida, aula Prática sobreposta" << endl;
+        cout << "-------------------------------------------"  << endl;
         return false;
     }
     return true;
@@ -231,7 +256,14 @@ void Manager::removerEstudanteDaUc(Pedido &pedido) {
 
     if (it != ucs.end()) {
         UC atualizada = UC(*it);
-        atualizada.removeEstudante(estudante.getTurma(uc), estudante.getStudentNumber());
+        cout << estudante.getTurma(uc) << " " << pedido.getTurma() << endl;
+        atualizada.removeEstudante(pedido.getTurma(), estudante.getStudentNumber(), estudante.getStudentName());
+        /*for (auto a: atualizada.getUcTurma()) {
+            cout << a.first << " ";
+            for (auto b : a.second.estudantes) {
+                cout << b.first << " " << b.second << endl;
+            }
+        }*/
         ucs.erase(it);
         ucs.insert(atualizada);
     }
@@ -274,8 +306,10 @@ unordered_map<string,list<Aula>> Manager::getTurmasPossiveis(const string &uc, l
 // Verificar se o estudante tem possibilidade de se inscrever na nova turma
 bool Manager::validarNovaUc(const string &uc, const Estudante &estudante) {
     if (estudante.inscrito(const_cast<string &>(uc))) {
+        cout << "---------------------------------"  << endl;
         cout << "O estudante já está incrito na UC" << endl;
-        return true;
+        cout << "---------------------------------"  << endl;
+        return false;
     }
 
 
@@ -286,24 +320,28 @@ bool Manager::validarNovaUc(const string &uc, const Estudante &estudante) {
         unordered_map<string,TurmaInfo> turmas = it->getUcTurma();
         for (const auto &t : turmas) {
             if (!(verificarAulaSobreposta(praticas, obterPraticaUc(uc,t.first)))) {
+                cout << "---------------------------------------------------------------------"  << endl;
                 cout << "Já tens o horário muito preenchido, não é possível adicionar esta UC";
+                cout << "---------------------------------------------------------------------"  << endl;
                 return false;
             }
         }
         return true;
     }
+    cout << "---------------"  << endl;
     cout << "A UC não existe" << endl;
+    cout << "---------------"  << endl;
     return false;
 }
 
 
 void Manager::trocaTurma(const string &uc, const string& turma1, const int &numero1, const string &nome1, const string& turma2, const int &numero2, const string &nome2) {
-    auto it = ucs.find(uc);
+    auto it = ucs.lower_bound(uc);
 
-    if (it != ucs.end()) {
+    if (it->getCodigoUc() == uc) {
         UC atualizada = UC(*it);
-        atualizada.removeEstudante(turma1, numero1);
-        atualizada.removeEstudante(turma2, numero2);
+        atualizada.removeEstudante(turma1, numero1,nome1);
+        atualizada.removeEstudante(turma2, numero2,nome2);
         atualizada.addEstudante(turma2, numero1, nome1);
         atualizada.addEstudante(turma1,numero2,nome2);
         ucs.erase(it);
@@ -357,6 +395,11 @@ void Manager::proximoPedido() {
         historico.push(pedidos.front());
         pedidos.pop();
     }
+    else {
+        cout << "-----------------------------"  << endl;
+        cout << "Não existem pedidos pendentes" << endl;
+        cout << "-----------------------------"  << endl;
+    }
 }
 
 
@@ -376,7 +419,11 @@ void Manager::reverterPedido() {
             case TipoAlteracao::A: removerEstudanteDaUc(last);
                 break;
         }
+        cout << "Último pedido revertido!" << endl;
         historico.pop();
+    }
+    else {
+        cout << "Não existem pedidos para reverter" << endl;
     }
 }
 
@@ -446,8 +493,8 @@ Aula Manager::obterPraticaUc(const string &uc, const string &turma) const {
 
 Estudante Manager::getEstudante(const int &numero) const {
     Estudante res;
-    auto it = estudantesNumero.lower_bound(numero);
-    if (it->getStudentNumber() == numero) {
+    auto it = estudantesNumero.find(numero);
+    if (it != estudantesNumero.end()) {
         res = *it;
     }
     return res;
@@ -468,8 +515,9 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
         auto iterator = turmaInfo.find(turma);
 
         if (iterator != turmaInfo.end()) {
-            cout << "UC: " << it->getCodigoUc() << " Turma: " << iterator->first << endl;
-            cout << "-----------------------------------"  << endl;
+            cout << "------------------------------------"  << endl;
+            cout << "UC: " << it->getCodigoUc() << " | Turma: " << iterator->first << endl;
+            cout << "------------------------------------"  << endl;
             list<pair<int,string>> studentList = iterator->second.estudantes;
 
             if (orderByNumber) studentList.sort(compareFirstElement);
@@ -511,8 +559,6 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
         auto it = ucs.find(uc);
 
         if (it != ucs.end()) {
-            cout << "Estudantes inscritos na UC: " << it->getCodigoUc() << endl;
-            cout << "-----------------------------------"  << endl;
             for (const auto& turma : it->getUcTurma()){
                 for (const auto& element : turma.second.estudantes){
                     studentList.insert(element);
@@ -521,11 +567,18 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
         }
 
         if (studentList.empty()){
-            cout << "There are no students in UC: " << uc << endl;
+            cout << "----------------------------------------"  << endl;
+            cout << "Não existem estudantes na UC: " << uc << endl;
+            cout << "----------------------------------------"  << endl;
             return;
         }
 
+        cout << "--------------------------------------"  << endl;
+        cout << "Estudantes inscritos na UC: " << it->getCodigoUc() << endl;
+        cout << "--------------------------------------"  << endl;
+
         if (ascending){
+
             for (const auto& element : studentList){
                 cout << element.first << ' ' << element.second << endl;
             }
@@ -535,14 +588,12 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
                 cout << i->first << ' ' << i->second << endl;
             }
         }
-        cout << "-----------------------------------"  << endl;
+        cout << "----------------------------------------"  << endl;
     } else {
         set<pair<int, string>, CompareBySecond> studentList;
         auto it = ucs.find(uc);
 
         if (it != ucs.end()) {
-            cout << "Estudantes inscritos na UC: " << it->getCodigoUc() << endl;
-            cout << "-----------------------------------"  << endl;
             for (const auto& turma : it->getUcTurma()){
                 for (const auto& element : turma.second.estudantes){
                     studentList.insert(element);
@@ -551,9 +602,15 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
         }
 
         if (studentList.empty()){
-            cout << "There are no students in UC: " << uc << endl;
+            cout << "----------------------------------------"  << endl;
+            cout << "Não existem estudantes na UC: " << uc << endl;
+            cout << "----------------------------------------"  << endl;
             return;
         }
+
+        cout << "--------------------------------------"  << endl;
+        cout << "Estudantes inscritos na UC: " << it->getCodigoUc() << endl;
+        cout << "--------------------------------------"  << endl;
 
         if (ascending){
             for (const auto& element : studentList){
@@ -565,16 +622,12 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
                 cout << i->first << ' ' << i->second << endl;
             }
         }
-        cout << "-----------------------------------"  << endl;
+        cout << "----------------------------------------"  << endl;
     }
 }
 
 void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, const bool &ascending) const {
-
-    if (ano < 1 or ano > 3) {
-        cout << "Ano Inválido.";
-        return;
-    }
+    cout << "-----------------------------------"  << endl;
     cout << "Estudantes do " << ano << "º ano: " << endl;
     cout << "-----------------------------------"  << endl;
     if (orderByNumber){
@@ -610,7 +663,8 @@ void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, c
 
 void Manager::printTurmasPorUC(const std::string &uc, const bool &ascending) const {
     set<string> turmas;
-    cout << "Turmas da UC: " << uc << endl;
+    cout << "-----------------------------------"  << endl;
+    cout << "     Turmas da UC: " << uc << endl;
     cout << "-----------------------------------"  << endl;
     auto it = ucs.find(uc);
 
@@ -633,11 +687,11 @@ void Manager::printTurmasPorUC(const std::string &uc, const bool &ascending) con
     cout << "-----------------------------------"  << endl;
 }
 
+bool Manager::nUcValido(const int &n) const {
+    return (n > 0 && n <= ucs.size());
+}
+
 void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& orderByNumber, const bool& ascending) const{
-    if (nUcs < 0 || nUcs > ucs.size()) {
-        cout << "Número inválido de Unidades Curriculares" << endl;
-        return;
-    }
     stringstream ss;
     list<Estudante> students;
     if (orderByNumber) {
@@ -676,31 +730,28 @@ void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& order
             }
         }
     }
-    cout << "Estão inscritos " << students.size() << " alunos em pelo menos " << nUcs << " Unidades Curriculares." << endl;
-    cout << "-----------------------------------"  << endl;
-    cout << ss.str();
-    cout << "-----------------------------------"  << endl;
-}
-
-bool Manager::inputToPedido(const string& uc, const int &estudante, const string &tipo, const int &outro, const string &turma) {
-    auto student1 = estudantesNumero.find(estudante);
-    if (student1 == estudantesNumero.end()){
-        cout << "Não existe nenhum estudante com número mecanográfico: " << estudante << '.' << endl;
-        return false;
+    if (students.size() > 0) {
+        cout << "------------------------------------------------------------------"  << endl;
+        cout << "Estão inscritos " << students.size() << " alunos em pelo menos " << nUcs << " Unidades Curriculares." << endl;
+        cout << "------------------------------------------------------------------"  << endl;
+        cout << ss.str();
+        cout << "------------------------------------------------------------------"  << endl;
+    }
+    else {
+        cout << "---------------------------------------------------------"  << endl;
+        cout << "Não existem alunos inscritos a " << nUcs << " Unidades Curriculares." << endl;
+        cout << "---------------------------------------------------------"  << endl;
     }
 
+}
+
+bool Manager::inputToPedido(const string& uc, const int &estudante, const string &tipo, const int outro, const string &turma) {
+    Estudante student1 = getEstudante(estudante);
     if (tipo == "H"){
-        auto student2 = estudantesNumero.find(outro);
-        if (student2 == estudantesNumero.end()){
-            cout << "Não existe nenhum estudante com número mecanográfico: " << estudante << '.' << endl;
-            return false;
-        }
-        addPedido(Pedido(uc,*student1,*student2));
-        return true;
+        Estudante student2 = getEstudante(outro);
+        return addPedido(Pedido(uc,student1,student2));
     }
-    addPedido(Pedido(uc,*student1,tipo,turma));
-    return true;
-}
+    return addPedido(Pedido(uc,student1,tipo,turma));
 
 bool Manager::ucValida(const string &uc) const {
     return (ucs.find(uc) != ucs.end());
@@ -710,12 +761,16 @@ bool Manager::turmaValidaNaUc(const string &uc, const string &turma) {
     auto it = ucs.find(uc);
 
     if (it == ucs.end()) {
+        cout << "---------------"  << endl;
         cout << "A UC não existe" << endl;
+        cout << "---------------"  << endl;
         return false;
     }
 
     if (!(it->verificarTurma(turma))) {
+        cout << "---------------------------"  << endl;
         cout << "A turma não existe nessa UC" << endl;
+        cout << "---------------------------"  << endl;
         return false;
     }
 
