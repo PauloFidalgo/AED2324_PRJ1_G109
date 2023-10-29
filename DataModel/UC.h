@@ -7,6 +7,7 @@
 #include <string>
 #include <unordered_map>
 #include <list>
+#include <vector>
 
 #include "Aula.h"
 
@@ -31,6 +32,7 @@ public:
     void addEstudante(const std::string &turma, const int &estudante,const std::string &nome);
     void removeEstudante(const std::string &turma, const int &numero, const std::string &nome);
     std::list<Aula> getAulasTurma(const std::string &turma) const;
+    std::vector<std::pair<std::string,std::pair<std::string,Aula>>> getAulasUc() const;
     std::string getCodigoUc() const;
     Aula getPratica(const std::string &turma) const;
 

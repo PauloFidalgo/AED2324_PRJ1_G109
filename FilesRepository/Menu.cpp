@@ -344,17 +344,17 @@ void Menu::iniciar() {
         switch (this->userInput) {
             case '1': // Hórario da Estudante
                 getStudentNumber();
-                cout << endl << "O hórario do estudante é o seguinte : "<< endl;
+                cout << endl << "O hórario do Estudante " << this->numero_estudante << " é o seguinte : "<< endl;
                 manager.inputToHorario('E',"","",this->numero_estudante);
                 break;
             case '2': // Horário por UC
                 getUC();
-                cout << endl << " O hórario da uc é o seguinte: " << endl;
+                cout << endl << " O hórario da UC " << this->uc <<" é o seguinte: " << endl;
                 manager.inputToHorario('U',this->uc,"",0);
                 break;
             case '3': // Hórario por turma
                 getTurma();
-                cout << endl << "O hórario da turma é o seguinte: " << endl;
+                cout << endl << "O hórario da Turma " << this->turma <<  " é o seguinte: " << endl;
                 manager.inputToHorario('T', "", this->turma, 0);
                 break;
             case '4': // Listagens
@@ -529,7 +529,7 @@ void Menu::iniciar() {
                                 int idx;
                                 try {
                                     idx = stoi(line);
-                                    if (idx >= 0 && idx < turmas.size()) {
+                                    if (idx >= 0 && idx <= turmas.size()) {
                                         string turma = turmas[idx];
                                         manager.inputToPedido(this->uc, this->numero_estudante, "A", 0, turma);
                                         break;

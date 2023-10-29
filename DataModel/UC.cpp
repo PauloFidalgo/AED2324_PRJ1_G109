@@ -46,6 +46,16 @@ Aula UC::getPratica(const std::string &turma) const {
     return res;
 }
 
+std::vector<std::pair<std::string,std::pair<std::string,Aula>>> UC::getAulasUc() const {
+    std::vector<std::pair<std::string,std::pair<std::string,Aula>>> res;
+    for (const auto& turma : ucTurma) {
+        for (const auto& aula : turma.second.aulas) {
+            res.push_back({codigoUC, {turma.first, aula}});
+        }
+    }
+    return res;
+}
+
 std::list<Aula> UC::getAulasTurma(const std::string &turma) const {
     auto it = ucTurma.find(turma);
     std::list<Aula> res;
