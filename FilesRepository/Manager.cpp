@@ -1181,3 +1181,112 @@ void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) const
 
     }
 }
+
+void Manager::printInfoEstudante(const int &numero, const bool &orderByFirst ,const bool& ascending) const {
+    Estudante estudante = getEstudante(numero);
+    set<pair<string,string>> lista;
+    if (estudante.getStudentNumber() != 0) {
+        lista = estudante.getTurmas();
+    }
+    // L.EIC001
+    int len, lenf;
+    auto it = lista.begin();
+    cout << "---------------------------------------------------------" << endl;
+    cout << "|                                  |    UC    |  Turma  |" << endl;
+    for (int i = 0; i < lista.size() || i < 3; i++){
+        if (i == 0){
+            len = (10 - it->first.length()) / 2;
+            lenf = (10 - it->first.length()) % 2 == 0 ? len : len + 1;
+            cout << "| Nome: " << estudante.getStudentName() << string(27 - estudante.getStudentName().length(), ' ') << '|';
+            cout << string(len, ' ') << it -> first << string(lenf, ' ') << '|';
+            cout << ' ' << it->second << " |" << endl;
+            it++;
+        }
+        else if (i == 1){
+            if (it != lista.end()){
+                len = (10 - it->first.length()) / 2;
+                lenf = (10 - it->first.length()) % 2 == 0 ? len : len + 1;
+                cout << "| Número: " << estudante.getStudentNumber() << string(16 , ' ') << '|';
+                cout << string(len, ' ') << it -> first << string(lenf, ' ') << '|';
+                cout << ' ' << it->second << " |" << endl;
+                it++;
+            }
+            else {
+                cout << "| Número: " << estudante.getStudentNumber() << string(16, ' ')
+                     << "|          |         |" << endl;
+            }
+        }
+        else if (i == 2){
+            if (it != lista.end()){
+                len = (10 - it->first.length()) / 2;
+                lenf = (10 - it->first.length()) % 2 == 0 ? len : len + 1;
+                cout << "| Ano: " << estudante.getAno() << string(27, ' ') << '|';
+                cout << string(len, ' ') << it -> first << string(lenf, ' ') << '|';
+                cout << ' ' << it->second << " |" << endl;
+                it++;
+            }
+            else {
+                cout << "| Ano: " << estudante.getAno() << string(27, ' ')
+                     << "|          |         |" << endl;
+            }
+        }
+        else{
+            cout << "|                                  |";
+            len = (10 - it->first.length()) / 2;
+            lenf = (10 - it->first.length()) % 2 == 0 ? len : len + 1;
+            cout << string(len, ' ') << it -> first << string(lenf, ' ') << '|';
+            cout << ' ' << it->second << " |" << endl;
+            it++;
+        }
+    }
+    cout << "---------------------------------------------------------" << endl;
+}
+
+// Estatística
+/*
+void Manager::estudantesEmMaisOuMenosUc(const int &n, const bool &mais) const {
+    set<pair<int,pair<string,int>>> res;
+    for (auto est : estudantesNumero) {
+        res.insert({est.getTurmas().size(), {est.getStudentName(), est.getStudentNumber()}});
+    }
+
+}
+
+void Manager::ucComMaisOuMenosAlunos(const int &n, const bool &mais) const {
+    set<pair<int,string>> res;
+
+    for (auto uc : ucs) {
+        int alunos = 0;
+        for (auto turma : uc.getUcTurma()) {
+            alunos += uc.getNumeroAlunos(turma.first);
+        }
+        res.insert({n,uc.getCodigoUc()});
+    }
+}
+
+void Manager::turmaComMaisOuMenosAlunos(const string &uc, const bool &mais) {
+    auto it = ucs.find(uc);
+    set<pair<int,string>> res;
+
+    if (it != ucs.end()) {
+        for (auto turma : it->getUcTurma()) {
+            res.insert({it->getNumeroAlunos(turma.first), turma.first});
+        }
+    }
+}*/
+
+void Manager::printNumeroDeAlunosPorAno() const {
+    int first = 0, second = 0, third = 0;
+    for (auto estudante : estudantesNumero) {
+        int ano = estudante.getAno();
+        first += ano == 1 ? 1 : 0;
+        second += ano == 2 ? 1 : 0;
+        third += ano == 3 ? 1 : 0;
+    }
+
+    cout << "---------------------------" << endl;
+    cout << "| 1º Ano:       " << first << " Alunos |" << endl;
+    cout << "| 2º Ano:      " << second << " Alunos |" << endl;
+    cout << "| 3º Ano:      " << third << " Alunos |" << endl;
+    cout << "---------------------------" << endl;
+}

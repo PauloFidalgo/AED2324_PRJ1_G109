@@ -57,6 +57,8 @@ public:
     void numeroEstudantesEmPeloMenosNUCS(const int& nUcs, const bool& orderByNumber = true, const bool& ascending = true) const;
     void printNumeroEstudantesPorTurmaPorUc(const std::string &uc, const bool &orderByFirst = true, const bool &ascending = true) const;
     void printTurmasDoAluno(const int &numero, const bool& ascending = true) const;
+    void printNumeroDeAlunosPorAno() const;
+    void printInfoEstudante(const int &numero, const bool &orderByFirst ,const bool& ascending) const;
 
     // Getters
     int getPedidos() const;
