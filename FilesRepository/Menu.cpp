@@ -16,10 +16,12 @@ Menu::Menu() {
 }
 
 Menu::~Menu() {
-    exitTimeThread=true;
+    exitTimeThread = true;
+    exitPedidoThread =  true;
     // Join the time update thread in the destructor
-    if (timeThread.joinable()) {
+    if (timeThread.joinable() || pedidoThread.joinable()) {
         timeThread.join();
+        pedidoThread.join();
     }
 }
 
@@ -192,11 +194,10 @@ void Menu::getSecondStudent(){
 void Menu::updateTime() {
     while (!exitTimeThread) {
         // Get the current time
-        data = std::time(0);
-        hora = std::localtime(&data);
+        data = time(0);
+        hora = localtime(&data);
 
-
-        this_thread::sleep_for(std::chrono::seconds(1));
+        this_thread::sleep_for(chrono::seconds(1));
     }
 }
 

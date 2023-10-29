@@ -15,20 +15,6 @@ UC::UC(const std::string &codigoUc, const std::unordered_map<std::string, TurmaI
 
 UC::UC(const std::string &codigoUc) : codigoUC(std::move(codigoUc)) {}
 
-void UC::addTurma(const std::string &turma, const TurmaInfo &turmaInfo) {
-    this->ucTurma.insert({turma,turmaInfo});
-}
-
-void UC::addEstudantes(const std::string &turma, const std::list<std::pair<int,std::string>> &estudantes) {
-    auto it = ucTurma.find(turma);
-
-    if (it != ucTurma.end()) {
-        it -> second.estudantes = estudantes;
-    } else {
-        std::cout << "Turma não encontrada";
-    }
-}
-
 std::unordered_map<std::string, TurmaInfo> UC::getUcTurma() const {
     return this->ucTurma;
 }
@@ -56,6 +42,10 @@ std::vector<std::pair<std::string,std::pair<std::string,Aula>>> UC::getAulasUc()
     return res;
 }
 
+std::string UC::getCodigoUc() const {
+    return this->codigoUC;
+}
+
 std::list<Aula> UC::getAulasTurma(const std::string &turma) const {
     auto it = ucTurma.find(turma);
     std::list<Aula> res;
@@ -74,9 +64,6 @@ void UC::addEstudante(const std::string &turma, const int &estudante, const std:
     }
 }
 
-std::string UC::getCodigoUc() const {
-    return this->codigoUC;
-}
 
 void UC::removeEstudante(const std::string &turma, const int &numero, const std::string &nome) {
     auto it = ucTurma.find(turma);
@@ -90,6 +77,20 @@ bool UC::verificarTurma(const std::string &turma) const {
     auto it = ucTurma.find(turma);
 
     return (it != ucTurma.end());
+}
+
+void UC::addTurma(const std::string &turma, const TurmaInfo &turmaInfo) {
+    this->ucTurma.insert({turma,turmaInfo});
+}
+
+void UC::addEstudantes(const std::string &turma, const std::list<std::pair<int,std::string>> &estudantes) {
+    auto it = ucTurma.find(turma);
+
+    if (it != ucTurma.end()) {
+        it -> second.estudantes = estudantes;
+    } else {
+        std::cout << "Turma não encontrada";
+    }
 }
 
 bool UC::operator<(const UC uc) const {

@@ -32,7 +32,8 @@ private:
 public:
     Menu();
     ~Menu();
-    void run();// thread
+    void run();
+
     void menuInicial(const tm* hora);
     void menuOrdenacaoTotal();
     void menuOrdenacaoParcial();

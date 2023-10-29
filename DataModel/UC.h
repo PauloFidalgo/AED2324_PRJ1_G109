@@ -25,17 +25,22 @@ public:
     UC(const std::string &codigoUc, const std::unordered_map<std::string, TurmaInfo> &ucTurma);
     UC(const std::string &codigoUc);
     UC(const UC &other);
+
+    // Getters
     std::unordered_map<std::string, TurmaInfo> getUcTurma() const;
-    bool verificarTurma(const std::string &turma) const;
-    void addTurma(const std::string &turma, const TurmaInfo &turmaInfo);
-    void addEstudantes(const std::string &turma, const std::list<std::pair<int,std::string>> &estudantes);
-    void addEstudante(const std::string &turma, const int &estudante,const std::string &nome);
-    void removeEstudante(const std::string &turma, const int &numero, const std::string &nome);
     std::list<Aula> getAulasTurma(const std::string &turma) const;
     std::vector<std::pair<std::string,std::pair<std::string,Aula>>> getAulasUc() const;
     std::string getCodigoUc() const;
     Aula getPratica(const std::string &turma) const;
 
+    // Setters
+    void addTurma(const std::string &turma, const TurmaInfo &turmaInfo);
+    void addEstudantes(const std::string &turma, const std::list<std::pair<int,std::string>> &estudantes);
+    void addEstudante(const std::string &turma, const int &estudante,const std::string &nome);
+    void removeEstudante(const std::string &turma, const int &numero, const std::string &nome);
+
+    // Validators
+    bool verificarTurma(const std::string &turma) const;
     bool operator<(const UC uc) const;
 
 };

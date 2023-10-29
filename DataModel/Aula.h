@@ -17,15 +17,19 @@ private:
     std::string tipo;
 
 public:
+    // Constructors
     Aula();
     Aula(std::string dia, float inicio, float duracao, std::string tipo);
 
-    const void printData() const;
-    const bool sobreposta(const Aula &aula) const;
+    // Getters
     const std::string getTipo() const;
     const std::string getDia() const;
     const float getDuracao() const;
     const float getInicio() const;
+
+    // Validators
+    bool sobreposta(const Aula &aula) const;
+
 
 };
 
