@@ -47,7 +47,7 @@ public:
     void menuOpcoesTurmas(vector<string> lista);
     void getUC();
     void getNuc();
-    string getTurma();
+    void getTurma();
     void getUC_Turma();
     void getAno();
 };

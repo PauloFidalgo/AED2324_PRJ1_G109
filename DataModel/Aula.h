@@ -23,6 +23,10 @@ public:
     const void printData() const;
     const bool sobreposta(const Aula &aula) const;
     const std::string getTipo() const;
+    const std::string getDia() const;
+    const float getDuracao() const;
+    const float getInicio() const;
+
 };
 
 

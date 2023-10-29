@@ -46,6 +46,16 @@ Aula UC::getPratica(const std::string &turma) const {
     return res;
 }
 
+std::list<Aula> UC::getAulasTurma(const std::string &turma) const {
+    auto it = ucTurma.find(turma);
+    std::list<Aula> res;
+
+    if (it != ucTurma.end()) {
+        res = it->second.aulas;
+    }
+    return res;
+}
+
 void UC::addEstudante(const std::string &turma, const int &estudante, const std::string &nome) {
     auto it = ucTurma.find(turma);
 

@@ -64,6 +64,21 @@ void Menu::getStudentNumber() {
     }
 }
 
+void Menu::getTurma() {
+    while (true) {
+        cout << "Turma: ";
+        cin >> this->turma;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.clear();
+
+        if (!manager.turmaValida(this->turma)) {
+            cout << "Turma não encontrada! " << endl;
+            continue;
+        }
+        break;
+    }
+}
+
 void Menu::getUC() {
     while (true) {
         cout << "UC: ";
@@ -90,7 +105,7 @@ void Menu::getNuc() {
         try {
             this->nU = stoi(line);
             if (!manager.nUcValido(this->nU)) {
-                cout << "Número inválido, tente novamente!!" << endl;
+                cout << "Número inválido, tente novamente" << endl;
                 continue;
             }
             break;
@@ -330,14 +345,17 @@ void Menu::iniciar() {
             case '1': // Hórario da Estudante
                 getStudentNumber();
                 cout << endl << "O hórario do estudante é o seguinte : "<< endl;
+                manager.inputToHorario('E',"","",this->numero_estudante);
                 break;
             case '2': // Horário por UC
                 getUC();
                 cout << endl << " O hórario da uc é o seguinte: " << endl;
+                manager.inputToHorario('U',this->uc,"",0);
                 break;
             case '3': // Hórario por turma
-                // getTurmaNumber();
+                getTurma();
                 cout << endl << "O hórario da turma é o seguinte: " << endl;
+                manager.inputToHorario('T', "", this->turma, 0);
                 break;
             case '4': // Listagens
                 menuListagens();

@@ -9,13 +9,13 @@ int main() {
     Manager manager;
     manager.readFiles();
     cout << "---------------------------" << endl;
-    manager.printPratica(202025742);
-    cout << "---------------------------" << endl;
+    //manager.printPratica(202025742);
+    //cout << "---------------------------" << endl;
     cout << "---------------------------" << endl;
     //manager.printPratica(202029992);
     //manager.printHorarioEstudante(202025742);
     cout << "---------------------------" << endl;
-    manager.inputToPedido("L.EIC003",202025742,"H",202027867);
+    manager.inputToPedido("L.EIC003",202028717,"R");
     //manager.printPratica(202025742);
     auto estudante = manager.getEstudante(202027867);
     for (auto a : manager.obterHorarioEstudantePraticas(estudante)) {

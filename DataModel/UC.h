@@ -30,8 +30,10 @@ public:
     void addEstudantes(const std::string &turma, const std::list<std::pair<int,std::string>> &estudantes);
     void addEstudante(const std::string &turma, const int &estudante,const std::string &nome);
     void removeEstudante(const std::string &turma, const int &numero, const std::string &nome);
+    std::list<Aula> getAulasTurma(const std::string &turma) const;
     std::string getCodigoUc() const;
     Aula getPratica(const std::string &turma) const;
+
     bool operator<(const UC uc) const;
 
 };

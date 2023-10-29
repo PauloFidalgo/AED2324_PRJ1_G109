@@ -21,3 +21,14 @@ const bool Aula::sobreposta(const Aula &aula) const {
 const std::string Aula::getTipo() const {
     return this->tipo;
 }
+const std::string Aula::getDia() const {
+    return this->dia;
+}
+
+const float Aula::getInicio() const {
+    return this->inicio;
+}
+
+const float Aula::getDuracao() const {
+    return this->duracao;
+}
