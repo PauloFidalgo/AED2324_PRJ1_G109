@@ -4,33 +4,10 @@
 
 int main() {
     Menu menu;
-    menu.iniciar();
-    /*
     Manager manager;
-    manager.readFiles();
-    cout << "---------------------------" << endl;
-    //manager.printPratica(202025742);
-    //cout << "---------------------------" << endl;
-    cout << "---------------------------" << endl;
-    //manager.printPratica(202029992);
-    //manager.printHorarioEstudante(202025742);
-    cout << "---------------------------" << endl;
-    manager.inputToPedido("L.EIC003",202028717,"R");
-    //manager.printPratica(202025742);
-    auto estudante = manager.getEstudante(202027867);
-    for (auto a : manager.obterHorarioEstudantePraticas(estudante)) {
-        a.printData();
-    }
-    cout << "----------------------------" << endl;
-    for (auto b : manager.obterHorarioEstudantePraticasExceto(estudante,"L.EIC003")) {
-        b.printData();
-    }
-    cout << endl;
-    string a = "LEIC";
-    cout << estudante.inscrito(a) << endl;
-    cout << estudante.getTurma("L.EI") << endl;
-    cout << manager.verificarAulaSobreposta(manager.obterHorarioEstudantePraticas(estudante),Aula("Wednesday", 10, 2, "TP"));
-*/
+    menu.iniciar();
+    //manager.inputToHorario('U',"L.EIC002","",0);
+
     return 0;
 }
 
