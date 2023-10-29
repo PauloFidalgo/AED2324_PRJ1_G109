@@ -18,6 +18,7 @@ private:
     thread pedidoThread;
     bool exitTimeThread;
     bool exitPedidoThread;
+    bool showMainMenu;
     Manager manager;
     int estudante2;
     int pedidosAtivo;
@@ -27,7 +28,7 @@ private:
     string uc;
     string turma;
     int ano;
-
+    std::vector<std::function<void(Menu&)>> menuHistory;
 
 public:
     Menu();
@@ -35,10 +36,18 @@ public:
     void run();
 
     void menuInicial(const tm* hora);
-    void menuOrdenacaoTotal();
+    void menuOrdenacaoTotalAno();
+    void menuOrdenacaoTotalUc();
+    void menuOrdenacaoTotalTurmaUc();
+    void menuOrdenacaoTotalEstudantesNucs();
+    void menuOrdenacaoTotalNEstudantesNUcs();
     void menuOrdenacaoParcial();
     void menuListagens();
     void menuOpcoesPedidos();
+    void trocarHorarioUc();
+    void adicionarUc();
+    void horarioUc();
+    void removerUc();
     void iniciar();
     void updateTime();
     void updatePedidos();
