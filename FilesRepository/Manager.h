@@ -86,6 +86,7 @@ public:
     void printTurmasPorUC(const string& uc, const bool& ascending = true) const;
     void numeroEstudantesEmPeloMenosNUCS(const int& nUcs, const bool& orderByNumber = true, const bool& ascending = true) const;
     void printPratica(int n);
+    void printAllDays();
 };
 
 #endif //PROJECT_MANAGER_H

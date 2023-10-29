@@ -1,6 +1,3 @@
-//
-// Created by Wagner Pedrosa on 19/10/2023.
-//
 
 #include "Manager.h"
 #include "fstream"
@@ -21,6 +18,9 @@ void Manager::printHistorico() const {
             cout << line.first << " - " << line.second;
         }
         cout << "---------------------------------------------------------------------" << endl;
+    }
+    else {
+        cout << "Não existem pedidos" << endl;
     }
 }
 
@@ -878,31 +878,63 @@ const string makeHoras(const float& a){
     return result;
 }
 
-vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pair<string,Aula>>>& horario){
+
+void Manager::inputToHorario(const char &tipo, const string &uc, const string &turma, const int &numero) {
+    switch (tipo) {
+        case 'E': {
+            Estudante estudante = getEstudante(numero);
+            vector<pair<string,pair<string,Aula>>> horario = getAulas(estudante);
+            printHorario(horario);
+            break;
+        }
+        case 'U': {
+            auto it = ucs.find(uc);
+            vector<pair<string,pair<string,Aula>>> horario = it->getAulasUc();
+            printHorario(horario);
+            break;
+        }
+        case 'T': {
+            vector<pair<string,pair<string,Aula>>> horario;
+            for (const auto& unidade : ucs) {
+                list<Aula> aulasUc = unidade.getAulasTurma(turma);
+                for (const auto& aula : aulasUc) {
+                    horario.push_back({unidade.getCodigoUc(), {turma, aula}});
+                }
+            }
+            printHorario(horario);
+            break;
+        }
+    }
+}
+
+
+vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario){
     vector<pair<string,pair<string,Aula>>> sobrepostas;
     for (auto i = horario.begin(); i != horario.end(); ++i){
         auto j = i;
         j++;
-        while(j!=horario.end()){
+        while(j < horario.end() && j > horario.begin()){
+
             Aula aula1 = i->second.second;
             Aula aula2 = j->second.second;
-            if (aula1.sobreposta(aula2)){
+            if (aula1.sobreposta(aula2)) {
                 if (aula1.getTipo() != "T"  && aula2.getTipo() == "T") {
                     // se aula1 é prática e aula2 é teórica.
-                    sobrepostas.push_back({j->first,{j->second.first,j->second.second}});
+                    sobrepostas.push_back(*j);
                     horario.erase(j);
                 }
                 else if (aula2.getTipo() != "T" && aula1.getTipo() == "T"){
                     // se aula1 é prática e aula2 é teórica.
-                    sobrepostas.push_back({i->first,{i->second.first,i->second.second}});
+                    sobrepostas.push_back(*i);
                     horario.erase(i);
+
                 }
                 else {
                     // se as duas aulas são teoricas
                     int sobre1 = 0, sobre2 = 0;
                     auto k = j;
                     k++;
-                    while(k != horario.end()){
+                    while(k < horario.end() && k > horario.begin()){
                         Aula aula3 = k->second.second;
                         if (aula1.sobreposta(aula3)) sobre1++;
                         if (aula2.sobreposta(aula3)) sobre2++;
@@ -951,6 +983,7 @@ vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pai
                         }
                     }
                 }
+                j = i;
             }
             j++;
         }
@@ -958,43 +991,33 @@ vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pai
     return sobrepostas;
 }
 
-void Manager::inputToHorario(const char &tipo, const string &uc, const string &turma, const int &numero) {
-    switch (tipo) {
-        case 'E': {
-            Estudante estudante = getEstudante(numero);
-            vector<pair<string,pair<string,Aula>>> horario = getAulas(estudante);
-            printHorario(horario);
-            break;
-        }
-        case 'U': {
-            vector<pair<string,pair<string,Aula>>> horario;
-            auto it = ucs.find(uc);
-            for (auto &turma : it->getUcTurma()) {
-                for (const Aula &aula : turma.second.aulas) {
-                    horario.push_back({uc,{turma.first,aula}});
-                }
-            }
-            printHorario(horario);
-
-            break;
-        }
-        case 'T': {
-            vector<pair<string,pair<string,Aula>>> horario;
-            for (const auto& unidade : ucs) {
-                list<Aula> aulasUc = unidade.getAulasTurma(turma);
-                for (const auto& aula : aulasUc) {
-                    horario.push_back({unidade.getCodigoUc(), {turma, aula}});
-                }
-            }
-            printHorario(horario);
-
-            break;
-        }
+const string getHoras(const float& begin, const float& duration = 0.5){
+    string result ="| ";
+    if (begin < 10){
+        result+='0';
     }
+    int aux = begin;
+    if (begin-aux == 0.5) {
+        result += to_string(aux) + ":30 - ";
+    }
+    else result += to_string(aux) + ":00 - ";
+    float end = begin + duration;
+    if (end < 10){
+        result+='0';
+    }
+    aux = end;
+    if (end-aux == 0.5) {
+        result += to_string(aux) + ":30 |";
+    }
+    else result += to_string(aux) + ":00 |";
+    return result;
 }
+
+
 
 void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) const {
     vector<pair<string,pair<string,Aula>>> sobrepostas = createSobrepostas(horario);
+    unordered_map<string,string> translate = {{"Monday","Segunda"}, {"Tuesday","Terça"}, {"Wednesday","Quarta"}, {"Thursday","Quinta"}, {"Friday","Sexta"}};
     unordered_map<string,int> weekdays = {{"Monday",1}, {"Tuesday",2}, {"Wednesday",3}, {"Thursday",4}, {"Friday",5}};
     map<pair<int,int>,string> sparseMatrix;
     static int LEN = 15;
@@ -1008,22 +1031,22 @@ void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) const
         else {
             uc += (string(lenUC,' ') + elem.first + string(lenUC,' '));
         }
-        string turma = "    " + elem.second.first + "    ";
+        string turma = "    " + elem.second.first;
         if (elem.second.second.getDuracao() == 2){
             uc += '|';
-            turma += '|';
+            turma += "    |";
             sparseMatrix.insert({coordinates,"               |"});
             sparseMatrix.insert({{coordinates.first,coordinates.second+1},"               -"});
             sparseMatrix.insert({{coordinates.first,coordinates.second+2},uc});
             sparseMatrix.insert({{coordinates.first,coordinates.second+3},"               -"});
             sparseMatrix.insert({{coordinates.first,coordinates.second+4},turma});
             sparseMatrix.insert({{coordinates.first,coordinates.second+5},"               -"});
-            sparseMatrix.insert({{coordinates.first,coordinates.second+6},"               -"});
+            sparseMatrix.insert({{coordinates.first,coordinates.second+6},"               |"});
             sparseMatrix.insert({{coordinates.first,coordinates.second+7},"----------------"});
         }
-        else if (elem.second.second.getDuracao() == 1) {
+        else if (elem.second.second.getDuracao() == 1){
             uc += '|';
-            turma += '|';
+            turma += "    |";
             sparseMatrix.insert({coordinates,uc});
             sparseMatrix.insert({{coordinates.first,coordinates.second+1},"               -"});
             sparseMatrix.insert({{coordinates.first,coordinates.second+2},turma});
@@ -1031,22 +1054,23 @@ void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) const
         }
         else {
             uc += '-';
-            turma += '-';
-            sparseMatrix.insert({{coordinates},"               |"});
+            turma += "    -";
+            sparseMatrix.insert({coordinates,"               |"});
             sparseMatrix.insert({{coordinates.first,coordinates.second+1},uc});
-            sparseMatrix.insert({{coordinates.first,coordinates.second+2},"               -"});
+            sparseMatrix.insert({{coordinates.first,coordinates.second+2},"               |"});
             sparseMatrix.insert({{coordinates.first,coordinates.second+3},turma});
-            sparseMatrix.insert({{coordinates.first,coordinates.second+4},"               -"});
+            sparseMatrix.insert({{coordinates.first,coordinates.second+4},"               |"});
             sparseMatrix.insert({{coordinates.first,coordinates.second+5},"----------------"});
         }
     }
     for (int i = 0; i < 24; i++) {
         float hours = i/2.0 + 8.0;
-        sparseMatrix.insert({{0,i*2}, makeHoras(hours)});
+        sparseMatrix.insert({{0,i*2}, getHoras(hours)});
         sparseMatrix.insert({{0,i*2+1}, "-----------------"});
     }
+    cout << endl;
     cout << "-------------------------------------------------------------------------------------------------" << endl;
-    cout << "|     Hours     |    Monday     |    Tuesday    |   Wednesday   |   Thursday    |    Friday     |" << endl;
+    cout << "|     Horas     |    Segunda    |     Terça     |    Quarta     |    Quinta     |    Sexta      |" << endl;
     cout << "-------------------------------------------------------------------------------------------------" << endl;
     for (int y = 0; y < 48; y++) {
         for (int x = 0; x < 6; x++) {
@@ -1059,10 +1083,34 @@ void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) const
                 cout << aux;
             }
         }
-        cout << endl;
+        cout << endl; // 16-5
+    }
+
+    if (sobrepostas.empty()) return;
+    cout << endl << endl << endl; //L.EIC001
+    cout << "-------------------------------------------------------------" << endl;
+    cout << "|                     Aulas Sobrepostas                     |" << endl;
+    cout << "-------------------------------------------------------------" << endl;
+    cout << "| Unidade Curricular |   Turma   |   Dia    |    Horário    |" << endl;
+
+    cout << "-------------------------------------------------------------" << endl;
+    for(const auto& sobreposta : sobrepostas){
+        int lenT = sobreposta.second.second.getTipo().length();
+        int totalUC = lenT + 3 + sobreposta.first.length();
+        int lenUC = (20 - totalUC) / 2;
+        int lenUCfim = (20 - totalUC) % 2 == 0 ? lenUC : lenUC + 1;
+        int total = (translate[sobreposta.second.second.getDia()] == "Terça") ? 5 : translate[sobreposta.second.second.getDia()].length();
+        int lenDia = (10 - total) / 2;
+        int lenDiaFim = ((10 - total) % 2 == 0) ? lenDia : lenDia + 1;
+        int lenTurma = (11 - sobreposta.second.first.length()) / 2;
+        cout << '|' << string(lenUC,' ') << sobreposta.first << " (" << sobreposta.second.second.getTipo() << ")" << string(lenUCfim,' ')
+             << '|' << string(lenTurma, ' ') << sobreposta.second.first <<  string(lenTurma, ' ')
+             << '|' << string(lenDia,' ') << translate[sobreposta.second.second.getDia()] << string(lenDiaFim,' ')
+             << getHoras(sobreposta.second.second.getInicio(),sobreposta.second.second.getDuracao()) << endl
+             << "-------------------------------------------------------------" << endl;;
+
     }
 }
-
 // ------------------------------------------------------------------------------------------------
 
 void Manager::printStudents() {
@@ -1137,6 +1185,18 @@ void Manager::printPratica(int n) {
         t.printData();
     }
 }
+
+void Manager::printAllDays() {
+    for (auto uc : ucs) {
+        for (auto turma : uc.getUcTurma()) {
+            for (auto aula : turma.second.aulas) {
+                cout << aula.getDia() << endl;
+            }
+        }
+    }
+}
+
+
 /*
 void Manager::fakeTroca() {
     int numero1 = 202025232;
