@@ -9,6 +9,7 @@
 #include <list>
 #include <vector>
 
+
 #include "Aula.h"
 
 struct TurmaInfo {
@@ -32,6 +33,8 @@ public:
     std::vector<std::pair<std::string,std::pair<std::string,Aula>>> getAulasUc() const;
     std::string getCodigoUc() const;
     Aula getPratica(const std::string &turma) const;
+    int getNumeroAlunos(const std::string &turma) const;
+    int getMinimum() const;
 
     // Setters
     void addTurma(const std::string &turma, const TurmaInfo &turmaInfo);
@@ -41,6 +44,7 @@ public:
 
     // Validators
     bool verificarTurma(const std::string &turma) const;
+    bool checkBalance(const std::string &turma) const;
     bool operator<(const UC uc) const;
 
 };

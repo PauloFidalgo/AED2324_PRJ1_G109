@@ -1,17 +1,16 @@
 
 
 Construir menu com opções:
-    - Obter Horário para um determinado Estudante;
-    - Obter Turma de um estudante;
-    - Obter Horário de uma UC;
-    - Obter Horário para uma Turma;
-    - Listar alunos por Turma;
-    - Listar alunos por ano curricular;
-    - Listar alunos por UC;
-    - Obter turmas por UC;
-    - Pedir trocas diretas de UC's;
-    - Inscrição de nova UC (com compatibilidade de horário);
-    - Anular uma UC e (atualizar horário);
-    - Obter o ano curricular de um aluno;
-    - Trocar uma UC com horário compatível (anular + inscrever);
-    - Consultar o número de estudantes em pelo menos n UC's;
+    - Obter informação completa aluno (numero)
+    - Com nome listar alunos; input (nome) -> print Numero, nome, ano, turmas
+    - Obter o ano curricular de um aluno; input (numero)
+    - Estatisticas:
+        - Uc com mais alunos
+        - Uc com menos alunos
+        - Turmas com mais alunos (na uc)
+        - Turmas com menos alunos (na uc)
+        - Ano com mais alunos
+        - Ano com menos alunos
+        - Alunos com mais UC's
+        - Alunos com menos UC'S
+

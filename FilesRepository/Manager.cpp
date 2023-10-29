@@ -298,11 +298,14 @@ unordered_map<string,list<Aula>> Manager::getTurmasPossiveis(const string &uc, l
 
     if (it != ucs.end()) {
         unordered_map<string,TurmaInfo> turmas = it->getUcTurma();
+
         for (const auto& t : turmas) {
             Aula pratica = obterPraticaUc(uc, t.first);
             if (verificarAulaSobreposta(horarioPraticas,pratica)) {
                 TurmaInfo info = obterInfoUc(uc,t.first);
-                res.insert({t.first, info.aulas});
+                if (info.estudantes.size() < 30 && it->checkBalance(t.first)) {
+                    res.insert({t.first, info.aulas});
+                }
             }
         }
     }
@@ -331,6 +334,12 @@ bool Manager::validarNovaUc(const string &uc, const int &student) {
         return false;
     }
 
+    if (estudante.getTurmas().size() >= 7) {
+        cout << "----------------------------------------------------------" << endl;
+        cout << "O estudante já está incrito a muitas Unidades Curriculares" << endl;
+        cout << "----------------------------------------------------------" << endl;
+        return false;
+    }
 
     auto it = ucs.find(uc);
     list<Aula> praticas = obterHorarioEstudantePraticas(estudante);
@@ -338,14 +347,12 @@ bool Manager::validarNovaUc(const string &uc, const int &student) {
     if (it != ucs.end()) {
         unordered_map<string,TurmaInfo> turmas = it->getUcTurma();
         for (const auto &t : turmas) {
-            if (!(verificarAulaSobreposta(praticas, obterPraticaUc(uc,t.first)))) {
-                cout << "---------------------------------------------------------------------"  << endl;
-                cout << "Já tens o horário muito preenchido, não é possível adicionar esta UC";
-                cout << "---------------------------------------------------------------------"  << endl;
-                return false;
+            if ((verificarAulaSobreposta(praticas, obterPraticaUc(uc,t.first)))) {
+                return true;
             }
         }
-        return true;
+        cout << "O estudante não tem compatibilidade de horário" << endl;
+        return false;
     }
     cout << "---------------"  << endl;
     cout << "A UC não existe" << endl;
@@ -594,6 +601,40 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
     }
 }
 
+void Manager::printNumeroEstudantesPorTurmaPorUc(const std::string &uc, const bool &orderByFirst , const bool &ascending) const {
+    vector<pair<string,int>> turmas;
+    cout << "-----------------------------------"  << endl;
+    cout << "     Estudantes na UC: " << uc << endl;
+    cout << "-----------------------------------"  << endl;
+    auto it = ucs.find(uc);
+
+    if (it != ucs.end()) {
+        for (const auto& element : it->getUcTurma()){
+            turmas.push_back({element.first, it->getNumeroAlunos(element.first)});
+        }
+    }
+
+    if (orderByFirst) {
+        sort(turmas.begin(), turmas.end(), [] (pair<string,int> first, pair<string,int> second) {return first.first < second.first;});
+    }
+    else {
+        sort(turmas.begin(), turmas.end(), [] (pair<string,int> first, pair<string,int> second) {return first.second < second.second;});
+    }
+
+    if (ascending) {
+        for (const auto& elem : turmas) {
+            cout << elem.first << " Nº: " << elem.second << endl;
+        }
+    }
+    else {
+        for (auto it = turmas.rbegin(); it != turmas.rend(); it++) {
+            cout << it->first << " Nº: " << it->second << endl;
+        }
+    }
+    cout << "-----------------------------------"  << endl;
+}
+
+
 struct CompareByFirst{
     bool operator()(const pair<int, string>& a, const pair<int, string>& b) const {
         return a.first < b.first;
@@ -678,6 +719,32 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
             }
         }
         cout << "----------------------------------------"  << endl;
+    }
+}
+
+void Manager::printTurmasDoAluno(const int &numero, const bool& ascending) const {
+    Estudante estudante = getEstudante(numero);
+    set<pair<string,string>> lista;
+
+    if (estudante.getStudentNumber() != 0) {
+        lista = estudante.getTurmas();
+    }
+
+    if (ascending && !lista.empty()) {
+        cout << "------------------" << endl;
+        cout << "   UC      Turma  " << endl;
+        cout << "------------------" << endl;
+        for (const auto& element : lista) {
+            cout << element.first << "   " << element.second << endl;
+        }
+    }
+    else if (!lista.empty()) {
+        cout << "------------------" << endl;
+        cout << "   UC      Turma  " << endl;
+        cout << "------------------" << endl;
+        for (auto it = lista.rbegin(); it != lista.rend(); it++) {
+            cout << it->first << "   " << it->second << endl;
+        }
     }
 }
 
@@ -1016,20 +1083,23 @@ const string getHoras(const float& begin, const float& duration = 0.5){
 
 
 void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) const {
+
     vector<pair<string,pair<string,Aula>>> sobrepostas = createSobrepostas(horario);
     unordered_map<string,string> translate = {{"Monday","Segunda"}, {"Tuesday","Terça"}, {"Wednesday","Quarta"}, {"Thursday","Quinta"}, {"Friday","Sexta"}};
     unordered_map<string,int> weekdays = {{"Monday",1}, {"Tuesday",2}, {"Wednesday",3}, {"Thursday",4}, {"Friday",5}};
     map<pair<int,int>,string> sparseMatrix;
     static int LEN = 15;
+
     for(const auto& elem : horario){
         pair<int,int> coordinates = make_pair(weekdays[elem.second.second.getDia()], (elem.second.second.getInicio() - 8.0) * 4.0);
-        int lenUC = (LEN - elem.first.length()) / 2;
+        int lenTotal = elem.first.length() + elem.second.second.getTipo().length() + 3;
+        int lenUC = (LEN - lenTotal) / 2;
         string uc;
-        if ((lenUC) % 2 == 1) {
-            uc += (string(lenUC,' ') + elem.first + string(lenUC + 1,' '));
+        if ((LEN - lenTotal) % 2 == 1) {
+            uc += (string(lenUC,' ') + elem.first + " (" + elem.second.second.getTipo() + ")" + string(lenUC + 1,' '));
         }
         else {
-            uc += (string(lenUC,' ') + elem.first + string(lenUC,' '));
+            uc += (string(lenUC,' ') + elem.first + " (" + elem.second.second.getTipo() + ")" + string(lenUC,' '));
         }
         string turma = "    " + elem.second.first;
         if (elem.second.second.getDuracao() == 2){

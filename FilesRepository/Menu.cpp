@@ -66,6 +66,18 @@ void Menu::getStudentNumber() {
     }
 }
 
+void Menu::horarioTurma() {
+    getTurma();
+    cout << endl << "O horário da Turma " << this->turma << " é o seguinte: " << endl;
+    manager.inputToHorario('T', "", this->turma,0);
+}
+
+void Menu::horarioEstudante() {
+    getStudentNumber();
+    cout << endl << "O horário do Estudante " << this->numero_estudante << " é o seguinte:" << endl;
+    manager.inputToHorario('E', "", "", this->numero_estudante);
+}
+
 void Menu::horarioUc() {
     getUC();
     cout << endl << " O hórario da uc é o seguinte: " << endl;
@@ -227,26 +239,30 @@ void Menu::adicionarUc(){
     getStudentNumber();
     if (manager.validarNovaUc(this->uc, this->numero_estudante)) {
         vector<string> turmas = manager.enviaListaDeAulaPossivel(this->uc, this->numero_estudante);
-        menuOpcoesTurmas(turmas);
-
-        while (true) {
-            cout << "Escolha a turma: " << endl;
-            string line;
-            cin >> line;
-            int idx;
-            try {
-                idx = stoi(line);
-                if (idx >= 0 && idx < turmas.size()) {
-                    string turma = turmas[idx];
-                    manager.inputToPedido(this->uc, this->numero_estudante, "A", 0, turma);
-                    break;
+        if (!turmas.empty()) {
+            menuOpcoesTurmas(turmas);
+            while (true) {
+                cout << "Escolha a turma: " << endl;
+                string line;
+                cin >> line;
+                int idx;
+                try {
+                    idx = stoi(line);
+                    if (idx >= 0 && idx < turmas.size()) {
+                        string turma = turmas[idx];
+                        manager.inputToPedido(this->uc, this->numero_estudante, "A", 0, turma);
+                        break;
+                    }
+                }
+                catch (exception e) {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Indique um número dentro de 0 até " << turmas.size() - 1 << endl;
                 }
             }
-            catch (exception e) {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Indique um número dentro de 0 até " << turmas.size() - 1 << endl;
-            }
+        }
+        else {
+            cout << "Não é possível adicionar um novo aluno à UC" << endl;
         }
     }
 }
@@ -276,7 +292,7 @@ void Menu::menuInicial(const tm* hora) {
     cout << "|                   5 - Estatisticas                                                                |" << endl;
     cout << "|                                                                                                   |" << endl;
     cout << "|                                                                                                   |" << endl;
-    cout << "|    Q - Sair do programa                                                            Pedidos: " << this->pedidosAtivo << "     |" << endl;
+    cout << "|    q - Sair do programa                                                            Pedidos: " << this->pedidosAtivo << "     |" << endl;
     cout << "-----------------------------------------------------------------------------------------------------" << endl;
     cout << endl;
 
@@ -286,19 +302,19 @@ void Menu::menuInicial(const tm* hora) {
 
 void Menu::menuListagens() {
     while(true) {
-        cout<< "________________________________________________________________________________________________________"<< endl;
-        cout<< "|    Listagens                                                                                         |" << endl;
-        cout<< "|                                                                                                      |"<< endl;
-        cout<< "|                                                                                                      |"<< endl;
-        cout<< "|                                   1 - Turmas por UC                                                  |"<< endl;
-        cout<< "|                                   2 - Estudantes por ano                                             |"<< endl;
-        cout<< "|                                   3 - Estudantes por UC                                              |"<< endl;
-        cout<< "|                                   4 - Estudantes por turma                                           |"<< endl;
-        cout<< "|                                   5 - Estudantes em pelo menos N ucs                                 |"<< endl;
-        cout << "|                                                                                                      |" << endl;
-        cout << "|  B - Menu anterior                                                                                   |"<< endl;
-        cout << "|  Q - Sair do programa                                                                                |" << endl;
-        cout<< "--------------------------------------------------------------------------------------------------------"<< endl;
+        cout << "________________________________________________________________________________________________________"<< endl;
+        cout << "|    Listagens                                                                                         |" << endl;
+        cout << "|                                                                                                      |"<< endl;
+        cout << "|                                   1 - Turmas por UC                                                  |"<< endl;
+        cout << "|                                   2 - Estudantes por Ano                                             |"<< endl;
+        cout << "|                                   3 - Estudantes por UC                                              |"<< endl;
+        cout << "|                                   4 - Estudantes por Turma                                           |"<< endl;
+        cout << "|                                   5 - Estudantes em pelo menos N UC's                                |"<< endl;
+        cout << "|                                   6 - Número de Estudantes por turma numa UC                         |"<< endl;
+        cout << "|                                   7 - Turmas do Estudante                                            |" << endl;
+        cout << "|  b - Menu anterior                                                                                   |"<< endl;
+        cout << "|  q - Sair do programa                                                                                |" << endl;
+        cout << "--------------------------------------------------------------------------------------------------------"<< endl;
 
         getUserInput();
 
@@ -319,7 +335,10 @@ void Menu::menuListagens() {
                 menuOrdenacaoTotalEstudantesNucs();
                 break;
             case '6':
-                menuOrdenacaoTotalNEstudantesNUcs();
+                menuOrdenacaoEstudanteUc();
+                break;
+            case '7':
+                menuTurmasEstudante();
                 break;
             case 'b' :
                 return;
@@ -328,6 +347,95 @@ void Menu::menuListagens() {
             default:
                 cout << "Opção inválida. Escolha uma opção valida." << endl;
 
+        }
+    }
+}
+
+void Menu::menuTurmasEstudante() {
+    while(true){
+
+        cout << "________________________________________________________________________________________________________" <<endl;
+        cout << "|  Ordenação                                                                                           |" << endl;
+        cout << "|                                                                                                      |" << endl;
+        cout << "|                                                                                                      |" << endl;
+        cout << "|                                                                                                      |" << endl;
+        cout << "|                                                                                                      |" << endl;
+        cout << "|                                            1 - Ordem crescente                                       |" << endl;
+        cout << "|                                            2 - Ordem decrescente                                     |" << endl;
+        cout << "|                                                                                                      |" << endl;
+        cout << "|  m - Menu principal                                                                                  |" << endl;
+        cout << "|  b - Menu anterior                                                                                   |"<< endl;
+        cout << "|  q - Sair do programa                                                                                |" << endl;
+        cout << "--------------------------------------------------------------------------------------------------------" << endl;
+
+        getUserInput();
+        switch (userInput) {
+            case '1': // listagem das turmas por uc orderm crescente
+                getStudentNumber();
+                manager.printTurmasDoAluno(this->numero_estudante);
+                break;
+            case '2': // listagem das turmas por uc orderm decrescente
+                getStudentNumber();
+                manager.printTurmasDoAluno(this->numero_estudante, false);
+                break;
+            case 'b': // back
+                return;
+            case 'q':
+                exit(0);
+            case 'm':
+                menuInicial(hora);
+                break;
+            default:
+                cout << "Opção invalida. Escolha uma opção valida."<<endl;
+        }
+    }
+}
+
+void Menu::menuOrdenacaoEstudanteUc() {
+    while(true){
+
+        cout << "________________________________________________________________________________________________________" <<endl;
+        cout << "|  Ordenação                                                                                           |" << endl;
+        cout << "|                                                                                                      |" << endl;
+        cout << "|                                                                                                      |" << endl;
+        cout << "|                                   1 - Ordenar por Turma e ordem crescente                            |" << endl;
+        cout << "|                                   2 - Ordenar por Turma e ordem decrescente                          |" << endl;
+        cout << "|                                   3 - Ordenar por Ocupação e ordem crescente                         |" << endl;
+        cout << "|                                   4 - Ordenar por Ocupação e ordem decrescente                       |" << endl;
+        cout << "|                                                                                                      |" << endl;
+        cout << "|  m - Menu principal                                                                                  |" << endl;
+        cout << "|  b - Menu anterior                                                                                   |"<< endl;
+        cout << "|  q - Sair do programa                                                                                |" << endl;
+        cout << "--------------------------------------------------------------------------------------------------------" << endl;
+
+        getUserInput();
+
+        switch (this->userInput) {
+            case '1':
+                getUC();
+                manager.printNumeroEstudantesPorTurmaPorUc(this->uc, true, true);
+                break;
+            case '2':
+                getUC();
+                manager.printNumeroEstudantesPorTurmaPorUc(this->uc, true, false);
+                break;
+            case '3':
+                getUC();
+                manager.printNumeroEstudantesPorTurmaPorUc(this->uc, false, true);
+                break;
+            case '4':
+                getUC();
+                manager.printNumeroEstudantesPorTurmaPorUc(this->uc, false, false);
+                break;
+            case 'b' :
+                return;
+            case 'm':
+                menuInicial(hora);
+                break;
+            case 'q' :
+                exit(0);
+            default:
+                cout << "Opção invalida. Escolha uma opção valida"<<endl;
         }
     }
 }
@@ -344,9 +452,9 @@ void Menu::menuOrdenacaoTotalAno() {
         cout << "|                                   3 - Ordenar por nome e ordem crescente                             |" << endl;
         cout << "|                                   4 - Ordenar por nome e ordem decrescente                           |" << endl;
         cout << "|                                                                                                      |" << endl;
-        cout << "|  M - Menu principal                                                                                  |" << endl;
-        cout << "|  B - Menu anterior                                                                                   |"<< endl;
-        cout << "|  Q - Sair do programa                                                                                |" << endl;
+        cout << "|  m - Menu principal                                                                                  |" << endl;
+        cout << "|  b - Menu anterior                                                                                   |"<< endl;
+        cout << "|  q - Sair do programa                                                                                |" << endl;
         cout << "--------------------------------------------------------------------------------------------------------" << endl;
 
         getUserInput();
@@ -393,9 +501,9 @@ void Menu::menuOrdenacaoTotalUc() {
         cout << "|                                   3 - Ordenar por nome e ordem crescente                             |" << endl;
         cout << "|                                   4 - Ordenar por nome e ordem decrescente                           |" << endl;
         cout << "|                                                                                                      |" << endl;
-        cout << "|  M - Menu principal                                                                                  |" << endl;
-        cout << "|  B - Menu anterior                                                                                   |"<< endl;
-        cout << "|  Q - Sair do programa                                                                                |" << endl;
+        cout << "|  m - Menu principal                                                                                  |" << endl;
+        cout << "|  b - Menu anterior                                                                                   |"<< endl;
+        cout << "|  q - Sair do programa                                                                                |" << endl;
         cout << "--------------------------------------------------------------------------------------------------------" << endl;
 
         getUserInput();
@@ -442,9 +550,9 @@ void Menu::menuOrdenacaoTotalTurmaUc() {
         cout << "|                                   3 - Ordenar por nome e ordem crescente                             |" << endl;
         cout << "|                                   4 - Ordenar por nome e ordem decrescente                           |" << endl;
         cout << "|                                                                                                      |" << endl;
-        cout << "|  M - Menu principal                                                                                  |" << endl;
-        cout << "|  B - Menu anterior                                                                                   |"<< endl;
-        cout << "|  Q - Sair do programa                                                                                |" << endl;
+        cout << "|  m - Menu principal                                                                                  |" << endl;
+        cout << "|  b - Menu anterior                                                                                   |"<< endl;
+        cout << "|  q - Sair do programa                                                                                |" << endl;
         cout << "--------------------------------------------------------------------------------------------------------" << endl;
 
         getUserInput();
@@ -490,9 +598,9 @@ void Menu::menuOrdenacaoTotalEstudantesNucs() {
         cout << "|                                   3 - Ordenar por nome e ordem crescente                             |" << endl;
         cout << "|                                   4 - Ordenar por nome e ordem decrescente                           |" << endl;
         cout << "|                                                                                                      |" << endl;
-        cout << "|  M - Menu principal                                                                                  |" << endl;
-        cout << "|  B - Menu anterior                                                                                   |"<< endl;
-        cout << "|  Q - Sair do programa                                                                                |" << endl;
+        cout << "|  m - Menu principal                                                                                  |" << endl;
+        cout << "|  b - Menu anterior                                                                                   |"<< endl;
+        cout << "|  q - Sair do programa                                                                                |" << endl;
         cout << "--------------------------------------------------------------------------------------------------------" << endl;
 
         getUserInput();
@@ -539,9 +647,9 @@ void Menu::menuOrdenacaoTotalNEstudantesNUcs(){
        cout << "|                                   3 - Ordenar por nome e ordem crescente                             |" << endl;
        cout << "|                                   4 - Ordenar por nome e ordem decrescente                           |" << endl;
        cout << "|                                                                                                      |" << endl;
-       cout << "|  M - Menu principal                                                                                  |" << endl;
-       cout << "|  B - Menu anterior                                                                                   |"<< endl;
-       cout << "|  Q - Sair do programa                                                                                |" << endl;
+       cout << "|  m - Menu principal                                                                                  |" << endl;
+       cout << "|  b - Menu anterior                                                                                   |"<< endl;
+       cout << "|  q - Sair do programa                                                                                |" << endl;
        cout << "--------------------------------------------------------------------------------------------------------" << endl;
 
        getUserInput();
@@ -589,9 +697,9 @@ void Menu::menuOrdenacaoParcial(){
         cout << "|                                            1 - Ordem crescente                                       |" << endl;
         cout << "|                                            2 - Ordem decrescente                                     |" << endl;
         cout << "|                                                                                                      |" << endl;
-        cout << "|  M - Menu principal                                                                                  |" << endl;
-        cout << "|  B - Menu anterior                                                                                   |"<< endl;
-        cout << "|  Q - Sair do programa                                                                                |" << endl;
+        cout << "|  m - Menu principal                                                                                  |" << endl;
+        cout << "|  b - Menu anterior                                                                                   |"<< endl;
+        cout << "|  q - Sair do programa                                                                                |" << endl;
         cout << "--------------------------------------------------------------------------------------------------------" << endl;
 
         getUserInput();
@@ -629,8 +737,8 @@ void Menu::menuOpcoesPedidos(){
         cout << "|                                            3 - Remover UC                                            |" << endl;
         cout << "|                                                                                                      |" << endl;
         cout << "|                                                                                                      |" << endl;
-        cout << "|  B - Menu anterior                                                                                   |"<< endl;
-        cout << "|  Q - Sair do programa                                                                                |" << endl;
+        cout << "|  b - Menu anterior                                                                                   |"<< endl;
+        cout << "|  q - Sair do programa                                                                                |" << endl;
         cout << "--------------------------------------------------------------------------------------------------------" << endl;
 
         getUserInput();
@@ -682,43 +790,43 @@ void Menu::iniciar() {
     timeThread = thread(&Menu::updateTime, this);
     pedidoThread = thread(&Menu::updatePedidos, this);
 
-    while(true){
+    while (true) {
 
         menuInicial(hora);
-
         switch (this->userInput) {
-            case '1': // Hórario da Estudante
-                getStudentNumber();
+            case '1': { // Hórario da Estudante
+                horarioEstudante();
                 break;
-            case '2': // Horário por UC
-                horarioUc();
+                case '2': //
+                    horarioUc();
                 break;
-            case '3': // Hórario por turma
-                getTurma();
+                case '3': // Hórario por turma
+                    horarioTurma();
                 break;
-            case '4': // Listagens
-                menuListagens();
+                case '4': // Listagens
+                    menuListagens();
                 break;
-            case '6' : // Fazer pedidos
-                menuOpcoesPedidos();
+                case '6' : // Fazer pedidos
+                    menuOpcoesPedidos();
                 break;
-            case '7' : // Proximo pedido
-                manager.proximoPedido();
+                case '7' : // Proximo pedido
+                    manager.proximoPedido();
                 break;
-            case '8': // Ver historico
-                manager.printHistorico();
+                case '8': // Ver historico
+                    manager.printHistorico();
                 break;
-            case '9': // andar para tras
-                manager.reverterPedido();
+                case '9': // andar para tras
+                    manager.reverterPedido();
                 break;
-            case 'q':
-                cout << "fechando o programa..."<< endl;
+                case 'q':
+                    cout << "Fechando o programa" << endl;
                 exit(0);
-            default:
-                cout<< "Escolha uma opção válida"<<endl;
+                default:
+                    cout << "Escolha uma opção válida" << endl;
 
 
+            }
         }
     }
-}
 
+}

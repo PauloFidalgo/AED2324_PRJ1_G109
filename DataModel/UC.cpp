@@ -56,6 +56,16 @@ std::list<Aula> UC::getAulasTurma(const std::string &turma) const {
     return res;
 }
 
+int UC::getNumeroAlunos(const std::string &turma) const {
+    auto it = ucTurma.find(turma);
+    int res;
+
+    if (it != ucTurma.end()) {
+        res = it->second.estudantes.size();
+    }
+    return res;
+}
+
 void UC::addEstudante(const std::string &turma, const int &estudante, const std::string &nome) {
     auto it = ucTurma.find(turma);
 
@@ -92,6 +102,35 @@ void UC::addEstudantes(const std::string &turma, const std::list<std::pair<int,s
         std::cout << "Turma não encontrada";
     }
 }
+
+int UC::getMinimum() const {
+    bool first = true;
+    int min;
+
+    for (auto t : ucTurma) {
+        if (first) {
+            min = t.second.estudantes.size();
+            first = false;
+        }
+        else {
+            if (t.second.estudantes.size() < min) {
+                min = t.second.estudantes.size();
+            }
+        }
+    }
+    return min;
+}
+
+bool UC::checkBalance(const std::string &turma) const {
+   int min = this->getMinimum();
+
+   auto it = ucTurma.find(turma);
+   if ((it->second.estudantes.size() + 1) - min > 4) {
+        return false;
+   }
+    return true;
+}
+
 
 bool UC::operator<(const UC uc) const {
     return this->codigoUC < uc.codigoUC;

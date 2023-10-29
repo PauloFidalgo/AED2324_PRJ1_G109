@@ -43,7 +43,11 @@ public:
     void menuOrdenacaoTotalNEstudantesNUcs();
     void menuOrdenacaoParcial();
     void menuListagens();
+    void menuOrdenacaoEstudanteUc();
+    void menuTurmasEstudante();
     void menuOpcoesPedidos();
+    void horarioEstudante();
+    void horarioTurma();
     void trocarHorarioUc();
     void adicionarUc();
     void horarioUc();
