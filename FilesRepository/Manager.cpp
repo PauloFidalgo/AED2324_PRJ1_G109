@@ -1471,3 +1471,13 @@ void Manager::printNumeroEstudantesDeTodasUc() const {
     cout << "----------------------------------------------------------" << endl;
     cout << endl;
 }
+
+set<pair<string,string>> Manager::enviaUCParaRemover(const int &numero) const {
+    auto estudante = estudantesNumero.find(numero);
+    set<pair<string, string>> res;
+
+    if (estudante != estudantesNumero.end()) {
+        res = estudante->getTurmas();
+    }
+    return res;
+}

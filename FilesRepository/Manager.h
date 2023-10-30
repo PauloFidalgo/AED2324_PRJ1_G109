@@ -60,6 +60,7 @@ public:
     void printNumeroDeAlunosPorAno() const;
     void printInfoEstudante(const int &numero) const;
     void printNumeroEstudantesDeTodasUc() const;
+    set<pair<string,string>> enviaUCParaRemover(const int &numero) const;
 
     // Getters
     int getPedidos() const;
