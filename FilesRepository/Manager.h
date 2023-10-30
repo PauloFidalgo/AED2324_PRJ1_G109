@@ -58,7 +58,7 @@ public:
     void printNumeroEstudantesPorTurmaPorUc(const std::string &uc, const bool &orderByFirst = true, const bool &ascending = true) const;
     void printTurmasDoAluno(const int &numero, const bool& ascending = true) const;
     void printNumeroDeAlunosPorAno() const;
-    void printInfoEstudante(const int &numero, const bool &orderByFirst ,const bool& ascending) const;
+    void printInfoEstudante(const int &numero) const;
 
     // Getters
     int getPedidos() const;
@@ -71,6 +71,7 @@ public:
     Aula obterPraticaUc(const string &uc, const string &turma) const;
     unordered_map<string,list<Aula>> obterHorarioEstudante(const Estudante &estudante) const;
     vector<string> enviaListaDeAulaPossivel(const string &uc, const int &estudante);
+    vector<pair<int,int>> estudantesEmMaisOuMenosUc(const int &n, const bool &mais) const;
 
     // Validators
     bool nUcValido(const int &n) const;
