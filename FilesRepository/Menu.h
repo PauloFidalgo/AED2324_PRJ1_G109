@@ -9,6 +9,36 @@
 #include <iostream>
 #include "Manager.h"
 
+enum Tipo {
+    menuAnoUc,
+    menuAnoTurma,
+    menuAnoTurmaUc,
+    menuEstudantesPorAno,
+    menuEstudantesPorUc,
+    numeroDeEstudantesPorUc,
+    printTurmasPorUC,
+};
+
+enum OrdenacaoParcial {
+    pesquisaEstudantePorNome,
+    printTurmasPorUc,
+};
+
+enum ListagemUc {
+    turma,
+    uc,
+    numeroUc,
+    printTurmas,
+};
+
+enum OrdenacaoTotal {
+    estudantesPorAno,
+    estudantesPorUc,
+    estudantesPorTurmaPorUc,
+    estudantesNucs,
+    numeroEstuntesPorTurmaPorUc,
+    estudantesPorTurmaNaUc,
+};
 
 class Menu {
 private:
@@ -33,14 +63,8 @@ private:
 public:
     Menu();
     ~Menu();
-    void run();
     void vereficarHorario();
-    void escolhaUc();
     void menuInicial(const tm* hora);
-    void menuOrdenacaoTotalAno();
-    void menuOrdenacaoTotalUc();
-    void menuOrdenacaoTotalTurmaUc();
-    void menuOrdenacaoTotalEstudantesNucs();
     void menuOrdenacaoParcial();
     void menuListagens();
     void menuOrdenacaoEstudanteUc();
@@ -71,6 +95,13 @@ public:
     void menuTurmaPorAno(const int &ano);
     void menuAnoTurma();
     void menuOrdenacaoPesquisaEstudanteNome();
+    void menuListagemTurmasPorUc(const string& uc);
+    void menuListagemUc(const int &ano, ListagemUc listagem);
+    void menuOrdenaçãoListagemTurmaNaUc(const string &uc,const string &turma);
+    void menuAno(Tipo tipo);
+    void menuListagemUcGetAno();
+    void ordenaçãoParcial(OrdenacaoParcial ord, string uc = "");
+    void ordernaçãoTotal(OrdenacaoTotal ord, int ano = 1, string uc = "", string turma = "");
 };
 
 #endif // PROJECT_MENU_H

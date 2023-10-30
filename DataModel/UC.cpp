@@ -38,6 +38,15 @@ int UC::getAno() const {
     return this->ano;
 }
 
+int UC::getNumeroAlunosTotal() const {
+    int res = 0;
+
+    for (auto turma : ucTurma) {
+        res += turma.second.estudantes.size();
+    }
+    return res;
+}
+
 Aula UC::getPratica(const std::string &turma) const {
     Aula res;
     auto it = this->ucTurma.find(turma);

@@ -59,6 +59,7 @@ public:
     void printTurmasDoAluno(const int &numero, const bool& ascending = true) const;
     void printNumeroDeAlunosPorAno() const;
     void printInfoEstudante(const int &numero) const;
+    void printNumeroEstudantesDeTodasUc() const;
 
     // Getters
     int getPedidos() const;
@@ -75,6 +76,7 @@ public:
     set<string> getUcPorAno(const int &ano) const;
     set<string> getTurmasPorAno(const int &ano) const;
     void printEstudantesPorNome(string &nome, const bool &ascending) const;
+    set<string> getTurmasPorUc(const string &uc) const;
 
     // Validators
     bool nUcValido(const int &n) const;
