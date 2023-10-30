@@ -74,6 +74,7 @@ public:
     vector<pair<int,int>> estudantesEmMaisOuMenosUc(const int &n, const bool &mais) const;
     set<string> getUcPorAno(const int &ano) const;
     set<string> getTurmasPorAno(const int &ano) const;
+    void printEstudantesPorNome(string &nome, const bool &ascending) const;
 
     // Validators
     bool nUcValido(const int &n) const;

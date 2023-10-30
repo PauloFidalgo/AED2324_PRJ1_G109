@@ -5,9 +5,9 @@ Construir menu com opções:
     - Dia livre ?
     - Menu: (Wagner)
         - Organizar página inicial
-        - Meter opções turmas (fim -> mais foda) ?
-        - Meter opções ano (facil)
-        - Meter opções de ucs (pelo nome da UC)
+        - Meter opçoes nas listagens (Ano / UCs / Turmas)
+        - Pedidos Remover (Opções com as UCs do aluno pra remover)
+        - Pedidos para Adicionar (Ano / Opções para adicionar) (horario ?)
     - Estatisticas:
         - Uc com mais alunos (todas)
         - Uc com menos alunos (todas)

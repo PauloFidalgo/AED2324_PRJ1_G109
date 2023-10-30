@@ -995,8 +995,6 @@ bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pa
     auto it = ucs.find(aula.first);
 
 
-    cout << "Uc: " << aula.first << " Turma: " << aula.second.first << endl;
-    cout << it->getMedia() << endl;
     if (turno <= it->getMedia()) {
         line = "Turno 1";
     }
@@ -1392,4 +1390,47 @@ void Manager::printNumeroDeAlunosPorAno() const {
     cout << "| 2º Ano:      " << second << " Alunos |" << endl;
     cout << "| 3º Ano:      " << third << " Alunos |" << endl;
     cout << "---------------------------" << endl;
+}
+
+void Manager::printEstudantesPorNome(string& nome, const bool& ascending) const {
+    bool first = true;
+    for (auto& ch : nome) {
+        ch = first ? toupper(ch) : tolower(ch);
+        first = false;
+    }
+
+    vector<Estudante> students;
+    for (const auto& estudante: estudantesNome) {
+        if(estudante.getStudentName().find(nome) != string::npos) {
+            students.push_back(estudante);
+        }
+    }
+    if (!students.empty()) {
+        cout << "------------------------------------------------" << endl;
+        cout << "|            Nome            |  Número   | Ano |" << endl;
+        cout << "------------------------------------------------" << endl;
+
+        if (ascending) {
+            for (const auto &elem: students) {
+                int len = (28 - elem.getStudentName().length()) / 2;
+                int lenf = (28 - elem.getStudentName().length()) % 2 == 0 ? len : len + 1;
+                cout << "|" << string(len, ' ') << elem.getStudentName() << string(lenf, ' ') << "| "
+                     << elem.getStudentNumber() << " |  " << elem.getAno() << "  |" << endl;
+                cout << "------------------------------------------------" << endl;
+            }
+        } else {
+            for (auto elem = students.rbegin(); elem < students.rend(); elem++) {
+                int len = (28 - elem->getStudentName().length()) / 2;
+                int lenf = (28 - elem->getStudentName().length()) % 2 == 0 ? len : len + 1;
+                cout << "|" << string(len, ' ') << elem->getStudentName() << string(lenf, ' ') << "| "
+                     << elem->getStudentNumber() << " |  " << elem->getAno() << "  |" << endl;
+                cout << "------------------------------------------------" << endl;
+            }
+        }
+    }
+    else {
+        cout << "------------------------------------------------------" << endl;
+        cout << "Não existem estudantes com o nome " << nome << endl;
+        cout << "------------------------------------------------------" << endl;
+    }
 }
