@@ -1484,3 +1484,128 @@ set<pair<string,string>> Manager::enviaUCParaRemover(const int &numero) const {
     }
     return res;
 }
+
+set<pair<int,string>> Manager::getOcupacaoUcs() const {
+    set<pair<int,string>> allUCs;
+    for (auto uc : ucs) {
+        int alunos = 0;
+        for (auto turma: uc.getUcTurma()) {
+            alunos += uc.getNumeroAlunos(turma.first);
+        }
+        allUCs.insert({alunos, uc.getCodigoUc()});
+    }
+    return allUCs;
+}
+
+
+set<pair<int,string>> Manager::getOcupacaoTurmas(const string &uc) const {
+    auto it = ucs.find(uc);
+    set<pair<int, string>> allTurmas;
+
+    if (it != ucs.end()) {
+        for (auto turma: it->getUcTurma()) {
+            allTurmas.insert({it->getNumeroAlunos(turma.first), turma.first});
+        }
+    }
+    return allTurmas;
+}
+void Manager::printSets(int n, const bool& mais) const {
+    set<pair<int,string>> allTurmas = getOcupacaoUcs();
+
+    if (!allTurmas.empty()) {
+        float tamanho = allTurmas.rbegin()->first;
+        if (mais) {
+            auto it = allTurmas.rbegin();
+            cout << "          |" << endl;
+            while(n != 0 && it != allTurmas.rend()){
+                int len = (10 - it->second.length()) / 2;
+                int lenf = (10 - it->second.length()) % 2 == 0 ? len : len + 1;
+                if (it->first == 0){
+                    cout << "          |" << endl;
+                    cout << string(len, ' ') << it->second << string(lenf, ' ') << "|" << it->first << endl;
+                    cout << "          |" << endl;
+                    n--;
+                    it++;
+                    continue;
+                }
+                int lenBarra = (it->first / tamanho) * 80;
+                cout << string(len + lenf + it-> second.length(), ' ') << "|" << string(lenBarra, '-') << endl;
+                cout << string(len, ' ') << it->second << string(lenf, ' ') << "|" << string(lenBarra - 1, ' ') << "| " << it->first << endl;
+                cout << string(len + lenf + it-> second.length(), ' ') << "|" << string(lenBarra, '-') << endl;
+                cout << "          |" << endl;
+                n--;
+                it++;
+            }
+        }
+        else {
+            auto it = allTurmas.begin();
+            cout << "          |" << endl;
+            while(n != 0 && it != allTurmas.end()){
+                int len = (10 - it->second.length()) / 2;
+                int lenf = (10 - it->second.length()) % 2 == 0 ? len : len + 1;
+                if (it->first == 0){
+                    cout << "          |" << endl;
+                    cout << string(len, ' ') << it->second << string(lenf, ' ') << "|" << it->first << endl;
+                    cout << "          |" << endl;
+                    n--;
+                    it++;
+                    continue;
+                }
+                if (tamanho == 0) tamanho = 1.0;
+                int lenBarra = (it->first / tamanho) * 80;
+                cout << string(len + lenf + it-> second.length(), ' ') << "|" << string(lenBarra, '-') << endl;
+                cout << string(len, ' ') << it->second << string(lenf, ' ') << "|" << string(lenBarra - 1, ' ') << "| " << it->first << endl;
+                cout << string(len + lenf + it-> second.length(), ' ') << "|" << string(lenBarra, '-') << endl;
+                cout << "          |" << endl;
+                n--;
+                it++;
+            }
+        }
+    }
+
+}
+
+vector<pair<int, int>> Manager::getAlunosPorNIncscricoes() const {
+    vector<pair<int,int>> result = {{0,1}, {0,2}, {0,3}, {0,4}, {0,5}, {0,6}, {0,7}};
+    for (const auto& estudante : estudantesNumero){
+        int i = estudante.getTurmas().size();
+        result[i-1].first++;
+    }
+    return result;
+}
+
+vector<pair<int, int>> Manager::getNumeroDeAlunosPorAno() const {
+    vector<pair<int, int>> result = {{0,1}, {0,2}, {0,3}};
+    int first = 0, second = 0, third = 0;
+    for (auto estudante : estudantesNumero) {
+        int ano = estudante.getAno();
+        result[ano-1].first++;
+    }
+    return result;
+}
+
+void Manager::printVectors(vector<pair<int,int>>& res, const bool &ordered, const bool& ascending) const{
+    if (!res.empty()) {
+        cout << "       |" << endl;
+        float tamanho = -1;
+        for (const auto& it : res) {
+            if (it.first > tamanho) tamanho = it.first;
+        }
+        if (ordered) {
+            if (ascending) sort(res.begin(), res.end());
+            else sort(res.rbegin(), res.rend());
+        }
+        for (const auto& elem : res) {
+            if (elem.first == 0) {
+                cout << "         |" << endl;
+                cout << "   " << elem.second << "   | " << elem.first << endl;
+            }
+            int lenBarra = (elem.first / tamanho) * 80;
+            if (elem.first == 0){};
+            cout << "       |" << string(lenBarra, '-') << endl;
+            cout << "   " << elem.second << "   |" << string(lenBarra - 1, ' ') << "| " << elem.first << endl;
+            cout << "       |" << string(lenBarra, '-') << endl;
+            cout << "       |" << endl;
+        }
+    }
+}

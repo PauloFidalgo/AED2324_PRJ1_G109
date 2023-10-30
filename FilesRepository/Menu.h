@@ -71,6 +71,7 @@ public:
     void menuOrdenacaoEstudanteUc();
     void menuTurmasEstudante();
     void menuOpcoesPedidos();
+    void menuEstatistica();
     void horarioEstudante();
     void horarioTurma();
     void trocarHorarioUc();

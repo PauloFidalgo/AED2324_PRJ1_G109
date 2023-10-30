@@ -1113,7 +1113,7 @@ void Menu::iniciar() {
                 menuListagens();
                 break;
             case '3': // estatisticas
-                cout << " Menu estatisticas" << endl;
+                menuEstatistica();
                 break;
             case '4' : // Fazer pedidos
                 menuOpcoesPedidos();
@@ -1382,7 +1382,56 @@ void Menu::ordenaçãoParcial(OrdenacaoParcial ord, string uc) {
     }
 }
 
+void Menu::menuEstatistica() {
+    while(true){
+        cout << "________________________________________________________________________________________________________" << endl;
+        cout << "|                                                                                                      |" << endl;
+        cout << "|                                         Menu Estatística:                                            |" << endl;
+        cout << "|                                                                                                      |" << endl;
+        cout << "|                                    1 - N UC's com mais alunos                                        |"<< endl;
+        cout << "|                                    2 - N UC's com menos alunos                                       |"<< endl;
+        cout << "|                                    3 - N Turmas com mais alunos                                      |"<< endl;
+        cout << "|                                    4 - N Turmas com menos alunos                                     |"<< endl;
+        cout << "|                                    5 - Número de alunos por UC                                       |"<< endl;
+        cout << "|                                    6 - Número de alunos por ano                                      |"<< endl;
+        cout << "|                                    7 - Número de estudantes por número de UC's                       |"<< endl;
+        cout << "|                                                                                                      |"<< endl;
+        cout << "|  b - anterior                                                                                        |"<< endl;
+        cout << "|  q - sair                                                                                            |" << endl;
+        cout << "--------------------------------------------------------------------------------------------------------"<< endl;
 
+        getUserInput();
+
+        switch (this->userInput) {
+            case '1':
+
+                break;
+            case '2':
+
+                break;
+            case '3':
+
+                break;
+            case '4' :
+
+                break;
+            case '5' :
+
+                break;
+            case'6':
+                break;
+            case '7':
+                break;
+            case 'b' :
+                return;
+            case 'q':
+                exit(0);
+            default:
+                cout << "Opção inválida. Escolha uma opção valida." << endl;
+
+        }
+    }
+}
 /*
  * void Menu::menuOrdenacaoParcial(){
 
