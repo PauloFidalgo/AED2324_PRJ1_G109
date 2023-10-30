@@ -59,6 +59,8 @@ public:
     void printTurmasDoAluno(const int &numero, const bool& ascending = true) const;
     void printNumeroDeAlunosPorAno() const;
     void printInfoEstudante(const int &numero) const;
+    void printNumeroEstudantesDeTodasUc() const;
+    set<pair<string,string>> enviaUCParaRemover(const int &numero) const;
 
     // Getters
     int getPedidos() const;
@@ -75,6 +77,7 @@ public:
     set<string> getTurmasPorAno(const int &ano) const;
     vector<pair<int,int>> estudantesEmMaisOuMenosUc(const int &n, const bool &mais) const;
     void printEstudantesPorNome(string &nome, const bool &ascending) const;
+    set<string> getTurmasPorUc(const string &uc) const;
 
 
 

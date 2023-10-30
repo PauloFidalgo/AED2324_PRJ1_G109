@@ -1352,6 +1352,19 @@ vector<pair<int,int>> Manager::estudantesEmMaisOuMenosUc(const int &n, const boo
 
     return result;
 }
+
+set<string> Manager::getTurmasPorUc(const string& uc) const {
+    auto it = ucs.find(uc);
+    set<string> res;
+
+    if (it != ucs.end()) {
+        for (auto turma : it->getUcTurma()) {
+            res.insert(turma.first);
+        }
+    }
+    return res;
+}
+
 /*
 void Manager::ucComMaisOuMenosAlunos(const int &n, const bool &mais) const {
     set<pair<int,string>> res;
@@ -1435,4 +1448,38 @@ void Manager::printEstudantesPorNome(string& nome, const bool& ascending) const 
         cout << "Não existem estudantes com o nome " << nome << endl;
         cout << "------------------------------------------------------" << endl;
     }
+}
+
+void Manager::printNumeroEstudantesDeTodasUc() const {
+    string ucP = "L.EIC001";
+    string ucS = "L.EIC011";
+    string ucT = "L.EIC021";
+    cout << endl;
+    cout << "----------------------------------------------------------" << endl;
+    cout << "|      1º Ano      |      2º Ano      |      3º Ano      |" << endl;
+    cout << "----------------------------------------------------------" << endl;
+    cout << "|    UC       Nº   |    UC       Nº   |    UC       Nº   |" << endl;
+    cout << "| L.EIC001:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC011:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC021:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    ucP = "L.EIC002", ucS = "L.EIC012", ucT = "L.EIC022";
+    cout << "| L.EIC001:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC012:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC022:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    ucP = "L.EIC003", ucS = "L.EIC013", ucT = "L.EIC023";
+    cout << "| L.EIC003:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC013:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC023:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    ucP = "L.EIC004", ucS = "L.EIC014", ucT = "L.EIC024";
+    cout << "| L.EIC004:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC014:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC024:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    ucP = "L.EIC005", ucS = "L.EIC015", ucT = "L.EIC025";
+    cout << "| L.EIC005:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC015:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC025:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    ucP = "UP001";
+    cout << "| UP001:       " << ucs.find(ucP)->getNumeroAlunosTotal() << "   |                  |                  |" << endl;
+    cout << "----------------------------------------------------------" << endl;
+    cout << endl;
+}
+
+set<pair<string,string>> Manager::enviaUCParaRemover(const int &numero) const {
+    auto estudante = estudantesNumero.find(numero);
+    set<pair<string, string>> res;
+
+    if (estudante != estudantesNumero.end()) {
+        res = estudante->getTurmas();
+    }
+    return res;
 }

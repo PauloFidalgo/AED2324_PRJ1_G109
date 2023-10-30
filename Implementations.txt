@@ -1,11 +1,8 @@
 
 
 Construir menu com opções:
-    - Com nome listar alunos; input (nome) -> print Numero, nome, ano, turmas (mandela tabela 3 colunas nome numero ano)
     - Dia livre ?
     - Menu: (Wagner)
-        - Organizar página inicial
-        - Meter opçoes nas listagens (Ano / UCs / Turmas)
         - Pedidos Remover (Opções com as UCs do aluno pra remover)
         - Pedidos para Adicionar (Ano / Opções para adicionar) (horario ?)
     - Estatisticas:
