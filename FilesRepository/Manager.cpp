@@ -1312,7 +1312,7 @@ vector<pair<int,int>> Manager::estudantesEmMaisOuMenosUc(const int &n, const boo
 
     return result;
 }
-
+/*
 void Manager::ucComMaisOuMenosAlunos(const int &n, const bool &mais) const {
     set<pair<int,string>> res;
 
@@ -1335,7 +1335,7 @@ void Manager::turmaComMaisOuMenosAlunos(const string &uc, const bool &mais) {
         }
     }
 }
-
+*/
 void Manager::printNumeroDeAlunosPorAno() const {
     int first = 0, second = 0, third = 0;
     for (auto estudante : estudantesNumero) {
@@ -1350,4 +1350,45 @@ void Manager::printNumeroDeAlunosPorAno() const {
     cout << "| 2º Ano:      " << second << " Alunos |" << endl;
     cout << "| 3º Ano:      " << third << " Alunos |" << endl;
     cout << "---------------------------" << endl;
+}
+
+set<string> Manager::getUcPorAno(const int &ano) const {
+    set<string> res;
+    for (auto uc : ucs) {
+        if (uc.getAno() == ano) {
+            res.insert(uc.getCodigoUc());
+        }
+    }
+    return res;
+}
+
+set<string> Manager::getTurmasPorAno(const int &ano) const {
+    set<string> res;
+    for (auto uc : ucs) {
+        if (uc.getAno() == ano) {
+            for (auto turma : uc.getUcTurma()) {
+                res.insert(turma.first);
+            }
+        }
+    }
+    return res;
+}
+
+string Manager::ucToString(const string &uc) const {
+    if (uc == "L.EIC001") return "Álgebra Linear e Geometria Analítica";
+    if (uc == "L.EIC002") return "Análise Matemática I";
+    if (uc == "L.EIC003") return "Fundamentos da Programação";
+    if (uc == "L.EIC004") return "Fundamentos de Sistemas Computacionais";
+    if (uc == "L.EIC005") return "Matemática Discreta";
+    if (uc == "UP001") return "Projeto UP";
+    if (uc == "L.EIC011") return "Algoritmos e Estruturas de Dados";
+    if (uc == "L.EIC012") return "Bases de Dados";
+    if (uc == "L.EIC013") return "Física II";
+    if (uc == "L.EIC014") return "Laboratório de Desenho e Teste de Software";
+    if (uc == "L.EIC015") return "Sistemas Operativos";
+    if (uc == "L.EIC021") return "Fundamentos de Segurança Informática";
+    if (uc == "L.EIC022") return "Interação Pessoa Computador";
+    if (uc == "L.EIC023") return "Laboratório de Bases de Dados e Aplicações Web";
+    if (uc == "L.EIC024") return "Programação Funcional e em Lógica";
+    if (uc == "L.EIC025") return "Redes de Computadores";
 }

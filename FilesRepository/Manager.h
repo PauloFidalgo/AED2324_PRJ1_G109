@@ -71,7 +71,12 @@ public:
     Aula obterPraticaUc(const string &uc, const string &turma) const;
     unordered_map<string,list<Aula>> obterHorarioEstudante(const Estudante &estudante) const;
     vector<string> enviaListaDeAulaPossivel(const string &uc, const int &estudante);
+    set<string> getUcPorAno(const int &ano) const;
+    set<string> getTurmasPorAno(const int &ano) const;
     vector<pair<int,int>> estudantesEmMaisOuMenosUc(const int &n, const bool &mais) const;
+
+
+
 
     // Validators
     bool nUcValido(const int &n) const;
@@ -97,6 +102,7 @@ public:
     void addEstudanteToUc(const string &uc, const string &turma, const int &numero, const string &nome);
     void removeEstudanteFromUc(const string &uc, const string& turma, const int &numero);
     vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario);
+    string ucToString(const string &uc) const;
 
 
 
