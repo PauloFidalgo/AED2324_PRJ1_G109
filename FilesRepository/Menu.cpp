@@ -285,11 +285,11 @@ void Menu::menuInicial(const tm* hora) {
     cout << "|  Menu Principal                                                                                   |" << endl;
     cout << "|                         Consulta                          Gestão de Horário                       |" << endl;
     cout << "|                                                                                                   |" << endl;
-    cout << "|                   1 - Horário Estudante                  6 - Fazer pedido                         |" << endl;
-    cout << "|                   2 - Horário UC                         7 - Executar Pedido                      |" << endl;
-    cout << "|                   3 - Horário Turma                      8 - Ver histórico                        |" << endl;
-    cout << "|                   4 - Listagens                          9 - Andar para trás                      |" << endl;
-    cout << "|                   5 - Estatisticas                                                                |" << endl;
+    cout << "|                   1 - Horários                           4 - Fazer pedido                         |" << endl;
+    cout << "|                   2 - Listagens                          5 - Executar Pedido                      |" << endl;
+    cout << "|                   3 - Estatisticas                       6 - Ver histórico                        |" << endl;
+    cout << "|                                                          7 - Andar para trás                      |" << endl;
+    cout << "|                                                                                                   |" << endl;
     cout << "|                                                                                                   |" << endl;
     cout << "|                                                                                                   |" << endl;
     cout << "|    q - Sair do programa                                                            Pedidos: " << this->pedidosAtivo << "     |" << endl;
@@ -300,6 +300,238 @@ void Menu::menuInicial(const tm* hora) {
 
 }
 
+void Menu::vereficarHorario(){
+    while(true){
+        cout << "_____________________________________________________________________________________________________" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|  Verificar Horário                                                                                |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|                                       1 - Horário Estudante                                       |" << endl;
+        cout << "|                                       2 - Horário UC                                              |" << endl;
+        cout << "|                                       3 - Horário Turma                                           |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|    b - Menu anterior                                                                              |" << endl;
+        cout << "|    q - Sair do programa                                                                           |" << endl;
+        cout << "-----------------------------------------------------------------------------------------------------" << endl;
+        cout << endl;
+
+        getUserInput();
+
+        switch (this->userInput) {
+            case '1':// horário estudante
+                horarioEstudante();
+                break;
+            case '2': // horário UC
+                menuAnoUc();
+                break;
+            case '3': // horário Turma
+                cout << "horario";
+                break;
+            case 'b' :
+                return;
+            case 'q':
+                exit(0);
+            default:
+                cout << "Opção inválida. Escolha uma opção valida." << endl;
+
+        }
+    }
+
+}
+
+void Menu::menuAnoUc() {
+    while(true){
+        cout << "________________________________________________________________________________________________________"<< endl;
+        cout << "|    Escolha do Ano                                                                                    |" << endl;
+        cout << "|                                                                                                      |"<< endl;
+        cout << "|                                                                                                      |"<< endl;
+        cout << "|                                                                                                      |"<< endl;
+        cout << "|                                             1 - 1º Ano                                               |"<< endl;
+        cout << "|                                             2 - 2º Ano                                               |"<< endl;
+        cout << "|                                             3 - 3º Ano                                               |"<< endl;
+        cout << "|                                                                                                      |"<< endl;
+        cout << "|  m - Menu principal                                                                                  |" << endl;
+        cout << "|  b - Menu anterior                                                                                   |"<< endl;
+        cout << "|  q - Sair do programa                                                                                |" << endl;
+        cout << "--------------------------------------------------------------------------------------------------------"<< endl;
+
+        getUserInput();
+        switch (userInput){
+            case '1':
+                menuOpçoes1Ano();
+                break;
+            case'2':
+                menuOpçoes2Ano();
+                break;
+            case '3':
+                menuOpçoes3Ano();
+                break;
+            case 'm':
+                menuInicial(hora);
+                break;
+            case 'b' :
+                return;
+            case 'q':
+                exit(0);
+            default:
+                cout << "Opção inválida. Escolha uma opção valida." << endl;
+
+        }
+    }
+}
+void Menu::menuOpçoes1Ano() {
+    while(true){
+        cout << "________________________________________________________________________________________________________" << endl;
+        cout << "|    Escolha da UC                                                                                     |" << endl;
+        cout << "|                                                                                                      |" << endl;
+        cout << "|                                                                                                      |" << endl;
+        cout << "|                               1 - Álgebra Linear e Geometria Analítica                               |" << endl;
+        cout << "|                               2 - Análise Matemática I                                               |" << endl;
+        cout << "|                               3 - Fundamentos da Programação                                         |" << endl;
+        cout << "|                               4 - Fundamentos de Sistemas Computacionais                             |" << endl;
+        cout << "|                               5 - Matemática Discreta                                                |" << endl;
+        cout << "|                               6 - Projeto UP                                                         |" << endl;
+        cout << "|  m - Menu Principal                                                                                  |" << endl;
+        cout << "|  b - Menu anterior                                                                                   |" << endl;
+        cout << "|  q - Sair do programa                                                                                |" << endl;
+        cout << "--------------------------------------------------------------------------------------------------------" << endl;
+
+        getUserInput();
+
+        switch (this->userInput) {
+            case '1':// turmas por uc
+                manager.inputToHorario('U',"L.EIC001","",0);
+                break;
+            case '2': // estudantes por ano
+                manager.inputToHorario('U',"L.EIC002","",0);
+                break;
+            case '3': // estudante por uc
+                manager.inputToHorario('U',"L.EIC003","",0);
+                break;
+            case '4' : // estudante por turma por uc
+                manager.inputToHorario('U',"L.EIC004","",0);
+                break;
+            case '5' :
+                manager.inputToHorario('U',"L.EIC005","",0);
+                break;
+            case '6':
+                manager.inputToHorario('U',"UP001","",0);
+                break;
+            case'm':
+                menuInicial(hora);
+                break;
+            case 'b' :
+                return;
+            case 'q':
+                exit(0);
+            default:
+                cout << "Opção inválida. Escolha uma opção valida." << endl;
+
+        }
+    }
+}
+
+void Menu::menuOpçoes2Ano() {
+    while(true){
+        cout << "________________________________________________________________________________________________________"<< endl;
+        cout << "|    Escolha da UC                                                                                     |" << endl;
+        cout << "|                                                                                                      |"<< endl;
+        cout << "|                                                                                                      |"<< endl;
+        cout << "|                               1 - Algoritmos e Estruturas de Dados                                   |"<< endl;
+        cout << "|                               2 - Bases de Dados                                                     |"<< endl;
+        cout << "|                               3 - Física II                                                          |"<< endl;
+        cout << "|                               4 - Laboratório de Desenho e Teste de Software                         |"<< endl;
+        cout << "|                               5 - Sistemas Operativos                                                |"<< endl;
+        cout << "|                                                                                                      |"<< endl;
+        cout << "|  m - Menu principal                                                                                  |" << endl;
+        cout << "|  b - Menu anterior                                                                                   |"<< endl;
+        cout << "|  q - Sair do programa                                                                                |" << endl;
+        cout << "--------------------------------------------------------------------------------------------------------"<< endl;
+
+        getUserInput();
+
+        switch (this->userInput) {
+            case '1':// turmas por uc
+                manager.inputToHorario('U',"L.EIC011","",0);
+                break;
+            case '2': // estudantes por ano
+                manager.inputToHorario('U',"L.EIC012","",0);
+                break;
+            case '3': // estudante por uc
+                manager.inputToHorario('U',"L.EIC013","",0);
+                break;
+            case '4' : // estudante por turma por uc
+                manager.inputToHorario('U',"L.EIC014","",0);
+                break;
+            case '5' :
+                manager.inputToHorario('U',"L.EIC015","",0);
+                break;
+            case'm':
+                menuInicial(hora);
+                break;
+            case 'b' :
+                return;
+            case 'q':
+                exit(0);
+            default:
+                cout << "Opção inválida. Escolha uma opção valida." << endl;
+
+        }
+    }
+}
+
+void Menu::menuOpçoes3Ano() {
+    while(true){
+        cout << "________________________________________________________________________________________________________"<< endl;
+        cout << "|    Escolha da UC                                                                                     |" << endl;
+        cout << "|                                                                                                      |"<< endl;
+        cout << "|                                                                                                      |"<< endl;
+        cout << "|                               1 - Fundamentos de Segurança Informática                               |"<< endl;
+        cout << "|                               2 - Interação Pessoa Computador                                        |"<< endl;
+        cout << "|                               3 - Laboratório de Bases de Dados e Aplicações Web                     |"<< endl;
+        cout << "|                               4 - Programação Funcional e em Lógica                                  |"<< endl;
+        cout << "|                               5 - Redes de Computadores                                              |"<< endl;
+        cout << "|                                                                                                      |"<< endl;
+        cout << "|  m - Menu principal                                                                                  |" << endl;
+        cout << "|  b - Menu anterior                                                                                   |"<< endl;
+        cout << "|  q - Sair do programa                                                                                |" << endl;
+        cout << "--------------------------------------------------------------------------------------------------------"<< endl;
+
+        getUserInput();
+
+        switch (this->userInput) {
+            case '1':// turmas por uc
+                manager.inputToHorario('U',"L.EIC021","",0);
+                break;
+            case '2': // estudantes por ano
+                manager.inputToHorario('U',"L.EIC022","",0);
+                break;
+            case '3': // estudante por uc
+                manager.inputToHorario('U',"L.EIC023","",0);
+                break;
+            case '4' : // estudante por turma por uc
+                manager.inputToHorario('U',"L.EIC024","",0);
+                break;
+            case '5' :
+                manager.inputToHorario('U',"L.EIC025","",0);
+                break;
+            case'm':
+                menuInicial(hora);
+                break;
+            case 'b' :
+                return;
+            case 'q':
+                exit(0);
+            default:
+                cout << "Opção inválida. Escolha uma opção valida." << endl;
+
+        }
+    }
+}
 void Menu::menuListagens() {
     while(true) {
         cout << "________________________________________________________________________________________________________"<< endl;
@@ -747,38 +979,35 @@ void Menu::iniciar() {
 
         menuInicial(hora);
         switch (this->userInput) {
-            case '1': { // Hórario da Estudante
-                horarioEstudante();
+            case '1':  // Horário
+                vereficarHorario();
                 break;
-                case '2': //
-                    horarioUc();
+            case '2': // Listagens
+                menuListagens();
                 break;
-                case '3': // Hórario por turma
-                    horarioTurma();
+            case '3': // estatisticas
+                cout << " Menu estatisticas" << endl;
                 break;
-                case '4': // Listagens
-                    menuListagens();
+            case '4' : // Fazer pedidos
+                menuOpcoesPedidos();
                 break;
-                case '6' : // Fazer pedidos
-                    menuOpcoesPedidos();
+            case '5' : // Proximo pedido
+                manager.proximoPedido();
                 break;
-                case '7' : // Proximo pedido
-                    manager.proximoPedido();
+            case '6': // Ver historico
+                manager.printHistorico();
                 break;
-                case '8': // Ver historico
-                    manager.printHistorico();
+            case '7': // andar para tras
+                manager.reverterPedido();
                 break;
-                case '9': // andar para tras
-                    manager.reverterPedido();
-                break;
-                case 'q':
-                    cout << "Fechando o programa" << endl;
+            case 'q':
+                cout << "Fechando o programa" << endl;
                 exit(0);
-                default:
-                    cout << "Escolha uma opção válida" << endl;
+            default:
+                cout << "Escolha uma opção válida" << endl;
 
 
-            }
+
         }
     }
 

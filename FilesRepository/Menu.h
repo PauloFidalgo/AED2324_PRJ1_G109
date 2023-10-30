@@ -34,7 +34,8 @@ public:
     Menu();
     ~Menu();
     void run();
-
+    void vereficarHorario();
+    void escolhaUc();
     void menuInicial(const tm* hora);
     void menuOrdenacaoTotalAno();
     void menuOrdenacaoTotalUc();
@@ -63,6 +64,10 @@ public:
     void getTurma();
     void getUC_Turma();
     void getAno();
+    void menuAnoUc();
+    void menuOpçoes1Ano();
+    void menuOpçoes2Ano();
+    void menuOpçoes3Ano();
 };
 
 #endif // PROJECT_MENU_H
