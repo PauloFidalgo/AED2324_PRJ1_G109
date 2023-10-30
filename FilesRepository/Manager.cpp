@@ -1223,7 +1223,7 @@ void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) {
     }
 }
 
-void Manager::printInfoEstudante(const int &numero, const bool &orderByFirst ,const bool& ascending) const {
+void Manager::printInfoEstudante(const int &numero) const {
     Estudante estudante = getEstudante(numero);
     set<pair<string,string>> lista;
     if (estudante.getStudentNumber() != 0) {
@@ -1284,13 +1284,33 @@ void Manager::printInfoEstudante(const int &numero, const bool &orderByFirst ,co
 }
 
 // Estatística
-/*
-void Manager::estudantesEmMaisOuMenosUc(const int &n, const bool &mais) const {
-    set<pair<int,pair<string,int>>> res;
+
+vector<pair<int,int>> Manager::estudantesEmMaisOuMenosUc(const int &n, const bool &mais) const {
+    set<pair<int,int>> res;
     for (auto est : estudantesNumero) {
-        res.insert({est.getTurmas().size(), {est.getStudentName(), est.getStudentNumber()}});
+        res.insert({est.getTurmas().size(), est.getStudentNumber()});
     }
 
+    vector<pair<int,int>> result;
+    if (mais) {
+        auto it = res.begin();
+        for (int i = 0; i < n; i++) {
+            if (it != res.end()) {
+                result.push_back(*it);
+            }
+        }
+    }
+
+    else {
+        auto it = res.rbegin();
+        for (int i = 0; i < n; i++) {
+            if (it != res.rend()) {
+                result.push_back(*it);
+            }
+        }
+    }
+
+    return result;
 }
 
 void Manager::ucComMaisOuMenosAlunos(const int &n, const bool &mais) const {
@@ -1314,7 +1334,7 @@ void Manager::turmaComMaisOuMenosAlunos(const string &uc, const bool &mais) {
             res.insert({it->getNumeroAlunos(turma.first), turma.first});
         }
     }
-}*/
+}
 
 void Manager::printNumeroDeAlunosPorAno() const {
     int first = 0, second = 0, third = 0;

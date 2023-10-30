@@ -1,14 +1,30 @@
 
 
 Construir menu com opções:
-    - Com nome listar alunos; input (nome) -> print Numero, nome, ano, turmas
+    - Com nome listar alunos; input (nome) -> print Numero, nome, ano, turmas (mandela tabela 3 colunas nome numero ano)
+    - Dia livre ?
+    - Correspondencia entre UC e Nome desta merda (Paulo)
+    - Get ucs por ano (Paulo)
+    - Get turmas por ano (Paulo)
+    - Menu: (Wagner)
+        - Organizar página inicial
+        - Meter opções turmas (fim)
+        - Meter opções ano (facil)
+        - Meter opções de ucs (pelo nome da UC)
     - Estatisticas:
-        - Uc com mais alunos
-        - Uc com menos alunos
+        - Uc com mais alunos (todas)
+        - Uc com menos alunos (todas)
         - Turmas com mais alunos (na uc)
         - Turmas com menos alunos (na uc)
-        - Ano com mais alunos
-        - Ano com menos alunos
-        - Alunos com mais UC's
-        - Alunos com menos UC'S
+        - Ano com mais alunos ( 1 / 2 / 3)
+        - Ano com menos alunos ( 1 / 2  / 3)
+        - Alunos com mais UC's (10 / 20)
+        - Alunos com menos UC'S (10 / 20)
 
+
+
+
+Horarios -> Listagem (ESTUDANTE,2 - UC, TURMA) -> 2 -> 1 / 2 / 3 Ano
+1- Est
+2- uC 2 -> 1 / 2 / 3 -> lista ucs
+3- Tu -> 1 / 2 / 3 -> lista turmas

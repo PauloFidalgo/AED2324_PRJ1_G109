@@ -22,6 +22,7 @@ private:
     std::string codigoUC;
     std::unordered_map<std::string, TurmaInfo> ucTurma;
     float media;
+    int ano;
 
 public:
     UC(const std::string &codigoUc, const std::unordered_map<std::string, TurmaInfo> &ucTurma, int media = 0);
@@ -36,6 +37,7 @@ public:
     Aula getPratica(const std::string &turma) const;
     int getNumeroAlunos(const std::string &turma) const;
     int getMinimum() const;
+    int getAno() const;
     float getMedia() const;
 
     // Setters

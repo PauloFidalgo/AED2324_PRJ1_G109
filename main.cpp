@@ -3,9 +3,8 @@
 #include "FilesRepository/Menu.h"
 
 int main() {
-    Manager manager;
-    manager.readFiles();
-    manager.printNumeroDeAlunosPorAno();
+    Menu menu;
+    menu.iniciar();
 
     return 0;
 
