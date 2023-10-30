@@ -34,7 +34,8 @@ public:
     Menu();
     ~Menu();
     void run();
-
+    void vereficarHorario();
+    void escolhaUc();
     void menuInicial(const tm* hora);
     void menuOrdenacaoTotalAno();
     void menuOrdenacaoTotalUc();

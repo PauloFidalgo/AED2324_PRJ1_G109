@@ -285,11 +285,11 @@ void Menu::menuInicial(const tm* hora) {
     cout << "|  Menu Principal                                                                                   |" << endl;
     cout << "|                         Consulta                          Gestão de Horário                       |" << endl;
     cout << "|                                                                                                   |" << endl;
-    cout << "|                   1 - Horário Estudante                  6 - Fazer pedido                         |" << endl;
-    cout << "|                   2 - Horário UC                         7 - Executar Pedido                      |" << endl;
-    cout << "|                   3 - Horário Turma                      8 - Ver histórico                        |" << endl;
-    cout << "|                   4 - Listagens                          9 - Andar para trás                      |" << endl;
-    cout << "|                   5 - Estatisticas                                                                |" << endl;
+    cout << "|                   1 - Horários                           6 - Fazer pedido                         |" << endl;
+    cout << "|                   2 - Listagens                          7 - Executar Pedido                      |" << endl;
+    cout << "|                   3 - Estatisticas                       8 - Ver histórico                        |" << endl;
+    cout << "|                                                          9 - Andar para trás                      |" << endl;
+    cout << "|                                                                                                   |" << endl;
     cout << "|                                                                                                   |" << endl;
     cout << "|                                                                                                   |" << endl;
     cout << "|    q - Sair do programa                                                            Pedidos: " << this->pedidosAtivo << "     |" << endl;
@@ -298,6 +298,73 @@ void Menu::menuInicial(const tm* hora) {
 
     getUserInput();
 
+}
+
+void Menu::vereficarHorario(){
+    while(true){
+        cout << "_____________________________________________________________________________________________________" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|  Verificar Horário                                                                                |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|                                       1 - Horário Estudante                                       |" << endl;
+        cout << "|                                       2 - Horário UC                                              |" << endl;
+        cout << "|                                       3 - Horário Turma                                           |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|    b - Menu anterior                                                                              |" << endl;
+        cout << "|    q - Sair do programa                                                                           |" << endl;
+        cout << "-----------------------------------------------------------------------------------------------------" << endl;
+        cout << endl;
+
+        getUserInput();
+
+        switch (this->userInput) {
+            case '1':// horário estudante
+                horarioEstudante();
+                break;
+            case '2': // horário UC
+                cout << "horario";
+                break;
+            case '3': // horário Turma
+                cout << "horario";
+                break;
+            case 'b' :
+                return;
+            case 'q':
+                exit(0);
+            default:
+                cout << "Opção inválida. Escolha uma opção valida." << endl;
+
+        }
+    }
+
+}
+
+void Menu::escolhaUc(){
+    while(true){
+
+        cout << "_____________________________________________________________________________________________________" << endl;
+        cout << "|  "<< std::setfill('0') << std::setw(2)<<hora->tm_mday<< "/" <<std::setfill('0') << std::setw(2)<< (hora->tm_mon+1) << "/" <<std::setfill('0') << std::setw(2)<<(hora->tm_year+1900)<<"                                                                             "<<std::setfill('0') << std::setw(2)<< hora->tm_hour<< ":" <<std::setfill('0') << std::setw(2)<< hora->tm_min<<"     |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|  Verificar Horário                                                                                |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|                                       1 - Horário Estudante                                       |" << endl;
+        cout << "|                                       2 - Horário UC                                              |" << endl;
+        cout << "|                                       3 - Horário Turma                                           |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|                                                                                                   |" << endl;
+        cout << "|    b - Menu anterior                                                                              |" << endl;
+        cout << "|    q - Sair do programa                                                            Pedidos: " << this->pedidosAtivo << "     |" << endl;
+        cout << "-----------------------------------------------------------------------------------------------------" << endl;
+        cout << endl;
+
+        getUserInput();
+    }
 }
 
 void Menu::menuListagens() {
@@ -748,7 +815,7 @@ void Menu::iniciar() {
         menuInicial(hora);
         switch (this->userInput) {
             case '1': { // Hórario da Estudante
-                horarioEstudante();
+                vereficarHorario();
                 break;
                 case '2': //
                     horarioUc();
