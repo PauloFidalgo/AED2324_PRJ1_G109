@@ -3,8 +3,8 @@
 #include "FilesRepository/Menu.h"
 
 int main() {
-    Menu menu;
-    menu.iniciar();
+    Menu m;
+    m.iniciar();
 
     return 0;
 
