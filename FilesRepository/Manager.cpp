@@ -424,6 +424,7 @@ void Manager::proximoPedido() {
                 executarPedidoTrocaHorario(pedidos.front());
                 ostringstream oss;
                 oss << "Troca de turma entre o estudante " << pedidos.front().getEstudante().getStudentNumber() << " e o estudante " << pedidos.front().getOutroEstudante().getStudentNumber() << " na UC " << pedidos.front().getUc() << endl;
+                cout << oss.str();
                 printHist.insert({this->nPedido, oss.str()});
                 this->nPedido++;
                 break;
@@ -432,6 +433,7 @@ void Manager::proximoPedido() {
                 removerEstudanteDaUc(pedidos.front());
                 ostringstream oss;
                 oss << "Removeu o estudante " << pedidos.front().getEstudante().getStudentNumber() << " da UC " << pedidos.front().getUc() << endl;
+                cout << oss.str();
                 printHist.insert({this->nPedido, oss.str()});
                 this->nPedido++;
                 break;
@@ -440,6 +442,7 @@ void Manager::proximoPedido() {
                 adicionarUcAoEstudante(pedidos.front());
                 ostringstream oss;
                 oss << "Adicionou o estudante " << pedidos.front().getEstudante().getStudentNumber() << " na UC " << pedidos.front().getUc() << endl;
+                cout << oss.str();
                 printHist.insert({this->nPedido, oss.str()});
                 this->nPedido++;
                 break;
@@ -1459,7 +1462,7 @@ void Manager::printNumeroEstudantesDeTodasUc() const {
     cout << "|    UC       Nº   |    UC       Nº   |    UC       Nº   |" << endl;
     cout << "| L.EIC001:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC011:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC021:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
     ucP = "L.EIC002", ucS = "L.EIC012", ucT = "L.EIC022";
-    cout << "| L.EIC001:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC012:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC022:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "| L.EIC002:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC012:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC022:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
     ucP = "L.EIC003", ucS = "L.EIC013", ucT = "L.EIC023";
     cout << "| L.EIC003:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC013:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC023:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
     ucP = "L.EIC004", ucS = "L.EIC014", ucT = "L.EIC024";

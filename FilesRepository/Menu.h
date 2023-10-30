@@ -48,7 +48,8 @@ private:
     thread pedidoThread;
     bool exitTimeThread;
     bool exitPedidoThread;
-    bool showMainMenu;
+    bool menu;
+    bool sair;
     Manager manager;
     int estudante2;
     int pedidosAtivo;
