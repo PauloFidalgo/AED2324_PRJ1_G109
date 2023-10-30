@@ -68,6 +68,9 @@ public:
     void menuOpçoes1Ano();
     void menuOpçoes2Ano();
     void menuOpçoes3Ano();
+    void menuTurmaPorAno(const int &ano);
+    void menuAnoTurma();
+    void menuOrdenacaoPesquisaEstudanteNome();
 };
 
 #endif // PROJECT_MENU_H

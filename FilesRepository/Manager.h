@@ -74,6 +74,7 @@ public:
     set<string> getUcPorAno(const int &ano) const;
     set<string> getTurmasPorAno(const int &ano) const;
     vector<pair<int,int>> estudantesEmMaisOuMenosUc(const int &n, const bool &mais) const;
+    void printEstudantesPorNome(string &nome, const bool &ascending) const;
 
 
 
@@ -103,10 +104,6 @@ public:
     void removeEstudanteFromUc(const string &uc, const string& turma, const int &numero);
     vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario);
     string ucToString(const string &uc) const;
-
-
-
-
 };
 
 #endif //PROJECT_MANAGER_H

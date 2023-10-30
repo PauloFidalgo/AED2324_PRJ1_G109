@@ -995,8 +995,6 @@ bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pa
     auto it = ucs.find(aula.first);
 
 
-    cout << "Uc: " << aula.first << " Turma: " << aula.second.first << endl;
-    cout << it->getMedia() << endl;
     if (turno <= it->getMedia()) {
         line = "Turno 1";
     }
@@ -1283,7 +1281,49 @@ void Manager::printInfoEstudante(const int &numero) const {
     cout << "---------------------------------------------------------" << endl;
 }
 
+// UC to String
+string Manager::ucToString(const string &uc) const {
+    if (uc == "L.EIC001") return "Álgebra Linear e Geometria Analítica";
+    if (uc == "L.EIC002") return "Análise Matemática I";
+    if (uc == "L.EIC003") return "Fundamentos da Programação";
+    if (uc == "L.EIC004") return "Fundamentos de Sistemas Computacionais";
+    if (uc == "L.EIC005") return "Matemática Discreta";
+    if (uc == "UP001") return "Projeto UP";
+    if (uc == "L.EIC011") return "Algoritmos e Estruturas de Dados";
+    if (uc == "L.EIC012") return "Bases de Dados";
+    if (uc == "L.EIC013") return "Física II";
+    if (uc == "L.EIC014") return "Laboratório de Desenho e Teste de Software";
+    if (uc == "L.EIC015") return "Sistemas Operativos";
+    if (uc == "L.EIC021") return "Fundamentos de Segurança Informática";
+    if (uc == "L.EIC022") return "Interação Pessoa Computador";
+    if (uc == "L.EIC023") return "Laboratório de Bases de Dados e Aplicações Web";
+    if (uc == "L.EIC024") return "Programação Funcional e em Lógica";
+    if (uc == "L.EIC025") return "Redes de Computadores";
+}
+
 // Estatística
+set<string> Manager::getUcPorAno(const int &ano) const {
+    set<string> res;
+    for (auto uc : ucs) {
+        if (uc.getAno() == ano) {
+            res.insert(uc.getCodigoUc());
+        }
+    }
+    return res;
+}
+
+set<string> Manager::getTurmasPorAno(const int &ano) const {
+    set<string> res;
+    for (auto uc : ucs) {
+        if (uc.getAno() == ano) {
+            for (auto turma : uc.getUcTurma()) {
+                res.insert(turma.first);
+            }
+        }
+    }
+    return res;
+}
+
 
 vector<pair<int,int>> Manager::estudantesEmMaisOuMenosUc(const int &n, const bool &mais) const {
     set<pair<int,int>> res;
@@ -1334,8 +1374,10 @@ void Manager::turmaComMaisOuMenosAlunos(const string &uc, const bool &mais) {
             res.insert({it->getNumeroAlunos(turma.first), turma.first});
         }
     }
+<<<<<<< HEAD
 }
 */
+
 void Manager::printNumeroDeAlunosPorAno() const {
     int first = 0, second = 0, third = 0;
     for (auto estudante : estudantesNumero) {
@@ -1352,43 +1394,45 @@ void Manager::printNumeroDeAlunosPorAno() const {
     cout << "---------------------------" << endl;
 }
 
-set<string> Manager::getUcPorAno(const int &ano) const {
-    set<string> res;
-    for (auto uc : ucs) {
-        if (uc.getAno() == ano) {
-            res.insert(uc.getCodigoUc());
+void Manager::printEstudantesPorNome(string& nome, const bool& ascending) const {
+    bool first = true;
+    for (auto& ch : nome) {
+        ch = first ? toupper(ch) : tolower(ch);
+        first = false;
+    }
+
+    vector<Estudante> students;
+    for (const auto& estudante: estudantesNome) {
+        if(estudante.getStudentName().find(nome) != string::npos) {
+            students.push_back(estudante);
         }
     }
-    return res;
-}
+    if (!students.empty()) {
+        cout << "------------------------------------------------" << endl;
+        cout << "|            Nome            |  Número   | Ano |" << endl;
+        cout << "------------------------------------------------" << endl;
 
-set<string> Manager::getTurmasPorAno(const int &ano) const {
-    set<string> res;
-    for (auto uc : ucs) {
-        if (uc.getAno() == ano) {
-            for (auto turma : uc.getUcTurma()) {
-                res.insert(turma.first);
+        if (ascending) {
+            for (const auto &elem: students) {
+                int len = (28 - elem.getStudentName().length()) / 2;
+                int lenf = (28 - elem.getStudentName().length()) % 2 == 0 ? len : len + 1;
+                cout << "|" << string(len, ' ') << elem.getStudentName() << string(lenf, ' ') << "| "
+                     << elem.getStudentNumber() << " |  " << elem.getAno() << "  |" << endl;
+                cout << "------------------------------------------------" << endl;
+            }
+        } else {
+            for (auto elem = students.rbegin(); elem < students.rend(); elem++) {
+                int len = (28 - elem->getStudentName().length()) / 2;
+                int lenf = (28 - elem->getStudentName().length()) % 2 == 0 ? len : len + 1;
+                cout << "|" << string(len, ' ') << elem->getStudentName() << string(lenf, ' ') << "| "
+                     << elem->getStudentNumber() << " |  " << elem->getAno() << "  |" << endl;
+                cout << "------------------------------------------------" << endl;
             }
         }
     }
-    return res;
-}
-
-string Manager::ucToString(const string &uc) const {
-    if (uc == "L.EIC001") return "Álgebra Linear e Geometria Analítica";
-    if (uc == "L.EIC002") return "Análise Matemática I";
-    if (uc == "L.EIC003") return "Fundamentos da Programação";
-    if (uc == "L.EIC004") return "Fundamentos de Sistemas Computacionais";
-    if (uc == "L.EIC005") return "Matemática Discreta";
-    if (uc == "UP001") return "Projeto UP";
-    if (uc == "L.EIC011") return "Algoritmos e Estruturas de Dados";
-    if (uc == "L.EIC012") return "Bases de Dados";
-    if (uc == "L.EIC013") return "Física II";
-    if (uc == "L.EIC014") return "Laboratório de Desenho e Teste de Software";
-    if (uc == "L.EIC015") return "Sistemas Operativos";
-    if (uc == "L.EIC021") return "Fundamentos de Segurança Informática";
-    if (uc == "L.EIC022") return "Interação Pessoa Computador";
-    if (uc == "L.EIC023") return "Laboratório de Bases de Dados e Aplicações Web";
-    if (uc == "L.EIC024") return "Programação Funcional e em Lógica";
-    if (uc == "L.EIC025") return "Redes de Computadores";
+    else {
+        cout << "------------------------------------------------------" << endl;
+        cout << "Não existem estudantes com o nome " << nome << endl;
+        cout << "------------------------------------------------------" << endl;
+    }
 }
