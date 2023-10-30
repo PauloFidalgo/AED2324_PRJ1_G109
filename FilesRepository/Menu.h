@@ -40,7 +40,6 @@ public:
     void menuOrdenacaoTotalUc();
     void menuOrdenacaoTotalTurmaUc();
     void menuOrdenacaoTotalEstudantesNucs();
-    void menuOrdenacaoTotalNEstudantesNUcs();
     void menuOrdenacaoParcial();
     void menuListagens();
     void menuOrdenacaoEstudanteUc();

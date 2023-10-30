@@ -636,54 +636,6 @@ void Menu::menuOrdenacaoTotalEstudantesNucs() {
     }
 }
 
-void Menu::menuOrdenacaoTotalNEstudantesNUcs(){
-
-   while(true){
-       cout << "________________________________________________________________________________________________________" <<endl;
-       cout << "|  Ordenação                                                                                           |" << endl;
-       cout << "|                                                                                                      |" << endl;
-       cout << "|                                                                                                      |" << endl;
-       cout << "|                                   1 - Ordenar por nº e ordem crescente                               |" << endl;
-       cout << "|                                   2 - Ordenar por nº e ordem decrescente                             |" << endl;
-       cout << "|                                   3 - Ordenar por nome e ordem crescente                             |" << endl;
-       cout << "|                                   4 - Ordenar por nome e ordem decrescente                           |" << endl;
-       cout << "|                                                                                                      |" << endl;
-       cout << "|  m - Menu principal                                                                                  |" << endl;
-       cout << "|  b - Menu anterior                                                                                   |"<< endl;
-       cout << "|  q - Sair do programa                                                                                |" << endl;
-       cout << "--------------------------------------------------------------------------------------------------------" << endl;
-
-       getUserInput();
-
-       switch (this->userInput) {
-           case '1':
-               getNuc();
-               manager.numeroEstudantesEmPeloMenosNUCS(this->nU,true, true);
-               break;
-           case '2':
-               getNuc();
-               manager.numeroEstudantesEmPeloMenosNUCS(this->nU,true, false);
-               break;
-           case '3':
-               getNuc();
-               manager.numeroEstudantesEmPeloMenosNUCS(this->nU,false, true);
-               break;
-           case '4':
-               getNuc();
-               manager.numeroEstudantesEmPeloMenosNUCS(this->nU,false, false);
-               break;
-           case 'b':
-               return;
-           case 'm':
-               menuInicial(hora);
-               break;
-           case 'q':
-               exit(0);
-           default:
-               cout << "Opção invalida. Escolha uma opção valida" << endl;
-       }
-   }
-}
 
 void Menu::menuOrdenacaoParcial(){
 

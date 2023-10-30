@@ -32,6 +32,7 @@ void Manager::readFiles()
         iff.open("../CSV/classes.csv", ios::in);
         string line, uc, turma, dia, tipo, lastUc, inicio, duracao;
         bool first = true;
+        float i = 0, n = 0;
 
         getline(iff, line);
 
@@ -47,6 +48,11 @@ void Manager::readFiles()
             getline(s,tipo,'\r');
             TurmaInfo turmaInfo;
             turmaInfo.aulas.emplace_back(dia, stof(inicio), stof(duracao), tipo);
+
+            if (tipo != "T") {
+                n += stoi(turma.substr(5));
+                i++;
+            }
 
             if (tipo == "T") {
                 auto it = turmaUc.find(turma);
@@ -66,13 +72,16 @@ void Manager::readFiles()
            }
 
            else {
-               ucs.insert(UC(lastUc,turmaUc));
+               float media = round(n / i);
+               ucs.insert(UC(lastUc,turmaUc, media));
+               i = 0;
+               n = 0;
                turmaUc.clear();
                turmaUc.insert({turma,turmaInfo});
                lastUc = uc;
            }
         }
-        ucs.insert(UC(lastUc,turmaUc));
+        ucs.insert(UC(lastUc,turmaUc, n/i));
     }
     catch (const ifstream::failure& e){
         cout << "Falha a abrir o ficheiro" << endl;
@@ -974,8 +983,32 @@ void Manager::inputToHorario(const char &tipo, const string &uc, const string &t
     }
 }
 
+bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pair<string,pair<string,Aula>> &aula) {
+    string line;
+    for (auto slot : horario) {
+        if (slot.first == aula.first && slot.second.second.mesmoHorario(aula.second.second)) {
+            return true;
+        }
+    }
+    float turno = stof(aula.second.first.substr(5));
 
-vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario){
+    auto it = ucs.find(aula.first);
+
+
+    cout << "Uc: " << aula.first << " Turma: " << aula.second.first << endl;
+    cout << it->getMedia() << endl;
+    if (turno <= it->getMedia()) {
+        line = "Turno 1";
+    }
+    else {
+        line = "Turno 2";
+    }
+    aula.second.first = line;
+    return false;
+}
+
+
+vector<pair<string,pair<string,Aula>>> Manager::createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario)  {
     vector<pair<string,pair<string,Aula>>> sobrepostas;
     for (auto i = horario.begin(); i != horario.end(); ++i){
         auto j = i;
@@ -987,11 +1020,13 @@ vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pai
             if (aula1.sobreposta(aula2)) {
                 if (aula1.getTipo() != "T"  && aula2.getTipo() == "T") {
                     // se aula1 é prática e aula2 é teórica.
+                    if (!checkAlreadyIn(sobrepostas,*j))
                     sobrepostas.push_back(*j);
                     horario.erase(j);
                 }
                 else if (aula2.getTipo() != "T" && aula1.getTipo() == "T"){
                     // se aula1 é prática e aula2 é teórica.
+                    if (!checkAlreadyIn(sobrepostas,*i))
                     sobrepostas.push_back(*i);
                     horario.erase(i);
 
@@ -1009,6 +1044,7 @@ vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pai
                     }
                     if (sobre1 > sobre2) {
                         //se aula1 se sobrepõe a mais aulas que aula2
+                        if (!(aula1.getTipo() == "T" && checkAlreadyIn(sobrepostas,*i)))
                         sobrepostas.push_back(*i);
                         horario.erase(i);
                     }
@@ -1020,28 +1056,33 @@ vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pai
                         // se aula1 e aula2 se sobrepõem ao mesmo número de aulas.
                         if (aula1.getInicio() < aula2.getInicio()) {
                             // se aula1 começa antes da aula2
+                            if (!(aula2.getTipo() == "T" && checkAlreadyIn(sobrepostas,*j)))
                             sobrepostas.push_back(*j);
                             horario.erase(j);
                         }
                         else if (aula1.getInicio() > aula2.getInicio()) {
                             // se a aula2 começa antes da aula1
+                            if (!(aula1.getTipo() == "T" && checkAlreadyIn(sobrepostas,*i)))
                             sobrepostas.push_back(*i);
                             horario.erase(i);
                         }
                         else {
                             if (aula1.getDuracao() > aula2.getDuracao()) {
                                 //se a aula1 for maior que a aula2
+                                if (!(aula2.getTipo() == "T" && checkAlreadyIn(sobrepostas,*j)))
                                 sobrepostas.push_back(*j);
                                 horario.erase(j);
                             }
                             else if (aula1.getDuracao() < aula2.getDuracao()) {
                                 //se a aula2 for maior que a aula1
+                                if (!(aula1.getTipo() == "T" && checkAlreadyIn(sobrepostas,*i)))
                                 sobrepostas.push_back(*i);
                                 horario.erase(i);
                             }
                             else {
                                 // a aula 1 prevalece sobre a 2
                                 if (j!= horario.end()) {
+                                    if (!(aula2.getTipo() == "T" && checkAlreadyIn(sobrepostas,*j)))
                                     sobrepostas.push_back(*j);
                                     horario.erase(j);
                                 }
@@ -1082,7 +1123,7 @@ const string getHoras(const float& begin, const float& duration = 0.5){
 
 
 
-void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) const {
+void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) {
 
     vector<pair<string,pair<string,Aula>>> sobrepostas = createSobrepostas(horario);
     unordered_map<string,string> translate = {{"Monday","Segunda"}, {"Tuesday","Terça"}, {"Wednesday","Quarta"}, {"Thursday","Quinta"}, {"Friday","Sexta"}};

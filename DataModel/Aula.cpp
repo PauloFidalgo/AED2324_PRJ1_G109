@@ -25,6 +25,10 @@ const float Aula::getDuracao() const {
     return this->duracao;
 }
 
+bool Aula::mesmoHorario(const Aula &aula) const {
+    return (this->dia == aula.dia && this->inicio == aula.inicio && this->duracao == aula.duracao && this->tipo == aula.tipo);
+}
+
 bool Aula::sobreposta(const Aula &aula) const {
     return (this->dia != aula.dia || (((this->inicio + this->duracao) <= aula.inicio) || ((this->inicio >= aula.inicio + aula.duracao))) ? false : true);
 }

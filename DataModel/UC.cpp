@@ -9,14 +9,19 @@
 UC::UC(const UC &other) {
     this->codigoUC = other.codigoUC;
     this->ucTurma = other.ucTurma;
+    this->media = other.media;
 }
 
-UC::UC(const std::string &codigoUc, const std::unordered_map<std::string, TurmaInfo> &ucTurma) : codigoUC(std::move(codigoUc)), ucTurma(ucTurma) {}
+UC::UC(const std::string &codigoUc, const std::unordered_map<std::string, TurmaInfo> &ucTurma, int media) : codigoUC(std::move(codigoUc)), ucTurma(ucTurma), media(media) {}
 
 UC::UC(const std::string &codigoUc) : codigoUC(std::move(codigoUc)) {}
 
 std::unordered_map<std::string, TurmaInfo> UC::getUcTurma() const {
     return this->ucTurma;
+}
+
+float UC::getMedia() const {
+    return this->media;
 }
 
 Aula UC::getPratica(const std::string &turma) const {

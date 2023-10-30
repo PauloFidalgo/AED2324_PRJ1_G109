@@ -1,9 +1,7 @@
 
 
 Construir menu com opções:
-    - Obter informação completa aluno (numero)
     - Com nome listar alunos; input (nome) -> print Numero, nome, ano, turmas
-    - Obter o ano curricular de um aluno; input (numero)
     - Estatisticas:
         - Uc com mais alunos
         - Uc com menos alunos

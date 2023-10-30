@@ -29,8 +29,7 @@ public:
 
     // Validators
     bool sobreposta(const Aula &aula) const;
-
-
+    bool mesmoHorario(const Aula &aula) const;
 };
 
 

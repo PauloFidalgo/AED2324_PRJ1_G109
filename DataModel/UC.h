@@ -21,9 +21,10 @@ class UC {
 private:
     std::string codigoUC;
     std::unordered_map<std::string, TurmaInfo> ucTurma;
+    float media;
 
 public:
-    UC(const std::string &codigoUc, const std::unordered_map<std::string, TurmaInfo> &ucTurma);
+    UC(const std::string &codigoUc, const std::unordered_map<std::string, TurmaInfo> &ucTurma, int media = 0);
     UC(const std::string &codigoUc);
     UC(const UC &other);
 
@@ -35,6 +36,7 @@ public:
     Aula getPratica(const std::string &turma) const;
     int getNumeroAlunos(const std::string &turma) const;
     int getMinimum() const;
+    float getMedia() const;
 
     // Setters
     void addTurma(const std::string &turma, const TurmaInfo &turmaInfo);

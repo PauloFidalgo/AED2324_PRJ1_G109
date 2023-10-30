@@ -48,7 +48,7 @@ public:
     // Printers
     void printHistorico() const;
     void printHorario();
-    void printHorario(vector<pair<string,pair<string,Aula>>> horario) const;
+    void printHorario(vector<pair<string,pair<string,Aula>>> horario);
     void inputToHorario(const char &tipo, const string &uc, const string &turma, const int &numero);
     void printEstudantesPorTurmaNaUc(const string& uc, const string& turma, bool orderByNumber = true, bool ascending = true) const;
     void printEstudantesPorUC(const string& uc, const bool& orderByNumber = true, const bool& ascending = true) const;
@@ -83,6 +83,7 @@ public:
     bool verificarAulaSobreposta(const list<Aula> &horario, const Aula &aulaNova) const;
     bool validarNovaUc(const string &uc, const int &student);
     bool removerValida(Pedido &pedido);
+    bool checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pair<string,pair<string,Aula>> &aula);
     bool inputToPedido(const string& uc, const int &estudante, const string &tipo, const int outro = 0, const string &turma = "");
 
     // Execution
@@ -94,6 +95,7 @@ public:
     void trocaTurma(const string &uc, const string& turma1, const int &numero1, const string &nome1, const string& turma2, const int &numero2, const string &nome2);
     void addEstudanteToUc(const string &uc, const string &turma, const int &numero, const string &nome);
     void removeEstudanteFromUc(const string &uc, const string& turma, const int &numero);
+    vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario);
 
 
 
