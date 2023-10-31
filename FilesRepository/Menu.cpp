@@ -14,6 +14,7 @@ Menu::Menu() {
     this->manager = manager;
     this->manager.readFiles();
     this->menu = false;
+    this->pedidosAtivo = 0;
 }
 
 Menu::~Menu() {

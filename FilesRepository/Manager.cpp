@@ -5,7 +5,6 @@
 #include "string"
 #include <iostream>
 
-
 // Constructor
 Manager::Manager() {
     this->nPedido = 1;
@@ -531,16 +530,16 @@ bool Manager::verificarAulaSobreposta(const list<Aula> &horario, const Aula &aul
 bool Manager::validarNovaUc(const string &uc, const int &student) {
     auto estudante = getEstudante(student); // O(log(n))
     if (estudante.inscrito(const_cast<string &>(uc))) {
-        cout << "---------------------------------"  << endl;
+        cout << string(33,'-')  << endl;
         cout << "O estudante já está incrito na UC" << endl;
-        cout << "---------------------------------"  << endl;
+        cout << string(33,'-')  << endl;
         return false;
     }
 
     if (estudante.getTurmas().size() >= 7) {
-        cout << "----------------------------------------------------------" << endl;
+        cout << string(58,'-') << endl;
         cout << "O estudante já está incrito a muitas Unidades Curriculares" << endl;
-        cout << "----------------------------------------------------------" << endl;
+        cout << string(58,'-') << endl;
         return false;
     }
 
@@ -558,9 +557,9 @@ bool Manager::validarNovaUc(const string &uc, const int &student) {
         cout << "O estudante não tem compatibilidade de horário" << endl;
         return false;
     }
-    cout << "---------------"  << endl;
-    cout << "A UC não existe" << endl;
-    cout << "---------------"  << endl;
+    cout << string(19,'-')  << endl;
+    cout << "| A UC não existe |" << endl;
+    cout << string(19,'-')  << endl;
     return false;
 }
 
@@ -627,13 +626,13 @@ bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pa
 // Printers
 void Manager::printHistorico() const {
     if (!this->printHist.empty()) {
-        cout << "---------------------------------------------------------------------" << endl;
+        cout << string(69,'-') << endl;
         cout << "Histórico de alterações: " << endl;
-        cout << "---------------------------------------------------------------------" << endl;
+        cout << string(69,'-') << endl;
         for (const auto& line : this->printHist) {
             cout << line.first << " - " << line.second;
         }
-        cout << "---------------------------------------------------------------------" << endl;
+        cout << string(69,'-') << endl;
     }
     else {
         cout << "Não existem pedidos" << endl;
@@ -655,7 +654,7 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
         }
         if (iterator != turmaInfo.end()) {
             cout << string(56,'-') << endl;
-            cout <<'|' << string(16,' ') << "UC: " << it->getCodigoUc() << " | Turma: " << iterator->first << string(12,' ') << '|' << endl;
+            cout <<'|' << string(14,' ') << "UC: " << it->getCodigoUc() << " | Turma: " << iterator->first << string(56-14-4-12-it->getCodigoUc().length()-iterator->first.length(),' ') << '|' << endl;
             cout << string(56,'-') << endl;
             list<pair<int,string>> studentList = iterator->second.estudantes;
 
