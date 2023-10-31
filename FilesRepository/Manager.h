@@ -61,6 +61,9 @@ public:
     void printInfoEstudante(const int &numero) const;
     void printNumeroEstudantesDeTodasUc() const;
     set<pair<string,string>> enviaUCParaRemover(const int &numero) const;
+    void printSets(int n, const string& uc, const bool& mais = true) const;
+    void printVectors(vector<pair<int, int>> &res, const bool &ordered, const bool &ascending) const;
+    void printVectors(const char &tipo = ' ', const bool &ordered = false, const bool& ascending = true) const;
 
     // Getters
     int getPedidos() const;
@@ -78,6 +81,12 @@ public:
     vector<pair<int,int>> estudantesEmMaisOuMenosUc(const int &n, const bool &mais) const;
     void printEstudantesPorNome(string &nome, const bool &ascending) const;
     set<string> getTurmasPorUc(const string &uc) const;
+    set<pair<int, string>> getOcupacaoTurmas(const string &uc) const;
+    set<pair<int, string>> getOcupacaoUcs() const;
+    vector<pair<int, int>> getNumeroDeAlunosPorAno() const;
+    vector<pair<int, int>> getAlunosPorNIncscricoes() const;
+    int getNumeroTurmas(const string& uc);
+
 
 
 
@@ -107,6 +116,7 @@ public:
     void removeEstudanteFromUc(const string &uc, const string& turma, const int &numero);
     vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario);
     string ucToString(const string &uc) const;
+
 };
 
 #endif //PROJECT_MANAGER_H

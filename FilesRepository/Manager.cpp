@@ -277,7 +277,6 @@ void Manager::removerEstudanteDaUc(Pedido &pedido) {
 
     if (it != ucs.end()) {
         UC atualizada = UC(*it);
-        cout << estudante.getTurma(uc) << " " << pedido.getTurma() << endl;
         atualizada.removeEstudante(pedido.getTurma(), estudante.getStudentNumber(), estudante.getStudentName());
         ucs.erase(it);
         ucs.insert(atualizada);
@@ -424,6 +423,7 @@ void Manager::proximoPedido() {
                 executarPedidoTrocaHorario(pedidos.front());
                 ostringstream oss;
                 oss << "Troca de turma entre o estudante " << pedidos.front().getEstudante().getStudentNumber() << " e o estudante " << pedidos.front().getOutroEstudante().getStudentNumber() << " na UC " << pedidos.front().getUc() << endl;
+                cout << oss.str();
                 printHist.insert({this->nPedido, oss.str()});
                 this->nPedido++;
                 break;
@@ -432,6 +432,7 @@ void Manager::proximoPedido() {
                 removerEstudanteDaUc(pedidos.front());
                 ostringstream oss;
                 oss << "Removeu o estudante " << pedidos.front().getEstudante().getStudentNumber() << " da UC " << pedidos.front().getUc() << endl;
+                cout << oss.str();
                 printHist.insert({this->nPedido, oss.str()});
                 this->nPedido++;
                 break;
@@ -440,6 +441,7 @@ void Manager::proximoPedido() {
                 adicionarUcAoEstudante(pedidos.front());
                 ostringstream oss;
                 oss << "Adicionou o estudante " << pedidos.front().getEstudante().getStudentNumber() << " na UC " << pedidos.front().getUc() << endl;
+                cout << oss.str();
                 printHist.insert({this->nPedido, oss.str()});
                 this->nPedido++;
                 break;
@@ -1131,14 +1133,14 @@ void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) {
 
     for(const auto& elem : horario){
         pair<int,int> coordinates = make_pair(weekdays[elem.second.second.getDia()], (elem.second.second.getInicio() - 8.0) * 4.0);
-        int lenTotal = elem.first.length() + elem.second.second.getTipo().length() + 3;
+        int lenTotal = ucToString(elem.first).length() + elem.second.second.getTipo().length() + 3;
         int lenUC = (LEN - lenTotal) / 2;
         string uc;
         if ((LEN - lenTotal) % 2 == 1) {
-            uc += (string(lenUC,' ') + elem.first + " (" + elem.second.second.getTipo() + ")" + string(lenUC + 1,' '));
+            uc += (string(lenUC,' ') + ucToString(elem.first) + " (" + elem.second.second.getTipo() + ")" + string(lenUC + 1,' '));
         }
         else {
-            uc += (string(lenUC,' ') + elem.first + " (" + elem.second.second.getTipo() + ")" + string(lenUC,' '));
+            uc += (string(lenUC,' ') + ucToString(elem.first) + " (" + elem.second.second.getTipo() + ")" + string(lenUC,' '));
         }
         string turma = "    " + elem.second.first;
         if (elem.second.second.getDuracao() == 2){
@@ -1205,14 +1207,14 @@ void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) {
     cout << "-------------------------------------------------------------" << endl;
     for(const auto& sobreposta : sobrepostas){
         int lenT = sobreposta.second.second.getTipo().length();
-        int totalUC = lenT + 3 + sobreposta.first.length();
-        int lenUC = (20 - totalUC) / 2;
-        int lenUCfim = (20 - totalUC) % 2 == 0 ? lenUC : lenUC + 1;
+        int totalUC = lenT + 3 + ucToString(sobreposta.first).length();
+        int lenUC = ucToString(sobreposta.first).length() > 3 ? 6 : 7;
+        int lenUCfim = lenUC == 7 ? 13 : 14;
         int total = (translate[sobreposta.second.second.getDia()] == "Terça") ? 5 : translate[sobreposta.second.second.getDia()].length();
         int lenDia = (10 - total) / 2;
         int lenDiaFim = ((10 - total) % 2 == 0) ? lenDia : lenDia + 1;
         int lenTurma = (11 - sobreposta.second.first.length()) / 2;
-        cout << '|' << string(lenUC,' ') << sobreposta.first << " (" << sobreposta.second.second.getTipo() << ")" << string(lenUCfim,' ')
+        cout << "|" << string(lenUC, ' ') << ucToString(sobreposta.first) << " (" << sobreposta.second.second.getTipo() << ")" << string(lenUCfim - totalUC,' ')
              << '|' << string(lenTurma, ' ') << sobreposta.second.first <<  string(lenTurma, ' ')
              << '|' << string(lenDia,' ') << translate[sobreposta.second.second.getDia()] << string(lenDiaFim,' ')
              << getHoras(sobreposta.second.second.getInicio(),sobreposta.second.second.getDuracao()) << endl
@@ -1283,22 +1285,25 @@ void Manager::printInfoEstudante(const int &numero) const {
 
 // UC to String
 string Manager::ucToString(const string &uc) const {
-    if (uc == "L.EIC001") return "Álgebra Linear e Geometria Analítica";
-    if (uc == "L.EIC002") return "Análise Matemática I";
-    if (uc == "L.EIC003") return "Fundamentos da Programação";
-    if (uc == "L.EIC004") return "Fundamentos de Sistemas Computacionais";
-    if (uc == "L.EIC005") return "Matemática Discreta";
-    if (uc == "UP001") return "Projeto UP";
-    if (uc == "L.EIC011") return "Algoritmos e Estruturas de Dados";
-    if (uc == "L.EIC012") return "Bases de Dados";
-    if (uc == "L.EIC013") return "Física II";
-    if (uc == "L.EIC014") return "Laboratório de Desenho e Teste de Software";
-    if (uc == "L.EIC015") return "Sistemas Operativos";
-    if (uc == "L.EIC021") return "Fundamentos de Segurança Informática";
-    if (uc == "L.EIC022") return "Interação Pessoa Computador";
-    if (uc == "L.EIC023") return "Laboratório de Bases de Dados e Aplicações Web";
-    if (uc == "L.EIC024") return "Programação Funcional e em Lógica";
-    if (uc == "L.EIC025") return "Redes de Computadores";
+    map<string,string> maps = {{"L.EIC001","ALGA"},
+                               {"L.EIC002", "AM I"},
+                               {"L.EIC003", "FP"},
+                               {"L.EIC004","FSC"},
+                               {"L.EIC005", "MD"},
+                               {"UP001", "PUP"},
+                               {"L.EIC011", "AED"},
+                               {"L.EIC012", "BD"},
+                               {"L.EIC013", "F II"},
+                               {"L.EIC014", "LDTS"},
+                               {"L.EIC015", "SO"},
+                               {"L.EIC021", "FSI"},
+                               {"L.EIC022", "IPC"},
+                               {"L.EIC023", "LBAW"},
+                               {"L.EIC024", "PFL"},
+                               {"L.EIC025", "RC"},
+                               };
+
+    return maps[uc];
 }
 
 // Estatística
@@ -1461,7 +1466,7 @@ void Manager::printNumeroEstudantesDeTodasUc() const {
     cout << "|    UC       Nº   |    UC       Nº   |    UC       Nº   |" << endl;
     cout << "| L.EIC001:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC011:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC021:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
     ucP = "L.EIC002", ucS = "L.EIC012", ucT = "L.EIC022";
-    cout << "| L.EIC001:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC012:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC022:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "| L.EIC002:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC012:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC022:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
     ucP = "L.EIC003", ucS = "L.EIC013", ucT = "L.EIC023";
     cout << "| L.EIC003:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC013:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC023:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
     ucP = "L.EIC004", ucS = "L.EIC014", ucT = "L.EIC024";
@@ -1482,4 +1487,147 @@ set<pair<string,string>> Manager::enviaUCParaRemover(const int &numero) const {
         res = estudante->getTurmas();
     }
     return res;
+}
+
+set<pair<int,string>> Manager::getOcupacaoUcs() const {
+    set<pair<int,string>> allUCs;
+    for (auto uc : ucs) {
+        int alunos = 0;
+        for (auto turma: uc.getUcTurma()) {
+            alunos += uc.getNumeroAlunos(turma.first);
+        }
+        allUCs.insert({alunos, uc.getCodigoUc()});
+    }
+    return allUCs;
+}
+
+
+set<pair<int,string>> Manager::getOcupacaoTurmas(const string &uc) const {
+    auto it = ucs.find(uc);
+    set<pair<int, string>> allTurmas;
+
+    if (it != ucs.end()) {
+        for (auto turma: it->getUcTurma()) {
+            allTurmas.insert({it->getNumeroAlunos(turma.first), turma.first});
+        }
+    }
+    return allTurmas;
+}
+
+
+void Manager::printSets(int n, const string& uc, const bool& mais) const {
+    set<pair<int,string>> allTurmas;
+
+    if (uc == "") allTurmas = getOcupacaoUcs();
+    else allTurmas = getOcupacaoTurmas(uc);
+
+    if (!allTurmas.empty()) {
+        float tamanho = allTurmas.rbegin()->first;
+        if (mais) {
+            auto it = allTurmas.rbegin();
+            cout << "          |" << endl;
+            while(n != 0 && it != allTurmas.rend()){
+                int len = (10 - it->second.length()) / 2;
+                int lenf = (10 - it->second.length()) % 2 == 0 ? len : len + 1;
+                if (it->first == 0){
+                    cout << "          |" << endl;
+                    cout << string(len, ' ') << it->second << string(lenf, ' ') << "|" << it->first << endl;
+                    cout << "          |" << endl;
+                    n--;
+                    it++;
+                    continue;
+                }
+                int lenBarra = (it->first / tamanho) * 80;
+                cout << string(len + lenf + it-> second.length(), ' ') << "|" << string(lenBarra, '-') << endl;
+                cout << string(len, ' ') << it->second << string(lenf, ' ') << "|" << string(lenBarra - 1, ' ') << "| " << it->first << endl;
+                cout << string(len + lenf + it-> second.length(), ' ') << "|" << string(lenBarra, '-') << endl;
+                cout << "          |" << endl;
+                n--;
+                it++;
+            }
+        }
+        else {
+            auto it = allTurmas.begin();
+            cout << "          |" << endl;
+            while(n != 0 && it != allTurmas.end()){
+                int len = (10 - it->second.length()) / 2;
+                int lenf = (10 - it->second.length()) % 2 == 0 ? len : len + 1;
+                if (it->first == 0){
+                    cout << "          |" << endl;
+                    cout << string(len, ' ') << it->second << string(lenf, ' ') << "|" << it->first << endl;
+                    cout << "          |" << endl;
+                    n--;
+                    it++;
+                    continue;
+                }
+                if (tamanho == 0) tamanho = 1.0;
+                int lenBarra = (it->first / tamanho) * 80;
+                cout << string(len + lenf + it-> second.length(), ' ') << "|" << string(lenBarra, '-') << endl;
+                cout << string(len, ' ') << it->second << string(lenf, ' ') << "|" << string(lenBarra - 1, ' ') << "| " << it->first << endl;
+                cout << string(len + lenf + it-> second.length(), ' ') << "|" << string(lenBarra, '-') << endl;
+                cout << "          |" << endl;
+                n--;
+                it++;
+            }
+        }
+    }
+
+}
+
+vector<pair<int, int>> Manager::getAlunosPorNIncscricoes() const {
+    vector<pair<int,int>> result = {{0,1}, {0,2}, {0,3}, {0,4}, {0,5}, {0,6}, {0,7}};
+    for (const auto& estudante : estudantesNumero){
+        int i = estudante.getTurmas().size();
+        result[i-1].first++;
+    }
+    return result;
+}
+
+vector<pair<int, int>> Manager::getNumeroDeAlunosPorAno() const {
+    vector<pair<int, int>> result = {{0,1}, {0,2}, {0,3}};
+    int first = 0, second = 0, third = 0;
+    for (auto estudante : estudantesNumero) {
+        int ano = estudante.getAno();
+        result[ano-1].first++;
+    }
+    return result;
+}
+
+void Manager::printVectors(const char &tipo, const bool &ordered, const bool& ascending) const {
+    vector<pair<int,int>> res;
+
+    if (tipo == 'A') res = getNumeroDeAlunosPorAno();
+    else res = getAlunosPorNIncscricoes();
+
+    if (!res.empty()) {
+        cout << "       |" << endl;
+        float tamanho = -1;
+        for (const auto& it : res) {
+            if (it.first > tamanho) tamanho = it.first;
+        }
+        if (ordered) {
+            if (ascending) sort(res.begin(), res.end());
+            else sort(res.rbegin(), res.rend());
+        }
+        for (const auto& elem : res) {
+            if (elem.first == 0) {
+                cout << "         |" << endl;
+                cout << "   " << elem.second << "   | " << elem.first << endl;
+            }
+            int lenBarra = (elem.first / tamanho) * 80;
+            if (elem.first == 0){};
+            cout << "       |" << string(lenBarra, '-') << endl;
+            cout << "   " << elem.second << "   |" << string(lenBarra - 1, ' ') << "| " << elem.first << endl;
+            cout << "       |" << string(lenBarra, '-') << endl;
+            cout << "       |" << endl;
+        }
+    }
+}
+
+int Manager::getNumeroTurmas(const string& uc) {
+    auto it = ucs.find(uc);
+
+    if (it != ucs.end()) {
+        return it->getNumeroTurmas();
+    }
 }

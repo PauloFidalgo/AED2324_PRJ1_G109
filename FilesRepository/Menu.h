@@ -17,11 +17,20 @@ enum Tipo {
     menuEstudantesPorUc,
     numeroDeEstudantesPorUc,
     printTurmasPorUC,
+    turmasEstatisticaMais,
+    turmasEstatisticaMenos
+};
+
+enum Cadeiras {
+    estatistica,
+    escolha,
 };
 
 enum OrdenacaoParcial {
     pesquisaEstudantePorNome,
     printTurmasPorUc,
+    estatisticaAno,
+    estisticaInscricoes,
 };
 
 enum ListagemUc {
@@ -48,9 +57,11 @@ private:
     thread pedidoThread;
     bool exitTimeThread;
     bool exitPedidoThread;
-    bool showMainMenu;
+    bool menu;
+    bool sair;
     Manager manager;
     int estudante2;
+    int nTurma;
     int pedidosAtivo;
     int nU;
     char userInput;
@@ -70,9 +81,11 @@ public:
     void menuOrdenacaoEstudanteUc();
     void menuTurmasEstudante();
     void menuOpcoesPedidos();
+    void menuEstatistica();
     void horarioEstudante();
     void horarioTurma();
     void trocarHorarioUc();
+    void getNTurmas();
     void adicionarUc();
     void horarioUc();
     void removerUc();
@@ -82,6 +95,7 @@ public:
     void getSecondStudent();
     void getUserInput();
     void getStudentNumber();
+    void escolhaOrdenado(const bool& first);
     void menuOpcoesTurmas(vector<string> lista);
     void getUC();
     void getNuc();
@@ -89,9 +103,9 @@ public:
     void getUC_Turma();
     void getAno();
     void menuAnoUc();
-    void menuOpçoes1Ano();
-    void menuOpçoes2Ano();
-    void menuOpçoes3Ano();
+    void menuOpçoes1Ano(Cadeiras cadeira, const bool &mais = true);
+    void menuOpçoes2Ano(Cadeiras cadeira, const bool &mais = true);
+    void menuOpçoes3Ano(Cadeiras cadeira, const bool &mais = true);
     void menuTurmaPorAno(const int &ano);
     void menuAnoTurma();
     void menuOrdenacaoPesquisaEstudanteNome();

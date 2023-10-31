@@ -39,6 +39,7 @@ public:
     int getMinimum() const;
     int getAno() const;
     int getNumeroAlunosTotal() const;
+    int getNumeroTurmas() const;
     float getMedia() const;
 
     // Setters

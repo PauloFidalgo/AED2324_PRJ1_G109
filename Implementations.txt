@@ -2,16 +2,8 @@
 
 Construir menu com opções:
     - Dia livre ?
-    - Menu: (Wagner)
-        - Pedidos Remover (Opções com as UCs do aluno pra remover)
-        - Pedidos para Adicionar (Ano / Opções para adicionar) (horario ?)
-    - Estatisticas:
-        - Uc com mais alunos (todas)
-        - Uc com menos alunos (todas)
-        - Turmas com mais alunos (na uc)
-        - Turmas com menos alunos (na uc)
-        - Ano com mais alunos ( 1 / 2 / 3)
-        - Ano com menos alunos ( 1 / 2  / 3)
-        - Alunos com mais UC's (10 / 20)
-        - Alunos com menos UC'S (10 / 20)
+    - Menu:
+        - Pedidos para Adicionar (Ano / Opções para adicionar) (horario ?) - Paulo
+
+
 

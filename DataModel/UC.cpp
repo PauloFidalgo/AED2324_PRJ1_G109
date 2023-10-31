@@ -60,6 +60,10 @@ Aula UC::getPratica(const std::string &turma) const {
     return res;
 }
 
+int UC::getNumeroTurmas() const {
+    return ucTurma.size();
+}
+
 std::vector<std::pair<std::string,std::pair<std::string,Aula>>> UC::getAulasUc() const {
     std::vector<std::pair<std::string,std::pair<std::string,Aula>>> res;
     for (const auto& turma : ucTurma) {
