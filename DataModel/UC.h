@@ -5,7 +5,7 @@
 #ifndef PROJECT_UC_H
 #define PROJECT_UC_H
 #include <string>
-#include <unordered_map>
+#include <map>
 #include <list>
 #include <vector>
 
@@ -20,17 +20,18 @@ struct TurmaInfo {
 class UC {
 private:
     std::string codigoUC;
-    std::unordered_map<std::string, TurmaInfo> ucTurma;
+    std::map<std::string, TurmaInfo> ucTurma;
     float media;
     int ano;
 
 public:
-    UC(const std::string &codigoUc, const std::unordered_map<std::string, TurmaInfo> &ucTurma, int media = 0);
-    UC(const std::string &codigoUc);
+    //! Constructors
+    UC(const std::string &codigoUc, const std::map<std::string, TurmaInfo> &ucTurma, int media = 0);
+    UC(std::string codigoUc);
     UC(const UC &other);
 
-    // Getters
-    std::unordered_map<std::string, TurmaInfo> getUcTurma() const;
+    //! Getters
+    std::map<std::string, TurmaInfo> getUcTurma() const;
     std::list<Aula> getAulasTurma(const std::string &turma) const;
     std::vector<std::pair<std::string,std::pair<std::string,Aula>>> getAulasUc() const;
     std::string getCodigoUc() const;
@@ -42,13 +43,13 @@ public:
     int getNumeroTurmas() const;
     float getMedia() const;
 
-    // Setters
+    //! Setters
     void addTurma(const std::string &turma, const TurmaInfo &turmaInfo);
     void addEstudantes(const std::string &turma, const std::list<std::pair<int,std::string>> &estudantes);
     void addEstudante(const std::string &turma, const int &estudante,const std::string &nome);
     void removeEstudante(const std::string &turma, const int &numero, const std::string &nome);
 
-    // Validators
+    //! Validators
     bool verificarTurma(const std::string &turma) const;
     bool checkBalance(const std::string &turma) const;
     bool operator<(const UC uc) const;

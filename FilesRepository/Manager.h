@@ -35,6 +35,7 @@ private:
     set<Estudante,CompareByName> estudantesNome;
     set<UC> ucs;
     queue<Pedido> pedidos;
+    vector<Pedido> pedidosEspera;
     stack<Pedido> historico;
     set<pair<int,string>> printHist;
     int nPedido;
@@ -42,15 +43,14 @@ private:
 
 public:
     // Constructor
-    Manager() {this->nPedido = 1;};
+    Manager();
 
     // Initialize
     void readFiles();
 
     // Printers
     void printHistorico() const;
-    void printHorario();
-    void printHorario(vector<pair<string,pair<string,Aula>>> horario);
+    void printHorario(vector<pair<string,pair<string,Aula>>> horario) const;
     void inputToHorario(const char &tipo, const string &uc, const string &turma, const int &numero);
     void printEstudantesPorTurmaNaUc(const string& uc, const string& turma, bool orderByNumber = true, bool ascending = true) const;
     void printEstudantesPorUC(const string& uc, const bool& orderByNumber = true, const bool& ascending = true) const;
@@ -58,30 +58,25 @@ public:
     void printTurmasPorUC(const string& uc, const bool& ascending = true) const;
     void numeroEstudantesEmPeloMenosNUCS(const int& nUcs, const bool& orderByNumber = true, const bool& ascending = true) const;
     void printNumeroEstudantesPorTurmaPorUc(const std::string &uc, const bool &orderByFirst = true, const bool &ascending = true) const;
-    void printTurmasDoAluno(const int &numero, const bool& ascending = true) const;
-    void printNumeroDeAlunosPorAno() const;
     void printInfoEstudante(const int &numero) const;
     void printNumeroEstudantesDeTodasUc() const;
-    set<pair<string,string>> enviaUCParaRemover(const int &numero) const;
+    void printEstudantesPorNome(string &nome, const bool &ascending) const;
     void printSets(int n, const string& uc, const bool& mais = true) const;
-    void printVectors(vector<pair<int, int>> &res, const bool &ordered, const bool &ascending) const;
     void printVectors(const char &tipo = ' ', const bool &ordered = false, const bool& ascending = true) const;
 
     // Getters
     int getPedidos() const;
     Estudante getEstudante(const int &numero) const;
     vector<pair<string,pair<string,Aula>>> getAulas(const Estudante &estudante) const;
-    unordered_map<string,list<Aula>> getTurmasPossiveis(const string &uc, list<Aula> &horarioPraticas);
+    map<string,list<Aula>> getTurmasPossiveis(const string &uc, list<Aula> &horarioPraticas);
     list<Aula> obterHorarioEstudantePraticas(const Estudante &estudante) const;
     list<Aula> obterHorarioEstudantePraticasExceto(const Estudante &estudante, const string &uc) const;
     TurmaInfo obterInfoUc(const std::string &uc, const std::string &turma) const;
     Aula obterPraticaUc(const string &uc, const string &turma) const;
-    unordered_map<string,list<Aula>> obterHorarioEstudante(const Estudante &estudante) const;
-    vector<string> enviaListaDeAulaPossivel(const string &uc, const int &estudante);
+    set<pair<string,string>> enviaUCParaRemover(const int &numero) const;
+    map<string,list<Aula>> enviaListaDeAulaPossivel(const string &uc, const int &estudante);
     set<string> getUcPorAno(const int &ano) const;
     set<string> getTurmasPorAno(const int &ano) const;
-    vector<pair<int,int>> estudantesEmMaisOuMenosUc(const int &n, const bool &mais) const;
-    void printEstudantesPorNome(string &nome, const bool &ascending) const;
     set<string> getTurmasPorUc(const string &uc) const;
     set<pair<int, string>> getOcupacaoTurmas(const string &uc) const;
     set<pair<int, string>> getOcupacaoUcs() const;
@@ -95,14 +90,14 @@ public:
     bool nUcValido(const int &n) const;
     bool addPedido(Pedido pedido);
     bool estudanteValido(const int &numero) const;
-    bool trocaValida(Pedido &pedido);
+    bool trocaValida(Pedido &pedido) const;
     bool ucValida(const string &uc) const;
-    bool turmaValidaNaUc(const string &uc, const string &turma);
     bool turmaValida(const string &turma) const;
-    bool verificarAulaSobreposta(const list<Aula> &horario, const Aula &aulaNova) const;
+    static bool verificarAulaSobreposta(const list<Aula> &horario, const Aula &aulaNova) ;
     bool validarNovaUc(const string &uc, const int &student);
-    bool removerValida(Pedido &pedido);
-    bool checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pair<string,pair<string,Aula>> &aula);
+    static bool removerValida(Pedido &pedido);
+    bool checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pair<string,pair<string,Aula>> &aula) const;
+    bool verificarPedidosRepetidos(const Pedido &pedido);
     bool inputToPedido(const string& uc, const int &estudante, const string &tipo, const int outro = 0, const string &turma = "");
 
     // Execution
@@ -112,10 +107,8 @@ public:
     void removerEstudanteDaUc(Pedido &pedido);
     void adicionarUcAoEstudante(Pedido &pedido);
     void trocaTurma(const string &uc, const string& turma1, const int &numero1, const string &nome1, const string& turma2, const int &numero2, const string &nome2);
-    void addEstudanteToUc(const string &uc, const string &turma, const int &numero, const string &nome);
-    void removeEstudanteFromUc(const string &uc, const string& turma, const int &numero);
-    vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario);
-    string ucToString(const string &uc) const;
+    vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario) const;
+    void verHorarioAntesDeConfirmar(const int &numero, const string &uc, const string &turma, const list<Aula> &aulas) const;
 
 };
 

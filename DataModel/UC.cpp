@@ -5,7 +5,7 @@
 #include "UC.h"
 
 #include <utility>
-
+//! Construtor por cópia
 UC::UC(const UC &other) {
     this->codigoUC = other.codigoUC;
     this->ucTurma = other.ucTurma;
@@ -13,7 +13,8 @@ UC::UC(const UC &other) {
     this->ano = other.ano;
 }
 
-UC::UC(const std::string &codigoUc, const std::unordered_map<std::string, TurmaInfo> &ucTurma, int media) {
+//! Construtor com todos os parâmetros
+UC::UC(const std::string &codigoUc, const std::map<std::string, TurmaInfo> &ucTurma, int media) {
     this->codigoUC = codigoUc;
     this->ucTurma = ucTurma;
     this->media = media;
@@ -24,20 +25,25 @@ UC::UC(const std::string &codigoUc, const std::unordered_map<std::string, TurmaI
     }
 }
 
-UC::UC(const std::string &codigoUc) : codigoUC(std::move(codigoUc)) {}
+//! Construtor com código, usado para procurar UC's pelo código
+UC::UC(const std::string codigoUc) : codigoUC(codigoUc) {}
 
-std::unordered_map<std::string, TurmaInfo> UC::getUcTurma() const {
+//! Retorna o map ucTurma
+std::map<std::string, TurmaInfo> UC::getUcTurma() const {
     return this->ucTurma;
 }
 
+//! Retorna o valor que divide os dois turnos das teóricas
 float UC::getMedia() const {
     return this->media;
 }
 
+//! Retorna o ano da UC
 int UC::getAno() const {
     return this->ano;
 }
 
+//! Retorna o número de alunos total da UC O(n)
 int UC::getNumeroAlunosTotal() const {
     int res = 0;
 
@@ -47,6 +53,7 @@ int UC::getNumeroAlunosTotal() const {
     return res;
 }
 
+//! Retorna a aula prática da turma (turma) O(log(n))
 Aula UC::getPratica(const std::string &turma) const {
     Aula res;
     auto it = this->ucTurma.find(turma);
@@ -60,10 +67,12 @@ Aula UC::getPratica(const std::string &turma) const {
     return res;
 }
 
+//! Retorna o número de turmas da UC
 int UC::getNumeroTurmas() const {
     return ucTurma.size();
 }
 
+//! Retorna um vetor formado por pares, em que o primeiro elemento é o nome da UC e o segundo é um par com o nome da turma e uma aula dessa turma
 std::vector<std::pair<std::string,std::pair<std::string,Aula>>> UC::getAulasUc() const {
     std::vector<std::pair<std::string,std::pair<std::string,Aula>>> res;
     for (const auto& turma : ucTurma) {
@@ -74,10 +83,12 @@ std::vector<std::pair<std::string,std::pair<std::string,Aula>>> UC::getAulasUc()
     return res;
 }
 
+//! Retorna o código da UC
 std::string UC::getCodigoUc() const {
     return this->codigoUC;
 }
 
+//! Retorna uma lista de aulas da turma (turma) O(log(n))
 std::list<Aula> UC::getAulasTurma(const std::string &turma) const {
     auto it = ucTurma.find(turma);
     std::list<Aula> res;
@@ -88,9 +99,10 @@ std::list<Aula> UC::getAulasTurma(const std::string &turma) const {
     return res;
 }
 
+//! Retorna o número de alunos da turma (turma) O(log(n))
 int UC::getNumeroAlunos(const std::string &turma) const {
     auto it = ucTurma.find(turma);
-    int res;
+    int res = 0;
 
     if (it != ucTurma.end()) {
         res = it->second.estudantes.size();
@@ -98,15 +110,16 @@ int UC::getNumeroAlunos(const std::string &turma) const {
     return res;
 }
 
+//! Adiciona um estudante a uma turma O(log(n))
 void UC::addEstudante(const std::string &turma, const int &estudante, const std::string &nome) {
     auto it = ucTurma.find(turma);
 
     if (it != ucTurma.end()) {
-        it -> second.estudantes.push_back({estudante,nome});
+        it -> second.estudantes.emplace_back(estudante,nome);
     }
 }
 
-
+//! Remove um estudante de uma turma O(log(n))
 void UC::removeEstudante(const std::string &turma, const int &numero, const std::string &nome) {
     auto it = ucTurma.find(turma);
 
@@ -115,26 +128,7 @@ void UC::removeEstudante(const std::string &turma, const int &numero, const std:
     }
 }
 
-bool UC::verificarTurma(const std::string &turma) const {
-    auto it = ucTurma.find(turma);
-
-    return (it != ucTurma.end());
-}
-
-void UC::addTurma(const std::string &turma, const TurmaInfo &turmaInfo) {
-    this->ucTurma.insert({turma,turmaInfo});
-}
-
-void UC::addEstudantes(const std::string &turma, const std::list<std::pair<int,std::string>> &estudantes) {
-    auto it = ucTurma.find(turma);
-
-    if (it != ucTurma.end()) {
-        it -> second.estudantes = estudantes;
-    } else {
-        std::cout << "Turma não encontrada";
-    }
-}
-
+//! Retorna o número de alunos da turma com menos alunos O(n)
 int UC::getMinimum() const {
     bool first = true;
     int min;
@@ -153,6 +147,7 @@ int UC::getMinimum() const {
     return min;
 }
 
+//! Verifica se ao adicionar um aluno novo à turma (turma), não é comprometido o equilíbrio entre turmas O(n)
 bool UC::checkBalance(const std::string &turma) const {
    int min = this->getMinimum();
 
@@ -163,7 +158,7 @@ bool UC::checkBalance(const std::string &turma) const {
     return true;
 }
 
-
+//! Compara UC's, pelo seu código
 bool UC::operator<(const UC uc) const {
     return this->codigoUC < uc.codigoUC;
 }
