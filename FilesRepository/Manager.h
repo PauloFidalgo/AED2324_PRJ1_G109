@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include "Pedido.h"
 #include <stack>
+#include <iomanip>
 #include <map>
 
 using namespace std;
@@ -38,6 +39,7 @@ private:
     stack<Pedido> historico;
     set<pair<int,string>> printHist;
     int nPedido;
+
 
 public:
     //! Constructor
@@ -111,6 +113,7 @@ public:
     vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario) const;
     void verHorarioAntesDeConfirmar(const int &numero, const string &uc, const string &turma, const list<Aula> &aulas) const;
 
+    string ucToString(const string &uc) const ;
 };
 
 #endif //PROJECT_MANAGER_H

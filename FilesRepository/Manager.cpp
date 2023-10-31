@@ -5,12 +5,12 @@
 #include "string"
 #include <iostream>
 
-// Constructor
+//! Constructor
 Manager::Manager() {
     this->nPedido = 1;
 }
 
-// Parsing
+//! Parsing
 void Manager::readFiles()
 {
     // reading students_classes.csv
@@ -134,6 +134,7 @@ void Manager::readFiles()
     iff.close();
 }
 
+//! Carrega as alterações pendentes, bem como as executadas
 void Manager::readChanges() {
     fstream iff;
     try {
@@ -231,7 +232,6 @@ void Manager::readChanges() {
     }
     try {
         ifstream wagnerSalvadorDaPatria("../Changes/queue.txt");
-        cout << "estudante1" << " " << "uc" << endl;
         string line, tipo, estudante1, uc, turma, estudante2;
 
         while (getline(wagnerSalvadorDaPatria, line)) {
@@ -250,7 +250,6 @@ void Manager::readChanges() {
                 pedidosEspera.push_back(pedido);
             }
             else {
-                cout << estudante1 << " " << uc << endl;
                 iss >> estudante1;
                 iss >> uc;
                 iss >> turma;
@@ -267,7 +266,7 @@ void Manager::readChanges() {
     }
 }
 
-//! Saves changes
+//! Escreve as alterações permanentes num ficheiro
 void Manager::writeRequestInFile(const Pedido& pedido, const bool& reverse) {
     fstream off("../Changes/changes.txt", off.app);
     try {
@@ -301,6 +300,7 @@ void Manager::writeRequestInFile(const Pedido& pedido, const bool& reverse) {
     }
 }
 
+//! Escreve os pedidos pendentes num ficheiro
 void Manager::guardaPedidosPendentes() {
     ofstream off;
     try {
@@ -578,7 +578,7 @@ string getHoras(const float& begin, const float& duration = 0.5){
 }
 
 //! Retorna a abreviatura de uma UC, consoante o seu código, utilizado no horário
-string ucToString(const string &uc) {
+string Manager::ucToString(const string &uc) const {
     map<string,string> maps = {{"L.EIC001","ALGA"},
                                {"L.EIC002", "AM I"},
                                {"L.EIC003", "FP"},
@@ -653,9 +653,9 @@ bool Manager::addPedido(Pedido pedido) {
             break;
     }
     if (res) {
-        cout << "-----------------------------------"  << endl;
-        cout << "Pedido adicionado à fila de espera" << endl;
-        cout << "-----------------------------------"  << endl;
+        cout << string(38,'-') << endl;
+        cout << "| Pedido adicionado à fila de espera |" << endl;
+        cout << string(38,'-') << endl;
         pedidos.push(pedido);
         pedidosEspera.push_back(pedido);
         guardaPedidosPendentes();
@@ -684,9 +684,9 @@ bool Manager::trocaValida(Pedido &pedido) const {
     //! Verifica se os dois estudantes estão inscritos na UC
     if (!(estudante.inscrito(uc) && outro.inscrito(uc))) {
         // Pelo menos um dos alunos não esta inscrito na UC
-        cout << "------------------------------------------------"  << endl;
-        cout << "Troca inválida, a Unidade curricular não é comum" << endl;
-        cout << "------------------------------------------------"  << endl;
+        cout << string(52,'-') << endl;
+        cout << "| Troca inválida, a Unidade curricular não é comum |" << endl;
+        cout << string(52,'-') << endl;
         return false;
     }
 
@@ -696,9 +696,9 @@ bool Manager::trocaValida(Pedido &pedido) const {
     //! Verifica se os dois estudantes já são da mesma turma
     if (turma == outraTurma) {
         // Já são de turmas iguais
-        cout << "-------------------------------------------"  << endl;
-        cout << "Troca inválida, já são da mesma turma" << endl;
-        cout << "-------------------------------------------"  << endl;
+        cout << string(47,'-') << endl;
+        cout << "| Troca inválida, já são da mesma turma |" << endl;
+        cout << string(47,'-') << endl;
         return false;
     }
 
@@ -710,9 +710,9 @@ bool Manager::trocaValida(Pedido &pedido) const {
 
     //! Caso algum aluno não tenha compatibilidade de horário para trocar, a troca é inválida
     if (!(verificarAulaSobreposta(horarioUm,aula) && verificarAulaSobreposta(horarioOutro, aulaNova))) {
-        cout << "-------------------------------------------"  << endl;
-        cout << "Alteração inválida, aula Prática sobreposta" << endl;
-        cout << "-------------------------------------------"  << endl;
+        cout << string(47,'-') << endl;
+        cout << "| Alteração inválida, aula Prática sobreposta |" << endl;
+        cout << string(47,'-') << endl;
         return false;
     }
     return true;
@@ -732,16 +732,16 @@ bool Manager::verificarAulaSobreposta(const list<Aula> &horario, const Aula &aul
 bool Manager::validarNovaUc(const string &uc, const int &student) {
     auto estudante = getEstudante(student); // O(log(n))
     if (estudante.inscrito(const_cast<string &>(uc))) {
-        cout << "---------------------------------"  << endl;
+        cout << string(33,'-')  << endl;
         cout << "O estudante já está incrito na UC" << endl;
-        cout << "---------------------------------"  << endl;
+        cout << string(33,'-')  << endl;
         return false;
     }
 
     if (estudante.getTurmas().size() >= 7) {
-        cout << "----------------------------------------------------------" << endl;
+        cout << string(58,'-') << endl;
         cout << "O estudante já está incrito a muitas Unidades Curriculares" << endl;
-        cout << "----------------------------------------------------------" << endl;
+        cout << string(58,'-') << endl;
         return false;
     }
 
@@ -759,9 +759,9 @@ bool Manager::validarNovaUc(const string &uc, const int &student) {
         cout << "O estudante não tem compatibilidade de horário" << endl;
         return false;
     }
-    cout << "---------------"  << endl;
-    cout << "A UC não existe" << endl;
-    cout << "---------------"  << endl;
+    cout << string(19,'-')  << endl;
+    cout << "| A UC não existe |" << endl;
+    cout << string(19,'-')  << endl;
     return false;
 }
 
@@ -830,13 +830,13 @@ bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pa
 //! Da print do histórico de pedidos executados 0(n)
 void Manager::printHistorico() const {
     if (!this->printHist.empty()) {
-        cout << "---------------------------------------------------------------------" << endl;
+        cout << string(69,'-') << endl;
         cout << "Histórico de alterações: " << endl;
-        cout << "---------------------------------------------------------------------" << endl;
+        cout << string(69,'-') << endl;
         for (const auto& line : this->printHist) {
             cout << line.first << " - " << line.second;
         }
-        cout << "---------------------------------------------------------------------" << endl;
+        cout << string(69,'-') << endl;
     }
     else {
         cout << "Não existem pedidos" << endl;
@@ -860,7 +860,7 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
         }
         if (iterator != turmaInfo.end()) {
             cout << string(56,'-') << endl;
-            cout <<'|' << string(16,' ') << "UC: " << it->getCodigoUc() << " | Turma: " << iterator->first << string(12,' ') << '|' << endl;
+            cout <<'|' << string(14,' ') << "UC: " << it->getCodigoUc() << " | Turma: " << iterator->first << string(56-14-4-12-it->getCodigoUc().length()-iterator->first.length(),' ') << '|' << endl;
             cout << string(56,'-') << endl;
             vector<pair<int,string>> studentList = iterator->second.estudantes;
 
@@ -902,9 +902,9 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
 
 void Manager::printNumeroEstudantesPorTurmaPorUc(const std::string &uc, const bool &orderByFirst , const bool &ascending) const {
     vector<pair<string,int>> turmas;
-    cout << "-----------------------------------"  << endl;
-    cout << "|     Estudantes na UC: " << uc << "  |"<< endl;
-    cout << "-----------------------------------"  << endl;
+    cout << string(35,'-') << endl;
+    cout << '|' <<string(4, ' ') << "Estudantes na UC: " << uc << string(10 - uc.length(), ' ') <<" |"<< endl;
+    cout << string(35,'-') << endl;
     auto it = ucs.find(uc);
 
     if (it != ucs.end()) {
@@ -1355,11 +1355,12 @@ void Manager::printInfoEstudante(const int &numero) const {
     if (estudante.getStudentNumber() != 0) {
         lista = estudante.getTurmas();
     }
-    // L.EIC001
+
+
     int len, lenf;
     auto it = lista.begin();
-    cout << "---------------------------------------------------------" << endl;
-    cout << "|                                  |    UC    |  Turma  |" << endl;
+    cout << string(57 , '-') << endl;
+    cout << "|" << string(34,' ') << "|    UC    |  Turma  |" << endl;
     for (int i = 0; i < lista.size() || i < 3; i++){
         if (i == 0){
             len = (10 - it->first.length()) / 2;
@@ -1423,9 +1424,9 @@ void Manager::printEstudantesPorNome(string& nome, const bool& ascending) const 
         }
     }
     if (!students.empty()) {
-        cout << "------------------------------------------------" << endl;
+        cout << string(47,'-')<< endl;
         cout << "|            Nome            |  Número   | Ano |" << endl;
-        cout << "------------------------------------------------" << endl;
+        cout << string(47,'-')<< endl;
 
         if (ascending) {
             for (const auto &elem: students) {
@@ -1446,9 +1447,9 @@ void Manager::printEstudantesPorNome(string& nome, const bool& ascending) const 
         }
     }
     else {
-        cout << "------------------------------------------------------" << endl;
-        cout << "Não existem estudantes com o nome " << nome << endl;
-        cout << "------------------------------------------------------" << endl;
+        cout << string(47,'-')<< endl;
+        cout <<'|' << string(3,' ') <<  "Não existem estudantes com o nome " << nome << string(8 - nome.length(),' ') << '|' << endl;
+        cout << string(47,'-')<< endl;
     }
 }
 
@@ -1461,17 +1462,17 @@ void Manager::printNumeroEstudantesDeTodasUc() const {
     cout << "|      1º Ano      |      2º Ano      |      3º Ano      |" << endl;
     cout << "----------------------------------------------------------" << endl;
     cout << "|    UC       Nº   |    UC       Nº   |    UC       Nº   |" << endl;
-    cout << "| L.EIC001:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC011:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC021:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "|   Alga:     " <<ucs.find(ucP)->getNumeroAlunosTotal() << "   |   AED:     " << ucs.find(ucS)->getNumeroAlunosTotal() << "   |   FSI:     " << ucs.find(ucT)->getNumeroAlunosTotal() << "   |" << endl;
     ucP = "L.EIC002", ucS = "L.EIC012", ucT = "L.EIC022";
-    cout << "| L.EIC002:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC012:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC022:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "|   AM I:     " << ucs.find(ucP)->getNumeroAlunosTotal() << "   |   BD:      " << ucs.find(ucS)->getNumeroAlunosTotal() << "   |   IPC:     " << ucs.find(ucT)->getNumeroAlunosTotal() << "   |" << endl;
     ucP = "L.EIC003", ucS = "L.EIC013", ucT = "L.EIC023";
-    cout << "| L.EIC003:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC013:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC023:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "|   FP:       "<< ucs.find(ucP)->getNumeroAlunosTotal() << "   |   F II:    " << ucs.find(ucS)->getNumeroAlunosTotal() << "   |   LBAW:    " << ucs.find(ucT)->getNumeroAlunosTotal() << "   |" << endl;
     ucP = "L.EIC004", ucS = "L.EIC014", ucT = "L.EIC024";
-    cout << "| L.EIC004:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC014:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC024:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "|   FSC:      " << ucs.find(ucP)->getNumeroAlunosTotal() << "   |   LDTS:    " << ucs.find(ucS)->getNumeroAlunosTotal() << "   |   PFL:     " << ucs.find(ucT)->getNumeroAlunosTotal() << "   |" << endl;
     ucP = "L.EIC005", ucS = "L.EIC015", ucT = "L.EIC025";
-    cout << "| L.EIC005:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC015:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC025:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "|   MD:       " <<  ucs.find(ucP)->getNumeroAlunosTotal() << "   |   SO:      " << ucs.find(ucS)->getNumeroAlunosTotal() << "   |   RC:      " << ucs.find(ucT)->getNumeroAlunosTotal() << "   |" << endl;
     ucP = "UP001";
-    cout << "| UP001:       " << ucs.find(ucP)->getNumeroAlunosTotal() << "   |                  |                  |" << endl;
+    cout << "|   PUP:      " << ucs.find(ucP)->getNumeroAlunosTotal() << "    |                  |                  |" << endl;
     cout << "----------------------------------------------------------" << endl;
     cout << endl;
 }
@@ -1488,20 +1489,21 @@ void Manager::printSets(int n, const string& uc, const bool& mais) const {
             auto it = allTurmas.rbegin();
             cout << "          |" << endl;
             while(n != 0 && it != allTurmas.rend()){
-                int len = (10 - it->second.length()) / 2;
-                int lenf = (10 - it->second.length()) % 2 == 0 ? len : len + 1;
+                int len = (9 - ucToString(it->second).length());
+
+
                 if (it->first == 0){
                     cout << "          |" << endl;
-                    cout << string(len, ' ') << it->second << string(lenf, ' ') << "|" << it->first << endl;
+                    cout << string(len, ' ') << ucToString(it->second) << " |" << it->first << endl;
                     cout << "          |" << endl;
                     n--;
                     it++;
                     continue;
                 }
                 int lenBarra = (it->first / tamanho) * 80;
-                cout << string(len + lenf + it-> second.length(), ' ') << "|" << string(lenBarra, '-') << endl;
-                cout << string(len, ' ') << it->second << string(lenf, ' ') << "|" << string(lenBarra - 1, ' ') << "| " << it->first << endl;
-                cout << string(len + lenf + it-> second.length(), ' ') << "|" << string(lenBarra, '-') << endl;
+                cout << string(10, ' ') << "|" << string(lenBarra, '-') << endl;
+                cout << string(len, ' ') << ucToString( it->second ) << " |" << string(lenBarra - 1, ' ') << "| " << it->first << endl;
+                cout << string(10, ' ') << "|" << string(lenBarra, '-') << endl;
                 cout << "          |" << endl;
                 n--;
                 it++;
