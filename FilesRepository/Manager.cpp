@@ -1,4 +1,3 @@
-
 #include "Manager.h"
 #include "fstream"
 #include "sstream"
