@@ -37,6 +37,7 @@ public:
 
     // Validators
     bool inscrito(std::string &uc) const;
+    bool operator==(const Estudante &estudante) const;
 };
 
 

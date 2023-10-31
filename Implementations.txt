@@ -1,9 +1,5 @@
 
 
 Construir menu com opções:
-    - Dia livre ?
     - Menu:
         - Pedidos para Adicionar (Ano / Opções para adicionar) (horario ?) - Paulo
-
-
-

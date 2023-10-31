@@ -96,7 +96,7 @@ public:
     void getUserInput();
     void getStudentNumber();
     void escolhaOrdenado(const bool& first);
-    void menuOpcoesTurmas(vector<string> lista);
+    void menuOpcoesTurmas(map<string,list<Aula>> turmas);
     void getUC();
     void getNuc();
     void getTurma();

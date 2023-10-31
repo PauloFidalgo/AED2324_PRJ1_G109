@@ -8,6 +8,7 @@
 
 #include "../DataModel/Estudante.h"
 #include <stack>
+#include <iostream>
 
 enum TipoAlteracao {H, A, R};
 
@@ -24,9 +25,12 @@ public:
     Estudante getEstudante();
     Estudante getOutroEstudante();
     void setTurma(const std::string &turma);
+    std::string pedidoToString() const;
+    bool pedidosConcorrentes(const Pedido &pedido);
     std::string getUc() const;
     std::string getTurma() const;
     TipoAlteracao getTipoAlteracao() const;
+    bool operator==(const Pedido &other) const;
 };
 
 

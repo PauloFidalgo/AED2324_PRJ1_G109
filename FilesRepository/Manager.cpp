@@ -24,6 +24,15 @@ void Manager::printHistorico() const {
     }
 }
 
+bool Manager::verificarPedidosRepetidos(const Pedido &pedido) {
+    for (auto p : pedidosEspera) {
+        if (! p.pedidosConcorrentes(pedido)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 void Manager::readFiles()
 {
     // reading students_classes.csv
@@ -149,6 +158,9 @@ void Manager::readFiles()
 
 bool Manager::addPedido(Pedido pedido) {
     bool res = false;
+
+    if (!verificarPedidosRepetidos(pedido)) return false;
+
     switch (pedido.getTipoAlteracao()) {
         case TipoAlteracao::H: res = trocaValida(pedido);
             break;
@@ -162,6 +174,7 @@ bool Manager::addPedido(Pedido pedido) {
         cout << "Pedido adicionado à fila de espera" << endl;
         cout << "-----------------------------------"  << endl;
         pedidos.push(pedido);
+        pedidosEspera.push_back(pedido);
     }
     return res;
 }
@@ -300,9 +313,9 @@ void Manager::removerEstudanteDaUc(Pedido &pedido) {
     }
 }
 
-unordered_map<string,list<Aula>> Manager::getTurmasPossiveis(const string &uc, list<Aula> &horarioPraticas) {
+map<string,list<Aula>> Manager::getTurmasPossiveis(const string &uc, list<Aula> &horarioPraticas) {
     auto it = ucs.find(uc);
-    unordered_map<string,list<Aula>> res;
+    map<string,list<Aula>> res;
 
     if (it != ucs.end()) {
         unordered_map<string,TurmaInfo> turmas = it->getUcTurma();
@@ -320,15 +333,12 @@ unordered_map<string,list<Aula>> Manager::getTurmasPossiveis(const string &uc, l
     return res;
 }
 
-vector<string> Manager::enviaListaDeAulaPossivel(const string &uc, const int &estudante) {
+
+map<string,list<Aula>> Manager::enviaListaDeAulaPossivel(const string &uc, const int &estudante) {
     Estudante student = getEstudante(estudante);
 
     list<Aula> praticas = obterHorarioEstudantePraticas(student);
-    unordered_map<string,list<Aula>> temp = getTurmasPossiveis(uc, praticas);
-    vector<string> res;
-    for (const auto& it : temp ) {
-        res.push_back(it.first);
-    }
+    map<string,list<Aula>> res = getTurmasPossiveis(uc, praticas);
     return res;
 }
 
@@ -421,33 +431,32 @@ void Manager::proximoPedido() {
         switch (pedidos.front().getTipoAlteracao()) {
             case TipoAlteracao::H: {
                 executarPedidoTrocaHorario(pedidos.front());
-                ostringstream oss;
-                oss << "Troca de turma entre o estudante " << pedidos.front().getEstudante().getStudentNumber() << " e o estudante " << pedidos.front().getOutroEstudante().getStudentNumber() << " na UC " << pedidos.front().getUc() << endl;
-                cout << oss.str();
-                printHist.insert({this->nPedido, oss.str()});
+                printHist.insert({this->nPedido, pedidos.front().pedidoToString()});
                 this->nPedido++;
                 break;
             }
             case TipoAlteracao::R: {
                 removerEstudanteDaUc(pedidos.front());
-                ostringstream oss;
-                oss << "Removeu o estudante " << pedidos.front().getEstudante().getStudentNumber() << " da UC " << pedidos.front().getUc() << endl;
-                cout << oss.str();
-                printHist.insert({this->nPedido, oss.str()});
+                printHist.insert({this->nPedido, pedidos.front().pedidoToString()});
                 this->nPedido++;
                 break;
             }
             case TipoAlteracao::A: {
                 adicionarUcAoEstudante(pedidos.front());
-                ostringstream oss;
-                oss << "Adicionou o estudante " << pedidos.front().getEstudante().getStudentNumber() << " na UC " << pedidos.front().getUc() << endl;
-                cout << oss.str();
-                printHist.insert({this->nPedido, oss.str()});
+                printHist.insert({this->nPedido,pedidos.front().pedidoToString()});
                 this->nPedido++;
                 break;
             }
         }
+        cout << pedidos.front().pedidoToString();
         historico.push(pedidos.front());
+
+        for (auto it = pedidosEspera.begin(); it != pedidosEspera.end(); it++) {
+            if (*it == pedidos.front()) {
+                pedidosEspera.erase(it);
+                break;
+            }
+        }
         pedidos.pop();
     }
     else {
@@ -466,33 +475,28 @@ bool Manager::estudanteValido(const int &numero) const {
 void Manager::reverterPedido() {
     if (!(historico.empty())) {
         Pedido last = historico.top();
+        string temp = "Reverteu o pedido: " + last.pedidoToString();
         switch (last.getTipoAlteracao()) {
             case TipoAlteracao::H: {
                 executarPedidoTrocaHorario(last);
-                ostringstream oss;
-                oss << "Reverteu o Pedido: Troca de turma entre o estudante " << last.getEstudante().getStudentNumber() << " e o estudante " << last.getOutroEstudante().getStudentNumber() << " na UC " << last.getUc() << endl;
-                printHist.insert({this->nPedido, oss.str()});
+                printHist.insert({this->nPedido, temp});
                 this->nPedido++;
                 break;
             }
             case TipoAlteracao::R: {
                 adicionarUcAoEstudante(last);
-                ostringstream oss;
-                oss << "Reverteu o Pedido: Removeu o estudante " << last.getEstudante().getStudentNumber() << " da UC " << last.getUc() << endl;
-                printHist.insert({this->nPedido, oss.str()});
+                printHist.insert({this->nPedido, temp});
                 this->nPedido++;
                 break;
             }
             case TipoAlteracao::A: {
                 removerEstudanteDaUc(last);
-                ostringstream oss;
-                oss << "Reverteu o Pedido: Adicionou o estudante " << last.getEstudante().getStudentNumber() << " da UC " << last.getUc() << endl;
-                printHist.insert({this->nPedido, oss.str()});
+                printHist.insert({this->nPedido, temp});
                 this->nPedido++;
                 break;
             }
         }
-        cout << "Último pedido revertido!" << endl;
+        cout << temp;
         historico.pop();
     }
     else {
@@ -985,7 +989,7 @@ void Manager::inputToHorario(const char &tipo, const string &uc, const string &t
     }
 }
 
-bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pair<string,pair<string,Aula>> &aula) {
+bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pair<string,pair<string,Aula>> &aula) const {
     string line;
     for (auto slot : horario) {
         if (slot.first == aula.first && slot.second.second.mesmoHorario(aula.second.second)) {
@@ -1008,7 +1012,7 @@ bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pa
 }
 
 
-vector<pair<string,pair<string,Aula>>> Manager::createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario)  {
+vector<pair<string,pair<string,Aula>>> Manager::createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario) const {
     vector<pair<string,pair<string,Aula>>> sobrepostas;
     for (auto i = horario.begin(); i != horario.end(); ++i){
         auto j = i;
@@ -1123,7 +1127,7 @@ const string getHoras(const float& begin, const float& duration = 0.5){
 
 
 
-void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) {
+void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) const {
 
     vector<pair<string,pair<string,Aula>>> sobrepostas = createSobrepostas(horario);
     unordered_map<string,string> translate = {{"Monday","Segunda"}, {"Tuesday","Terça"}, {"Wednesday","Quarta"}, {"Thursday","Quinta"}, {"Friday","Sexta"}};
@@ -1628,4 +1632,15 @@ int Manager::getNumeroTurmas(const string& uc) {
     if (it != ucs.end()) {
         return it->getNumeroTurmas();
     }
+}
+
+void Manager::verHorarioAntesDeConfirmar(const int &numero, const string &uc, const string &turma, const list<Aula> &aulas) const {
+    auto estudante = getEstudante(numero);
+
+    vector<pair<string,pair<string,Aula>>> horario = getAulas(estudante);
+
+    for (auto aula : aulas) {
+        horario.push_back({uc,{turma,aula}});
+    }
+    printHorario(horario);
 }

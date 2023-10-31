@@ -74,3 +74,7 @@ bool Estudante::inscrito(std::string &uc) const {
     }
     return false;
 }
+
+bool Estudante::operator==(const Estudante &estudante) const {
+    return (this->nome == estudante.nome) && (this->numero == estudante.numero) && (this->ano == estudante.ano) && (this->turmas == estudante.turmas);
+}
