@@ -285,7 +285,7 @@ void Menu::adicionarUc() {
             while (!confirmou) {
                 menuOpcoesTurmas(turmas);
                 while (true) {
-                    cout << "Escolha uma turma: ";
+                    cout << "Escolha uma turma (escreva 'sair' para voltar atrás): ";
                     string line;
                     cin >> line;
                     int idx;
