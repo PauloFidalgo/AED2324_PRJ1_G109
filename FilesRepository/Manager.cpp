@@ -777,7 +777,9 @@ void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, c
         }
         else {
             for (auto i = estudantesNumero.rbegin(); i != estudantesNumero.rend(); ++i){
-                cout << i->getStudentNumber() << ' ' << i->getStudentName() << endl;
+                if (i->getAno() == ano) {
+                    cout << i->getStudentNumber() << ' ' << i->getStudentName() << endl;
+                }
             }
         }
     }
@@ -791,7 +793,9 @@ void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, c
         }
         else {
             for (auto i = estudantesNome.rbegin(); i != estudantesNome.rend(); ++i){
-                cout << i->getStudentNumber() << ' ' << i->getStudentName() << endl;
+                if (i->getAno() == ano) {
+                    cout << i->getStudentNumber() << ' ' << i->getStudentName() << endl;
+                }
             }
         }
     }

@@ -1575,16 +1575,16 @@ void Menu::ordernaçãoTotal(OrdenacaoTotal ord, int ano, string uc, string turm
             case OrdenacaoTotal::numeroEstuntesPorTurmaPorUc: {
                 switch (this->userInput) {
                     case '1':
-                        manager.printNumeroEstudantesPorTurmaPorUc(uc, true, true);
-                        break;
-                    case '2':
-                        manager.printNumeroEstudantesPorTurmaPorUc(uc, true, false);
-                        break;
-                    case '3':
                         manager.printNumeroEstudantesPorTurmaPorUc(uc, false, true);
                         break;
-                    case '4':
+                    case '2':
                         manager.printNumeroEstudantesPorTurmaPorUc(uc, false, false);
+                        break;
+                    case '3':
+                        manager.printNumeroEstudantesPorTurmaPorUc(uc, true, true);
+                        break;
+                    case '4':
+                        manager.printNumeroEstudantesPorTurmaPorUc(uc, true, false);
                         break;
                     case 'b' :
                         return;
