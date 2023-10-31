@@ -586,11 +586,17 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
     if (it != ucs.end()) {
         unordered_map<string,TurmaInfo> turmaInfo = it->getUcTurma();
         auto iterator = turmaInfo.find(turma);
+        if(iterator->second.estudantes.empty()){
+            cout << string(56,'-')<<endl;
+            cout << '|' << string ( 12, ' ') << "Não existem alunos nesta turma"<< string(12, ' ') << '|' << endl;
+            cout << string(56,'-')<<endl;
 
+            return;
+        }
         if (iterator != turmaInfo.end()) {
-            cout << "------------------------------------"  << endl;
-            cout << "UC: " << it->getCodigoUc() << " | Turma: " << iterator->first << endl;
-            cout << "------------------------------------"  << endl;
+            cout << string(56,'-') << endl;
+            cout <<'|' << string(16,' ') << "UC: " << it->getCodigoUc() << " | Turma: " << iterator->first << string(12,' ') << '|' << endl;
+            cout << string(56,'-') << endl;
             list<pair<int,string>> studentList = iterator->second.estudantes;
 
             if (orderByNumber) studentList.sort(compareFirstElement);
@@ -599,23 +605,36 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
 
             if (ascending){
                 for (const auto& element : studentList){
-                    cout << element.first << ' ' << element.second << endl;
+
+                    int totalWidth = 26;
+
+                    if (element.second == "Verónica"){
+                        totalWidth = 27 ;
+                    }
+
+                    cout << '|'<< string(18,' ') << element.first << ' ' << element.second << string(totalWidth-element.second.length(),' ') << '|' << endl;
                 }
             }
             else{
                 for (auto i = studentList.rbegin(); i != studentList.rend(); ++i){
-                    cout << i->first << ' ' << i->second << endl;
+                    int totalWidth = 26;
+
+                    if (i->second == "Verónica"){
+                        totalWidth = 27 ;
+                    }
+
+                    cout << '|'<< string(18,' ') << i->first << ' ' << i->second << string(totalWidth- i->second.length(),' ') << '|' << endl;
                 }
             }
         }
-        cout << "-----------------------------------"  << endl;
+        cout << string(56,'-')<< endl;
     }
 }
 
 void Manager::printNumeroEstudantesPorTurmaPorUc(const std::string &uc, const bool &orderByFirst , const bool &ascending) const {
     vector<pair<string,int>> turmas;
     cout << "-----------------------------------"  << endl;
-    cout << "     Estudantes na UC: " << uc << endl;
+    cout << "|     Estudantes na UC: " << uc << "  |"<< endl;
     cout << "-----------------------------------"  << endl;
     auto it = ucs.find(uc);
 
@@ -634,12 +653,12 @@ void Manager::printNumeroEstudantesPorTurmaPorUc(const std::string &uc, const bo
 
     if (ascending) {
         for (const auto& elem : turmas) {
-            cout << elem.first << " Nº: " << elem.second << endl;
+            cout <<"|          "<< elem.first << " Nº: " << elem.second << "          |"<<endl;
         }
     }
     else {
         for (auto it = turmas.rbegin(); it != turmas.rend(); it++) {
-            cout << it->first << " Nº: " << it->second << endl;
+            cout <<"|          "<< it->first << " Nº: " << it->second<< "          |" << endl;
         }
     }
     cout << "-----------------------------------"  << endl;
@@ -674,28 +693,41 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
         }
 
         if (studentList.empty()){
-            cout << "----------------------------------------"  << endl;
-            cout << "Não existem estudantes na UC: " << uc << endl;
-            cout << "----------------------------------------"  << endl;
+            cout << string(56,'-')<< endl;
+            cout <<"|" << string(10,' ')<< "Não existem estudantes na UC: " << uc << string(9,' ') << "|"<<endl;
+            cout << string(56,'-')<< endl;
             return;
         }
 
-        cout << "--------------------------------------"  << endl;
-        cout << "Estudantes inscritos na UC: " << it->getCodigoUc() << endl;
-        cout << "--------------------------------------"  << endl;
+        cout << string (56,'-')  << endl;
+        cout <<"|" << string(10,' ') <<"Estudantes inscritos na UC: " << it->getCodigoUc() << string(8,' ') << "|"<<endl;
+        cout << string (56,'-')  << endl;
 
         if (ascending){
 
             for (const auto& element : studentList){
-                cout << element.first << ' ' << element.second << endl;
+                int totalWidth = 28;
+
+                if (element.second == "Verónica"){
+                    totalWidth = 29 ;
+                }
+
+                cout<< "|"<< string (16,' ') << element.first << ' ' << element.second << string(totalWidth-element.second.length(),' ') << "|" <<endl;
             }
         }
         else{
             for (auto i = studentList.rbegin(); i != studentList.rend(); ++i){
-                cout << i->first << ' ' << i->second << endl;
+                int totalWidth = 28;
+
+                if (i->second == "Verónica"){
+                    totalWidth = 29 ;
+                }
+
+                cout<< "|"<< string (16,' ') << i->first << ' ' << i->second << string(totalWidth-i->second.length(),' ') << "|" <<endl;
             }
         }
-        cout << "----------------------------------------"  << endl;
+        cout << string (56,'-')  << endl;
+
     } else {
         set<pair<int, string>, CompareBySecond> studentList;
         auto it = ucs.find(uc);
@@ -709,27 +741,40 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
         }
 
         if (studentList.empty()){
-            cout << "----------------------------------------"  << endl;
-            cout << "Não existem estudantes na UC: " << uc << endl;
-            cout << "----------------------------------------"  << endl;
+            cout << string (56,'-')  << endl;
+            cout <<"|" << string(10,' ')<< "Não existem estudantes na UC: " << uc << string(9,' ') << "|"<<endl;
+            cout << string (56,'-')  << endl;
             return;
         }
 
-        cout << "--------------------------------------"  << endl;
-        cout << "Estudantes inscritos na UC: " << it->getCodigoUc() << endl;
-        cout << "--------------------------------------"  << endl;
+        cout << string (56,'-')  << endl;
+        cout <<"|" << string(10,' ') <<"Estudantes inscritos na UC: " << it->getCodigoUc() << string(8,' ') << "|"<<endl;
+        cout << string (56,'-')  << endl;
 
         if (ascending){
             for (const auto& element : studentList){
-                cout << element.first << ' ' << element.second << endl;
+
+                int totalWidth = 28;
+
+                if (element.second == "Verónica"){
+                    totalWidth = 29 ;
+                }
+
+                cout<< "|"<< string (16,' ') << element.first << ' ' << element.second << string(totalWidth-element.second.length(),' ') << "|" <<endl;
             }
         }
         else{
             for (auto i = studentList.rbegin(); i != studentList.rend(); ++i){
-                cout << i->first << ' ' << i->second << endl;
+                int totalWidth = 28;
+
+                if (i->second == "Verónica"){
+                    totalWidth = 29 ;
+                }
+
+                cout<< "|"<< string (16,' ') << i->first << ' ' << i->second << string(totalWidth-i->second.length(),' ') << "|" <<endl;
             }
         }
-        cout << "----------------------------------------"  << endl;
+        cout << string (56,'-')  << endl;
     }
 }
 
@@ -760,20 +805,39 @@ void Manager::printTurmasDoAluno(const int &numero, const bool& ascending) const
 }
 
 void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, const bool &ascending) const {
-    cout << "-----------------------------------"  << endl;
-    cout << "Estudantes do " << ano << "º ano: " << endl;
-    cout << "-----------------------------------"  << endl;
+    cout << string (56,'-')  << endl;
+    cout << "|"<<string(16,' ')<< "Estudantes do " << ano << "º ano:"<< string(17,' ')<< "|" << endl;
+    cout << string (56,'-')  << endl;
     if (orderByNumber){
         if (ascending){
             for (const auto& estudante : estudantesNumero){
                 if (estudante.getAno() == ano){
-                    cout << estudante.getStudentNumber() << ' ' << estudante.getStudentName() << endl;
+                    std::string studentNumber = to_string(estudante.getStudentNumber());
+                    std::string studentName = estudante.getStudentName();
+
+                    int totalWidth = 28;
+
+                    if (studentName == "Verónica"){
+                        totalWidth = 29 ;
+                    }
+
+                    cout << "|"<< string(16,' ') << studentNumber << ' ' << studentName << string(totalWidth-studentName.length(),' ') << "|" << endl;
+
                 }
             }
         }
         else {
             for (auto i = estudantesNumero.rbegin(); i != estudantesNumero.rend(); ++i){
-                cout << i->getStudentNumber() << ' ' << i->getStudentName() << endl;
+                if (i->getAno() ==ano) {
+                    std::string studentNumber = to_string(i->getStudentNumber());
+                    std::string studentName = i->getStudentName();
+
+                    int totalWidth =28;
+                    if (studentName == "Verónica"){
+                        totalWidth = 29 ;
+                    }
+                    cout << "|"<< string(16,' ') << studentNumber << ' ' << studentName << string(totalWidth-studentName.length(),' ') << "|" << endl;
+                }
             }
         }
     }
@@ -781,24 +845,43 @@ void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, c
         if (ascending){
             for (const auto& estudante : estudantesNome){
                 if (estudante.getAno() == ano){
-                    cout << estudante.getStudentNumber() << ' ' << estudante.getStudentName() << endl;
+
+                    std::string studentNumber = to_string(estudante.getStudentNumber());
+                    std::string studentName = estudante.getStudentName();
+
+                    int totalWidth = 28;
+
+                    if (studentName == "Verónica"){
+                        totalWidth = 29 ;
+                    }
+
+                    cout << "|"<< string(16,' ') << studentNumber << ' ' << studentName << string(totalWidth-studentName.length(),' ') << "|" << endl;
                 }
             }
         }
         else {
             for (auto i = estudantesNome.rbegin(); i != estudantesNome.rend(); ++i){
-                cout << i->getStudentNumber() << ' ' << i->getStudentName() << endl;
+                if(i->getAno() == ano) {
+                    std::string studentNumber = to_string(i->getStudentNumber());
+                    std::string studentName = i->getStudentName();
+
+                    int totalWidth =28;
+                    if (studentName == "Verónica"){
+                        totalWidth = 29 ;
+                    }
+                    cout << "|"<< string(16,' ') << studentNumber << ' ' << studentName << string(totalWidth-studentName.length(),' ') << "|" << endl;
+                }
             }
         }
     }
-    cout << "-----------------------------------"  << endl;
+    cout << string(56,'-') << endl;
 }
 
 void Manager::printTurmasPorUC(const std::string &uc, const bool &ascending) const {
     set<string> turmas;
-    cout << "-----------------------------------"  << endl;
-    cout << "     Turmas da UC: " << uc << endl;
-    cout << "-----------------------------------"  << endl;
+    cout <<  string (35,'-')<< endl;
+    cout << "|" << string (6,' ') << "Turmas da UC: " << uc <<string(5,' ')<<"|"<<endl ;
+    cout <<  string (35,'-')<< endl;
     auto it = ucs.find(uc);
 
     if (it != ucs.end()) {
@@ -809,12 +892,12 @@ void Manager::printTurmasPorUC(const std::string &uc, const bool &ascending) con
 
     if (ascending){
         for (auto turma : turmas){
-            cout << turma << endl;
+            cout <<"|             "<< turma <<"             |" <<endl;
         }
     }
     else {
         for (auto i = turmas.rbegin(); i != turmas.rend(); ++i){
-            cout << *i << endl;
+            cout <<"|             "<< *i <<"             |"<< endl;
         }
     }
     cout << "-----------------------------------"  << endl;
@@ -832,7 +915,15 @@ void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& order
             for (auto& estudante : estudantesNumero){
                 if (estudante.getTurmas().size() >= nUcs){
                     students.push_back(estudante);
-                    ss << estudante.getStudentNumber() << ' ' << estudante.getStudentName() << endl;
+
+                    string studentName = estudante.getStudentName();
+                    int totalWidth = 48;
+
+                    if (studentName == "Verónica"){
+                        totalWidth = 49 ;
+                    }
+
+                    ss <<'|' << string(40,' ')<< estudante.getStudentNumber() << ' ' << estudante.getStudentName() << string(totalWidth-studentName.length(),' ')<< '|' << endl;
                 }
             }
         }
@@ -840,7 +931,15 @@ void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& order
             for (auto i = estudantesNumero.rbegin(); i != estudantesNumero.rend(); ++i){
                 if (i->getTurmas().size() >= nUcs){
                     students.push_back(*i);
-                    ss << i->getStudentNumber() << ' ' << i->getStudentName() << endl;
+                    string studentName = i->getStudentName();
+
+                    int totalWidth = 48;
+
+                    if (studentName == "Verónica"){
+                        totalWidth = 49 ;
+                    }
+
+                    ss <<'|' << string(40,' ')<< i->getStudentNumber() << ' ' << i->getStudentName() << string(totalWidth-studentName.length(),' ')<< '|' << endl;
                 }
             }
         }
@@ -850,7 +949,15 @@ void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& order
             for (auto& estudante : estudantesNome){
                 if (estudante.getTurmas().size() >= nUcs){
                     students.push_back(estudante);
-                    ss << estudante.getStudentNumber() << ' ' << estudante.getStudentName() << endl;
+
+                    string studentName = estudante.getStudentName();
+                    int totalWidth = 48;
+
+                    if (studentName == "Verónica"){
+                        totalWidth = 49 ;
+                    }
+
+                    ss <<'|' << string(40,' ')<< estudante.getStudentNumber() << ' ' << estudante.getStudentName() << string(totalWidth-studentName.length(),' ')<< '|' << endl;
                 }
             }
         }
@@ -858,22 +965,32 @@ void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& order
             for (auto i = estudantesNome.rbegin(); i != estudantesNome.rend(); ++i){
                 if (i->getTurmas().size() >= nUcs){
                     students.push_back(*i);
-                    ss << i->getStudentNumber() << ' ' << i->getStudentName() << endl;
+
+                    string studentName = i->getStudentName();
+
+                    int totalWidth = 48;
+
+                    if (studentName == "Verónica"){
+                        totalWidth = 49 ;
+                    }
+
+                    ss <<'|' << string(40,' ')<< i->getStudentNumber() << ' ' << i->getStudentName() << string(totalWidth-studentName.length(),' ')<< '|' << endl;
+
                 }
             }
         }
     }
     if (students.size() > 0) {
-        cout << "------------------------------------------------------------------"  << endl;
-        cout << "Estão inscritos " << students.size() << " alunos em pelo menos " << nUcs << " Unidades Curriculares." << endl;
-        cout << "------------------------------------------------------------------"  << endl;
-        cout << ss.str();
-        cout << "------------------------------------------------------------------"  << endl;
+        cout << string(100,'-') << endl;
+        cout << '|' << string (17, ' ') << "Estão inscritos " << students.size() << " alunos em pelo menos " << nUcs << " Unidades Curriculares." << string(17,' ')<< '|' << endl;
+        cout << string(100,'-') << endl;
+        cout<< ss.str();
+        cout << string(100,'-') << endl;
     }
     else {
-        cout << "---------------------------------------------------------"  << endl;
-        cout << "Não existem alunos inscritos a " << nUcs << " Unidades Curriculares." << endl;
-        cout << "---------------------------------------------------------"  << endl;
+        cout << string(100,'-') << endl;
+        cout << '|' << string (17, ' ') << "Não existem alunos inscritos a " << nUcs << " Unidades Curriculares."<<  string(16,' ')<< '|' << endl;
+        cout << string(100,'-') << endl;
     }
 
 }

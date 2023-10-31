@@ -329,18 +329,10 @@ void Menu::removerUc() {
                 cout << "|" << string(lenf, ' ') << i << " - " << uc.first << string(len, ' ') << "|" <<  endl;
                 i++;
             }
-            cout
-                    << "|  m - menu                                                                                            |"
-                    << endl;
-            cout
-                    << "|  b - anterior                                                                                        |"
-                    << endl;
-            cout
-                    << "|  q - sair                                                                                            |"
-                    << endl;
-            cout
-                    << "--------------------------------------------------------------------------------------------------------"
-                    << endl;
+            cout<< "|  m - menu                                                                                            |"<< endl;
+            cout<< "|  b - anterior                                                                                        |"<< endl;
+            cout<< "|  q - sair                                                                                            |"<< endl;
+            cout<< "--------------------------------------------------------------------------------------------------------"<< endl;
 
             string line;
             cout << "Escolha uma opção: ";
@@ -1428,10 +1420,10 @@ void Menu::ordernaçãoTotal(OrdenacaoTotal ord, int ano, string uc, string turm
         cout << "|  q - sair                                                                                            |" << endl;
         cout << "--------------------------------------------------------------------------------------------------------" << endl;
 
-        getUserInput();
 
         switch (ord) {
             case OrdenacaoTotal::estudantesPorTurmaNaUc: {
+                getUserInput();
                 switch (this->userInput) {
                     case '1':
                         manager.printEstudantesPorTurmaNaUc(uc, turma, true, true);
@@ -1458,6 +1450,7 @@ void Menu::ordernaçãoTotal(OrdenacaoTotal ord, int ano, string uc, string turm
                 break;
             }
             case OrdenacaoTotal::estudantesPorAno: {
+                getUserInput();
                 switch (userInput) {
                     case '1': {
                         manager.printEstudantesPorAno(ano, true, true);
@@ -1489,6 +1482,7 @@ void Menu::ordernaçãoTotal(OrdenacaoTotal ord, int ano, string uc, string turm
                 break;
             }
             case OrdenacaoTotal::estudantesNucs: {
+                getUserInput();
                 switch (this->userInput) {
                     case '1':
                         getNuc();
@@ -1523,6 +1517,7 @@ void Menu::ordernaçãoTotal(OrdenacaoTotal ord, int ano, string uc, string turm
                 break;
             }
             case OrdenacaoTotal::numeroEstuntesPorTurmaPorUc: {
+                getUserInput();
                 switch (this->userInput) {
                     case '1':
                         manager.printNumeroEstudantesPorTurmaPorUc(uc, true, true);
@@ -1549,6 +1544,7 @@ void Menu::ordernaçãoTotal(OrdenacaoTotal ord, int ano, string uc, string turm
                 break;
             }
             case OrdenacaoTotal::estudantesPorUc: {
+                getUserInput();
                 switch (this->userInput) {
                     case '1':
                         manager.printEstudantesPorUC(uc, true, true);
