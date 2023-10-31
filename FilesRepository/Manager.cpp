@@ -1133,14 +1133,14 @@ void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) {
 
     for(const auto& elem : horario){
         pair<int,int> coordinates = make_pair(weekdays[elem.second.second.getDia()], (elem.second.second.getInicio() - 8.0) * 4.0);
-        int lenTotal = elem.first.length() + elem.second.second.getTipo().length() + 3;
+        int lenTotal = ucToString(elem.first).length() + elem.second.second.getTipo().length() + 3;
         int lenUC = (LEN - lenTotal) / 2;
         string uc;
         if ((LEN - lenTotal) % 2 == 1) {
-            uc += (string(lenUC,' ') + elem.first + " (" + elem.second.second.getTipo() + ")" + string(lenUC + 1,' '));
+            uc += (string(lenUC,' ') + ucToString(elem.first) + " (" + elem.second.second.getTipo() + ")" + string(lenUC + 1,' '));
         }
         else {
-            uc += (string(lenUC,' ') + elem.first + " (" + elem.second.second.getTipo() + ")" + string(lenUC,' '));
+            uc += (string(lenUC,' ') + ucToString(elem.first) + " (" + elem.second.second.getTipo() + ")" + string(lenUC,' '));
         }
         string turma = "    " + elem.second.first;
         if (elem.second.second.getDuracao() == 2){
@@ -1207,14 +1207,14 @@ void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) {
     cout << "-------------------------------------------------------------" << endl;
     for(const auto& sobreposta : sobrepostas){
         int lenT = sobreposta.second.second.getTipo().length();
-        int totalUC = lenT + 3 + sobreposta.first.length();
-        int lenUC = (20 - totalUC) / 2;
-        int lenUCfim = (20 - totalUC) % 2 == 0 ? lenUC : lenUC + 1;
+        int totalUC = lenT + 3 + ucToString(sobreposta.first).length();
+        int lenUC = ucToString(sobreposta.first).length() > 3 ? 6 : 7;
+        int lenUCfim = lenUC == 7 ? 13 : 14;
         int total = (translate[sobreposta.second.second.getDia()] == "Terça") ? 5 : translate[sobreposta.second.second.getDia()].length();
         int lenDia = (10 - total) / 2;
         int lenDiaFim = ((10 - total) % 2 == 0) ? lenDia : lenDia + 1;
         int lenTurma = (11 - sobreposta.second.first.length()) / 2;
-        cout << '|' << string(lenUC,' ') << sobreposta.first << " (" << sobreposta.second.second.getTipo() << ")" << string(lenUCfim,' ')
+        cout << "|" << string(lenUC, ' ') << ucToString(sobreposta.first) << " (" << sobreposta.second.second.getTipo() << ")" << string(lenUCfim - totalUC,' ')
              << '|' << string(lenTurma, ' ') << sobreposta.second.first <<  string(lenTurma, ' ')
              << '|' << string(lenDia,' ') << translate[sobreposta.second.second.getDia()] << string(lenDiaFim,' ')
              << getHoras(sobreposta.second.second.getInicio(),sobreposta.second.second.getDuracao()) << endl
@@ -1285,22 +1285,25 @@ void Manager::printInfoEstudante(const int &numero) const {
 
 // UC to String
 string Manager::ucToString(const string &uc) const {
-    if (uc == "L.EIC001") return "Álgebra Linear e Geometria Analítica";
-    if (uc == "L.EIC002") return "Análise Matemática I";
-    if (uc == "L.EIC003") return "Fundamentos da Programação";
-    if (uc == "L.EIC004") return "Fundamentos de Sistemas Computacionais";
-    if (uc == "L.EIC005") return "Matemática Discreta";
-    if (uc == "UP001") return "Projeto UP";
-    if (uc == "L.EIC011") return "Algoritmos e Estruturas de Dados";
-    if (uc == "L.EIC012") return "Bases de Dados";
-    if (uc == "L.EIC013") return "Física II";
-    if (uc == "L.EIC014") return "Laboratório de Desenho e Teste de Software";
-    if (uc == "L.EIC015") return "Sistemas Operativos";
-    if (uc == "L.EIC021") return "Fundamentos de Segurança Informática";
-    if (uc == "L.EIC022") return "Interação Pessoa Computador";
-    if (uc == "L.EIC023") return "Laboratório de Bases de Dados e Aplicações Web";
-    if (uc == "L.EIC024") return "Programação Funcional e em Lógica";
-    if (uc == "L.EIC025") return "Redes de Computadores";
+    map<string,string> maps = {{"L.EIC001","ALGA"},
+                               {"L.EIC002", "AM I"},
+                               {"L.EIC003", "FP"},
+                               {"L.EIC004","FSC"},
+                               {"L.EIC005", "MD"},
+                               {"UP001", "PUP"},
+                               {"L.EIC011", "AED"},
+                               {"L.EIC012", "BD"},
+                               {"L.EIC013", "F II"},
+                               {"L.EIC014", "LDTS"},
+                               {"L.EIC015", "SO"},
+                               {"L.EIC021", "FSI"},
+                               {"L.EIC022", "IPC"},
+                               {"L.EIC023", "LBAW"},
+                               {"L.EIC024", "PFL"},
+                               {"L.EIC025", "RC"},
+                               };
+
+    return maps[uc];
 }
 
 // Estatística
