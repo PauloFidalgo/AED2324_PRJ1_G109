@@ -110,6 +110,7 @@ public:
     vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario) const;
     void verHorarioAntesDeConfirmar(const int &numero, const string &uc, const string &turma, const list<Aula> &aulas) const;
 
+    string ucToString(const string &uc) const ;
 };
 
 #endif //PROJECT_MANAGER_H

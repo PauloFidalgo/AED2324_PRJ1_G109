@@ -377,7 +377,7 @@ string getHoras(const float& begin, const float& duration = 0.5){
 }
 
 //! Retorna a abreviatura de uma UC, consoante o seu código, utilizado no horário
-string ucToString(const string &uc) {
+string Manager::ucToString(const string &uc) const {
     map<string,string> maps = {{"L.EIC001","ALGA"},
                                {"L.EIC002", "AM I"},
                                {"L.EIC003", "FP"},
@@ -1256,17 +1256,17 @@ void Manager::printNumeroEstudantesDeTodasUc() const {
     cout << "|      1º Ano      |      2º Ano      |      3º Ano      |" << endl;
     cout << "----------------------------------------------------------" << endl;
     cout << "|    UC       Nº   |    UC       Nº   |    UC       Nº   |" << endl;
-    cout << "| L.EIC001:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC011:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC021:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "|   Alga:     " <<ucs.find(ucP)->getNumeroAlunosTotal() << "   |   AED:     " << ucs.find(ucS)->getNumeroAlunosTotal() << "   |   FSI:     " << ucs.find(ucT)->getNumeroAlunosTotal() << "   |" << endl;
     ucP = "L.EIC002", ucS = "L.EIC012", ucT = "L.EIC022";
-    cout << "| L.EIC002:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC012:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC022:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "|   AM I:     " << ucs.find(ucP)->getNumeroAlunosTotal() << "   |   BD:      " << ucs.find(ucS)->getNumeroAlunosTotal() << "   |   IPC:     " << ucs.find(ucT)->getNumeroAlunosTotal() << "   |" << endl;
     ucP = "L.EIC003", ucS = "L.EIC013", ucT = "L.EIC023";
-    cout << "| L.EIC003:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC013:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC023:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "|   FP:       "<< ucs.find(ucP)->getNumeroAlunosTotal() << "   |   F II:    " << ucs.find(ucS)->getNumeroAlunosTotal() << "   |   LBAW:    " << ucs.find(ucT)->getNumeroAlunosTotal() << "   |" << endl;
     ucP = "L.EIC004", ucS = "L.EIC014", ucT = "L.EIC024";
-    cout << "| L.EIC004:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC014:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC024:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "|   FSC:      " << ucs.find(ucP)->getNumeroAlunosTotal() << "   |   LDTS:    " << ucs.find(ucS)->getNumeroAlunosTotal() << "   |   PFL:     " << ucs.find(ucT)->getNumeroAlunosTotal() << "   |" << endl;
     ucP = "L.EIC005", ucS = "L.EIC015", ucT = "L.EIC025";
-    cout << "| L.EIC005:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC015:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC025:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "|   MD:       " <<  ucs.find(ucP)->getNumeroAlunosTotal() << "   |   SO:      " << ucs.find(ucS)->getNumeroAlunosTotal() << "   |   RC:      " << ucs.find(ucT)->getNumeroAlunosTotal() << "   |" << endl;
     ucP = "UP001";
-    cout << "| UP001:       " << ucs.find(ucP)->getNumeroAlunosTotal() << "   |                  |                  |" << endl;
+    cout << "|   PUP:      " << ucs.find(ucP)->getNumeroAlunosTotal() << "    |                  |                  |" << endl;
     cout << "----------------------------------------------------------" << endl;
     cout << endl;
 }
@@ -1283,20 +1283,21 @@ void Manager::printSets(int n, const string& uc, const bool& mais) const {
             auto it = allTurmas.rbegin();
             cout << "          |" << endl;
             while(n != 0 && it != allTurmas.rend()){
-                int len = (10 - it->second.length()) / 2;
-                int lenf = (10 - it->second.length()) % 2 == 0 ? len : len + 1;
+                int len = (9 - ucToString(it->second).length());
+
+
                 if (it->first == 0){
                     cout << "          |" << endl;
-                    cout << string(len, ' ') << it->second << string(lenf, ' ') << "|" << it->first << endl;
+                    cout << string(len, ' ') << ucToString(it->second) << " |" << it->first << endl;
                     cout << "          |" << endl;
                     n--;
                     it++;
                     continue;
                 }
                 int lenBarra = (it->first / tamanho) * 80;
-                cout << string(len + lenf + it-> second.length(), ' ') << "|" << string(lenBarra, '-') << endl;
-                cout << string(len, ' ') << it->second << string(lenf, ' ') << "|" << string(lenBarra - 1, ' ') << "| " << it->first << endl;
-                cout << string(len + lenf + it-> second.length(), ' ') << "|" << string(lenBarra, '-') << endl;
+                cout << string(10, ' ') << "|" << string(lenBarra, '-') << endl;
+                cout << string(len, ' ') << ucToString( it->second ) << " |" << string(lenBarra - 1, ' ') << "| " << it->first << endl;
+                cout << string(10, ' ') << "|" << string(lenBarra, '-') << endl;
                 cout << "          |" << endl;
                 n--;
                 it++;
