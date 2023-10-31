@@ -812,18 +812,20 @@ void Menu::menuAno(Tipo tipo) {
 }
 
 void Menu::menuOpçoes1Ano(Cadeiras cadeira, const bool &mais) {
-    while(true){
+    set<string> ucs = manager.getUcPorAno(1);
+    while (true) {
+        int i = 1;
         cout << "________________________________________________________________________________________________________" << endl;
         cout << "|                                                                                                      |" << endl;
-        cout << "|                                   Escolha a Unidade Curricular:                                      |" << endl;
+        cout << "|                                     Escolha a Unidade Curricular:                                    |" << endl;
         cout << "|                                                                                                      |" << endl;
-        cout << "|                               1 - Álgebra Linear e Geometria Analítica                               |" << endl;
-        cout << "|                               2 - Análise Matemática I                                               |" << endl;
-        cout << "|                               3 - Fundamentos da Programação                                         |" << endl;
-        cout << "|                               4 - Fundamentos de Sistemas Computacionais                             |" << endl;
-        cout << "|                               5 - Matemática Discreta                                                |" << endl;
-        cout << "|                               6 - Projeto UP                                                         |" << endl;
-        cout << "|                                                                                                      |" << endl;
+        for (auto uc: ucs) {
+            int leni = to_string(i).length();
+            int len = (102 - 3 - uc.length() - leni) / 2;
+            int lenf = (102 - 3 - uc.length() - leni) % 2 == 0 ? len : len + 1;
+            cout << "|" << string(lenf, ' ') << i << " - " << uc << string(len, ' ') << "|" <<  endl;
+            i++;
+        }
         cout << "|  m - menu                                                                                            |" << endl;
         cout << "|  b - anterior                                                                                        |" << endl;
         cout << "|  q - sair                                                                                            |" << endl;
@@ -936,21 +938,24 @@ void Menu::menuOpçoes1Ano(Cadeiras cadeira, const bool &mais) {
 }
 
 void Menu::menuOpçoes2Ano(Cadeiras cadeira, const bool &mais) {
-    while(true){
+    set<string> ucs = manager.getUcPorAno(ano);
+    while (true) {
+        int i = 1;
         cout << "________________________________________________________________________________________________________" << endl;
         cout << "|                                                                                                      |" << endl;
-        cout << "|                                   Escolha a Unidade Curricular:                                      |" << endl;
+        cout << "|                                     Escolha a Unidade Curricular:                                    |" << endl;
         cout << "|                                                                                                      |" << endl;
-        cout << "|                               1 - Algoritmos e Estruturas de Dados                                   |"<< endl;
-        cout << "|                               2 - Bases de Dados                                                     |"<< endl;
-        cout << "|                               3 - Física II                                                          |"<< endl;
-        cout << "|                               4 - Laboratório de Desenho e Teste de Software                         |"<< endl;
-        cout << "|                               5 - Sistemas Operativos                                                |"<< endl;
-        cout << "|                                                                                                      |"<< endl;
+        for (auto uc: ucs) {
+            int leni = to_string(i).length();
+            int len = (102 - 3 - uc.length() - leni) / 2;
+            int lenf = (102 - 3 - uc.length() - leni) % 2 == 0 ? len : len + 1;
+            cout << "|" << string(lenf, ' ') << i << " - " << uc << string(len, ' ') << "|" <<  endl;
+            i++;
+        }
         cout << "|  m - menu                                                                                            |" << endl;
-        cout << "|  b - anterior                                                                                        |"<< endl;
+        cout << "|  b - anterior                                                                                        |" << endl;
         cout << "|  q - sair                                                                                            |" << endl;
-        cout << "--------------------------------------------------------------------------------------------------------"<< endl;
+        cout << "--------------------------------------------------------------------------------------------------------" << endl;
 
         getUserInput();
 

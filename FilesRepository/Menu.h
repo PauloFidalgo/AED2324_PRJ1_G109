@@ -7,6 +7,7 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
+#include <functional>
 #include "Manager.h"
 
 enum Tipo {

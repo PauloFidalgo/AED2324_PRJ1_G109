@@ -4,6 +4,8 @@
 #include "sstream"
 #include "string"
 #include <iostream>
+#include <cmath>
+#include <algorithm>
 
 // Constructor
 Manager::Manager() {
@@ -290,10 +292,7 @@ set<pair<string,string>> Manager::enviaUCParaRemover(const int &numero) const {
 set<pair<int,string>> Manager::getOcupacaoUcs() const {
     set<pair<int,string>> allUCs;
     for (const auto& uc : ucs) {
-        int alunos = 0;
-        for (const auto& turma: uc.getUcTurma()) {
-            alunos += uc.getNumeroAlunos(turma.first);
-        }
+        int alunos = uc.getNumeroAlunosTotal();
         allUCs.insert({alunos, uc.getCodigoUc()});
     }
     return allUCs;
@@ -605,12 +604,14 @@ void Manager::printHistorico() const {
     }
 }
 
+//! Lista o número e nome dos estudantes inscritos numa determinada turma de uma determinada UC, ordenados pelos número ou nome, de forma crescente ou decrescente.
 void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma, bool orderByNumber, bool ascending) const {
     auto it = ucs.find(uc);
 
     if (it != ucs.end()) {
         map<string,TurmaInfo> turmaInfo = it->getUcTurma();
         auto iterator = turmaInfo.find(turma);
+        // Caso a turma esteja vazia.
         if(iterator->second.estudantes.empty()){
             cout << string(56,'-')<<endl;
             cout << '|' << string ( 12, ' ') << "Não existem alunos nesta turma"<< string(12, ' ') << '|' << endl;
@@ -624,10 +625,13 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
             cout << string(56,'-') << endl;
             list<pair<int,string>> studentList = iterator->second.estudantes;
 
+            // Ordem de acordo com o número do estudante.
             if (orderByNumber) studentList.sort(compareFirstElement);
 
+            // Ordem de acordo com o nome do Estudante.
             else studentList.sort(compareSecondElement);
 
+            // Ordem crescente.
             if (ascending){
                 for (const auto& element : studentList){
 
@@ -640,6 +644,8 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
                     cout << '|'<< string(18,' ') << element.first << ' ' << element.second << string(totalWidth-element.second.length(),' ') << '|' << endl;
                 }
             }
+
+            // Ordem decrescente.
             else{
                 for (auto i = studentList.rbegin(); i != studentList.rend(); ++i){
                     int totalWidth = 26;
@@ -656,6 +662,7 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
     }
 }
 
+//! Lista o número de estudantes por turma numa determinada UC, de acordo com o código da turma ou o número de estudantes, por ordem crescente ou decrescente.
 void Manager::printNumeroEstudantesPorTurmaPorUc(const std::string &uc, const bool &orderByFirst , const bool &ascending) const {
     vector<pair<string,int>> turmas;
     cout << "-----------------------------------"  << endl;
@@ -668,19 +675,21 @@ void Manager::printNumeroEstudantesPorTurmaPorUc(const std::string &uc, const bo
             turmas.emplace_back(element.first, it->getNumeroAlunos(element.first));
         }
     }
-
+    // Ordem de acordo com o código da turma.
     if (orderByFirst) {
         sort(turmas.begin(), turmas.end(), [] (const pair<string,int>& first, const pair<string,int>& second) {return first.first < second.first;});
     }
+    // Ordem de acordo com o número de estudantes.
     else {
         sort(turmas.begin(), turmas.end(), [] (const pair<string,int>& first, const pair<string,int>& second) {return first.second < second.second;});
     }
-
+    // Ordem crescente
     if (ascending) {
         for (const auto& elem : turmas) {
             cout <<"|          "<< elem.first << " Nº: " << elem.second << "          |"<<endl;
         }
     }
+    // Ordem decrescente
     else {
         for (auto it = turmas.rbegin(); it != turmas.rend(); it++) {
             cout <<"|          "<< it->first << " Nº: " << it->second<< "          |" << endl;
@@ -689,8 +698,9 @@ void Manager::printNumeroEstudantesPorTurmaPorUc(const std::string &uc, const bo
     cout << "-----------------------------------"  << endl;
 }
 
+//! Lista o nome e o número dos estudantes inscritos em determinada UC, ordenados de acordo com o número ou nome do estudante, por ordem crescente ou decrescente.
 void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, const bool& ascending) const {
-
+    // Ordem de acordo com o número do estudante.
     if (orderByNumber) {
         set<pair<int, string>, CompareByFirst> studentList;
         auto it = ucs.find(uc);
@@ -713,7 +723,7 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
         cout << string (56,'-')  << endl;
         cout <<"|" << string(10,' ') <<"Estudantes inscritos na UC: " << it->getCodigoUc() << string(8,' ') << "|"<<endl;
         cout << string (56,'-')  << endl;
-
+        // Ordem ascendente
         if (ascending){
 
             for (const auto& element : studentList){
@@ -726,6 +736,7 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
                 cout<< "|"<< string (16,' ') << element.first << ' ' << element.second << string(totalWidth-element.second.length(),' ') << "|" <<endl;
             }
         }
+        // Ordem decrescente
         else{
             for (auto i = studentList.rbegin(); i != studentList.rend(); ++i){
                 int totalWidth = 28;
@@ -738,8 +749,9 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
             }
         }
         cout << string (56,'-')  << endl;
-
-    } else {
+    }
+    // Ordem de acordo com o nome do estudante.
+    else {
         set<pair<int, string>, CompareBySecond> studentList;
         auto it = ucs.find(uc);
 
@@ -762,6 +774,7 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
         cout <<"|" << string(10,' ') <<"Estudantes inscritos na UC: " << it->getCodigoUc() << string(8,' ') << "|"<<endl;
         cout << string (56,'-')  << endl;
 
+        // Ordem ascendente
         if (ascending){
             for (const auto& element : studentList){
 
@@ -774,6 +787,7 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
                 cout<< "|"<< string (16,' ') << element.first << ' ' << element.second << string(totalWidth-element.second.length(),' ') << "|" <<endl;
             }
         }
+        // Ordem descendente
         else{
             for (auto i = studentList.rbegin(); i != studentList.rend(); ++i){
                 int totalWidth = 28;
@@ -789,11 +803,15 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
     }
 }
 
+//! Lista o nome e o número dos estudantes inscritos em cada ano, ordenados de acordo com o número ou nome do estudante, por ordem crescente ou decrescente.
 void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, const bool &ascending) const {
     cout << string (56,'-')  << endl;
-    cout << "|"<<string(16,' ')<< "Estudantes do " << ano << "º ano:"<< string(17,' ')<< "|" << endl;
+    cout << "|" << string(16,' ')<< "Estudantes do " << ano << "º ano:"<< string(17,' ')<< "|" << endl;
     cout << string (56,'-')  << endl;
+
+    // Ordem de acordo com o nome do estudante
     if (orderByNumber){
+        // Ordem ascendente
         if (ascending){
             for (const auto& estudante : estudantesNumero){
                 if (estudante.getAno() == ano){
@@ -811,6 +829,7 @@ void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, c
                 }
             }
         }
+        // Ordem descendente
         else {
             for (auto i = estudantesNumero.rbegin(); i != estudantesNumero.rend(); ++i){
                 if (i->getAno() == ano) {
@@ -826,7 +845,9 @@ void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, c
             }
         }
     }
+    // Ordem de acordo com o nome do estudante
     else {
+        // Ordem ascendente
         if (ascending){
             for (const auto& estudante : estudantesNome){
                 if (estudante.getAno() == ano){
@@ -844,6 +865,7 @@ void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, c
                 }
             }
         }
+        // Ordem descendente
         else {
             for (auto i = estudantesNome.rbegin(); i != estudantesNome.rend(); ++i){
                 if(i->getAno() == ano) {
@@ -862,6 +884,7 @@ void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, c
     cout << string(56,'-') << endl;
 }
 
+//! Lista o código das turmas em deteminada UC, por ordem crescente ou decrescente. O(log(n)) maybe.
 void Manager::printTurmasPorUC(const std::string &uc, const bool &ascending) const {
     set<string> turmas;
     cout <<  string (35,'-')<< endl;
@@ -874,12 +897,13 @@ void Manager::printTurmasPorUC(const std::string &uc, const bool &ascending) con
             turmas.insert(element.first);
         }
     }
-
+    // Ordem ascendente
     if (ascending){
         for (const auto& turma : turmas){
             cout <<"|             "<< turma <<"             |" <<endl;
         }
     }
+    // Ordem descendente
     else {
         for (auto i = turmas.rbegin(); i != turmas.rend(); ++i){
             cout <<"|             "<< *i <<"             |"<< endl;
@@ -888,10 +912,13 @@ void Manager::printTurmasPorUC(const std::string &uc, const bool &ascending) con
     cout << "-----------------------------------"  << endl;
 }
 
+//! Lista o número e nome dos estudante incritos em pelo menos n UC's(nUcs), ordenados de acordo com o número ou nome do estudante, por ordem crescente ou decrescente. O(n)
 void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& orderByNumber, const bool& ascending) const{
     stringstream ss;
     list<Estudante> students;
+    // Ordem de acordo com o número do estudante
     if (orderByNumber) {
+        // Ordem ascendente
         if (ascending) {
             for (const auto& estudante : estudantesNumero){
                 if (estudante.getTurmas().size() >= nUcs){
@@ -908,6 +935,7 @@ void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& order
                 }
             }
         }
+        // Ordem descendente
         else {
             for (auto i = estudantesNumero.rbegin(); i != estudantesNumero.rend(); ++i){
                 if (i->getTurmas().size() >= nUcs){
@@ -925,7 +953,9 @@ void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& order
             }
         }
     }
+    // Ordem de acordo com o número do estudante
     else {
+        // Ordem ascendente
         if (ascending) {
             for (const auto& estudante : estudantesNome){
                 if (estudante.getTurmas().size() >= nUcs){
@@ -942,6 +972,7 @@ void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& order
                 }
             }
         }
+        // Ordem descendente
         else {
             for (auto i = estudantesNome.rbegin(); i != estudantesNome.rend(); ++i){
                 if (i->getTurmas().size() >= nUcs){
@@ -977,6 +1008,7 @@ void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& order
 
 }
 
+//! Consoante o tipo (tipo) de horário que se quer obter (horário de estudante, UC ou turma), o método chama um método que busca as aulas desse horário e chama o método printHorario para essas aulas.
 void Manager::inputToHorario(const char &tipo, const string &uc, const string &turma, const int &numero) {
     switch (tipo) {
         case 'E': {
@@ -1005,11 +1037,19 @@ void Manager::inputToHorario(const char &tipo, const string &uc, const string &t
     }
 }
 
+//! Permite visualizar o horário de um aluno, UC ou turma a partir de um vetor de pares composto por uma string que corresponde ao nome da UC, e um par formado pelo nome da turma e a aula correspondente. O(n²log(n))
 void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) const {
 
+    // Chama o método createSobrepostas para definir o conteúdo da tabela de aulas sobrepostas
+    // e retirar essas aulas do horário.
     vector<pair<string,pair<string,Aula>>> sobrepostas = createSobrepostas(horario);
+
+    //mapa que estabelece correspondência entre os dias da semana em inglês e em portugês que irão aparecer no horário.
     map<string,string> translate = {{"Monday","Segunda"}, {"Tuesday","Terça"}, {"Wednesday","Quarta"}, {"Thursday","Quinta"}, {"Friday","Sexta"}};
+    //mapa que estabelece correspondência entre os dias da semana e um número. Vai ser utilizado na construção da sparseMatrix.
     map<string,int> weekdays = {{"Monday",1}, {"Tuesday",2}, {"Wednesday",3}, {"Thursday",4}, {"Friday",5}};
+    //É utilizada uma sparseMatrix para determinar onde se encontram blocos do horário com aulas,
+    // o que é estabelecido pelas coordenadas atribuídas a cada bloco.
     map<pair<int,int>,string> sparseMatrix;
     static int LEN = 15;
 
@@ -1065,6 +1105,8 @@ void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) const
     cout << "-------------------------------------------------------------------------------------------------" << endl;
     cout << "|     Horas     |    Segunda    |     Terça     |    Quarta     |    Quinta     |    Sexta      |" << endl;
     cout << "-------------------------------------------------------------------------------------------------" << endl;
+    // Dá se a impressão de cada bloco. Se no mapa sparseMatrix se encontrar um bloco com as coordenadas
+    // (i,j), então é impresso esse bloco. Caso contrário, é impresso um bloco default.
     for (int y = 0; y < 48; y++) {
         for (int x = 0; x < 6; x++) {
             auto it = sparseMatrix.find({x,y});
@@ -1076,17 +1118,17 @@ void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) const
                 cout << aux;
             }
         }
-        cout << endl; // 16-5
+        cout << endl;
     }
 
     if (sobrepostas.empty()) return;
-    cout << endl << endl << endl; //L.EIC001
+    cout << endl << endl << endl;
     cout << "-------------------------------------------------------------" << endl;
     cout << "|                     Aulas Sobrepostas                     |" << endl;
     cout << "-------------------------------------------------------------" << endl;
     cout << "| Unidade Curricular |   Turma   |   Dia    |    Horário    |" << endl;
-
     cout << "-------------------------------------------------------------" << endl;
+    // Impressão das aulas sobrepostas
     for(const auto& sobreposta : sobrepostas){
         int lenT = sobreposta.second.second.getTipo().length();
         int totalUC = lenT + 3 + ucToString(sobreposta.first).length();
@@ -1105,6 +1147,7 @@ void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) const
     }
 }
 
+//!Permite visualizar o nome, número, ano, UC's e Turmas de um estudante com um determinado número (numero).
 void Manager::printInfoEstudante(const int &numero) const {
     Estudante estudante = getEstudante(numero);
     set<pair<string,string>> lista;
@@ -1165,6 +1208,7 @@ void Manager::printInfoEstudante(const int &numero) const {
     cout << "---------------------------------------------------------" << endl;
 }
 
+//! Faz uma busca por todos os estudantes com determinada string (nome) incluída no seu nome e mostra o seu nome, número e ano.
 void Manager::printEstudantesPorNome(string& nome, const bool& ascending) const {
     bool first = true;
     for (auto& ch : nome) {
@@ -1208,6 +1252,7 @@ void Manager::printEstudantesPorNome(string& nome, const bool& ascending) const 
     }
 }
 
+//! É utilizada no menu de Estatísticas para visualizar o número de estudantes inscrito em cada uma das UC's.
 void Manager::printNumeroEstudantesDeTodasUc() const {
     string ucP = "L.EIC001";
     string ucS = "L.EIC011";
@@ -1232,6 +1277,7 @@ void Manager::printNumeroEstudantesDeTodasUc() const {
     cout << endl;
 }
 
+//! É utilizada no menu de estatísticas, para visualizar as "n" UC's com mais ou menos estudantes ou para visualizar as "n" turmas de determinada UC com mais ou menos estudantes.
 void Manager::printSets(int n, const string& uc, const bool& mais) const {
     set<pair<int,string>> allTurmas;
 
@@ -1291,10 +1337,15 @@ void Manager::printSets(int n, const string& uc, const bool& mais) const {
 
 }
 
+//! É utilizada no menu de estatísticas, para visualizar o número de alunos por ano ou para visualizar o número de alunos por número de inscrições em UC's.
+//! O display do gráfico de barras pode ser desordenado, ou ordenado por ordem crescente ou descrescente do número de alunos. O(nlog(n))
 void Manager::printVectors(const char &tipo, const bool &ordered, const bool& ascending) const {
     vector<pair<int,int>> res;
 
+    //! Se se quiser visualizar o número de alunos por ano. (O(n))
     if (tipo == 'A') res = getNumeroDeAlunosPorAno();
+
+    //! Se se quiser visualizar o número de alunos por ano. (O(n))
     else res = getAlunosPorNIncscricoes();
 
     if (!res.empty()) {
@@ -1303,6 +1354,7 @@ void Manager::printVectors(const char &tipo, const bool &ordered, const bool& as
         for (const auto& it : res) {
             if (it.first > tamanho) tamanho = it.first;
         }
+        //! Se o display do gráfico de barras for ordenado, o vetor res é sorted. (O(nlog(n))
         if (ordered) {
             if (ascending) sort(res.begin(), res.end());
             else sort(res.rbegin(), res.rend());
@@ -1323,6 +1375,8 @@ void Manager::printVectors(const char &tipo, const bool &ordered, const bool& as
 }
 
 // Execution
+
+//! É utilizado no Menu, para permitir a visualização do horário de um estudante, caso passe a integrar uma determinada turma de uma nova UC.
 void Manager::verHorarioAntesDeConfirmar(const int &numero, const string &uc, const string &turma, const list<Aula> &aulas) const {
     auto estudante = getEstudante(numero);
 
@@ -1334,6 +1388,8 @@ void Manager::verHorarioAntesDeConfirmar(const int &numero, const string &uc, co
     printHorario(horario);
 }
 
+//! Retorna um vetor de aulas (sobrepostas) que se sobrepõem a outras, apagando simultaneamente de um outro vetor de aulas (horario), correspondente ao horario.
+//! O vetor de pares é composto por uma string que corresponde ao nome da UC, e um par formado pelo nome da turma e a aula correspondente.
 vector<pair<string,pair<string,Aula>>> Manager::createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario) const {
     vector<pair<string,pair<string,Aula>>> sobrepostas;
     for (auto i = horario.begin(); i != horario.end(); ++i){
@@ -1344,21 +1400,21 @@ vector<pair<string,pair<string,Aula>>> Manager::createSobrepostas (vector<pair<s
             Aula aula1 = i->second.second;
             Aula aula2 = j->second.second;
             if (aula1.sobreposta(aula2)) {
+                // As aulas práticas prevalecem sempre as teóricas
                 if (aula1.getTipo() != "T"  && aula2.getTipo() == "T") {
-                    // se aula1 é prática e aula2 é teórica.
                     if (!checkAlreadyIn(sobrepostas,*j))
                         sobrepostas.push_back(*j);
                     horario.erase(j);
                 }
                 else if (aula2.getTipo() != "T" && aula1.getTipo() == "T"){
-                    // se aula1 é prática e aula2 é teórica.
                     if (!checkAlreadyIn(sobrepostas,*i))
                         sobrepostas.push_back(*i);
                     horario.erase(i);
 
                 }
+                // As duas aulas são teóricas ou são práticas.
                 else {
-                    // se as duas aulas são teoricas
+                    // A aula que se sobrepõe a menos aulas prevalece.
                     int sobre1 = 0, sobre2 = 0;
                     auto k = j;
                     k++;
@@ -1369,7 +1425,6 @@ vector<pair<string,pair<string,Aula>>> Manager::createSobrepostas (vector<pair<s
                         k++;
                     }
                     if (sobre1 > sobre2) {
-                        //se aula1 se sobrepõe a mais aulas que aula2
                         if (!(aula1.getTipo() == "T" && checkAlreadyIn(sobrepostas,*i)))
                             sobrepostas.push_back(*i);
                         horario.erase(i);
@@ -1378,21 +1433,22 @@ vector<pair<string,pair<string,Aula>>> Manager::createSobrepostas (vector<pair<s
                         sobrepostas.push_back(*j);
                         horario.erase(j);
                     }
+                    // As aulas sobrepõem-se ao mesmo número de aulas.
                     else {
-                        // se aula1 e aula2 se sobrepõem ao mesmo número de aulas.
+                        // A aula que começa mais cedo prevalece.
                         if (aula1.getInicio() < aula2.getInicio()) {
-                            // se aula1 começa antes da aula2
                             if (!(aula2.getTipo() == "T" && checkAlreadyIn(sobrepostas,*j)))
                                 sobrepostas.push_back(*j);
                             horario.erase(j);
                         }
                         else if (aula1.getInicio() > aula2.getInicio()) {
-                            // se a aula2 começa antes da aula1
                             if (!(aula1.getTipo() == "T" && checkAlreadyIn(sobrepostas,*i)))
                                 sobrepostas.push_back(*i);
                             horario.erase(i);
                         }
+                        // As aulas aula1 e aula2 começam ao mesmo tempo.
                         else {
+                            // A aula cuja duração é superior prevalece.
                             if (aula1.getDuracao() > aula2.getDuracao()) {
                                 //se a aula1 for maior que a aula2
                                 if (!(aula2.getTipo() == "T" && checkAlreadyIn(sobrepostas,*j)))
@@ -1400,13 +1456,14 @@ vector<pair<string,pair<string,Aula>>> Manager::createSobrepostas (vector<pair<s
                                 horario.erase(j);
                             }
                             else if (aula1.getDuracao() < aula2.getDuracao()) {
-                                //se a aula2 for maior que a aula1
+                                //se a aula2 for maior que a aula1.
                                 if (!(aula1.getTipo() == "T" && checkAlreadyIn(sobrepostas,*i)))
                                     sobrepostas.push_back(*i);
                                 horario.erase(i);
                             }
+                            // As aulas têm a mesma duração.
                             else {
-                                // a aula 1 prevalece sobre a 2
+                                // É escolhida a aula1.
                                 if (j!= horario.end()) {
                                     if (!(aula2.getTipo() == "T" && checkAlreadyIn(sobrepostas,*j)))
                                         sobrepostas.push_back(*j);
@@ -1424,6 +1481,7 @@ vector<pair<string,pair<string,Aula>>> Manager::createSobrepostas (vector<pair<s
     }
     return sobrepostas;
 }
+
 
 void Manager::executarPedidoTrocaHorario(Pedido &pedido) {
     string uc = pedido.getUc();
@@ -1467,6 +1525,7 @@ void Manager::executarPedidoTrocaHorario(Pedido &pedido) {
     }
 }
 
+//! Anula a inscricão de um Estudante numa UC.
 void Manager::removerEstudanteDaUc(Pedido &pedido) {
     string uc = pedido.getUc();
     Estudante estudante = pedido.getEstudante();
@@ -1497,6 +1556,7 @@ void Manager::removerEstudanteDaUc(Pedido &pedido) {
     }
 }
 
+//! Troca a turma em que dois estudantes estão inscritos, dentro da mesma UC.
 void Manager::trocaTurma(const string &uc, const string& turma1, const int &numero1, const string &nome1, const string& turma2, const int &numero2, const string &nome2) {
     auto it = ucs.lower_bound(uc);
 
@@ -1512,6 +1572,7 @@ void Manager::trocaTurma(const string &uc, const string& turma1, const int &nume
 
 }
 
+//! Adiciona uma UC a um Estudante.
 void Manager::adicionarUcAoEstudante(Pedido &pedido) {
     string uc = pedido.getUc();
     string turma = pedido.getTurma();
@@ -1542,6 +1603,7 @@ void Manager::adicionarUcAoEstudante(Pedido &pedido) {
     }
 }
 
+//! Executa o próximo Pedido que se encontra nos Pedidos, coloca esse Pedido no histórico e remove-o dos Pedidos em espera.
 void Manager::proximoPedido() {
     if (!(pedidos.empty())) {
         switch (pedidos.front().getTipoAlteracao()) {
@@ -1582,6 +1644,7 @@ void Manager::proximoPedido() {
     }
 }
 
+//! Reverte um pedido efetuado.
 void Manager::reverterPedido() {
     if (!(historico.empty())) {
         Pedido last = historico.top();
