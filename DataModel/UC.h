@@ -13,7 +13,7 @@
 #include "Aula.h"
 
 struct TurmaInfo {
-    std::list<std::pair<int,std::string>> estudantes;
+    std::vector<std::pair<int,std::string>> estudantes;
     std::list<Aula> aulas;
 };
 

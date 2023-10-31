@@ -119,12 +119,17 @@ void UC::addEstudante(const std::string &turma, const int &estudante, const std:
     }
 }
 
-//! Remove um estudante de uma turma O(log(n))
+//! Remove um estudante de uma turma O(n)
 void UC::removeEstudante(const std::string &turma, const int &numero, const std::string &nome) {
     auto it = ucTurma.find(turma);
 
     if (it != ucTurma.end()) {
-        it -> second.estudantes.remove({numero, nome});
+        for (auto est = it->second.estudantes.begin(); est != it->second.estudantes.end(); est++) {
+            if (est->first == numero && est->second == nome) {
+                it->second.estudantes.erase(est);
+                break;
+            }
+        }
     }
 }
 

@@ -589,7 +589,7 @@ bool Manager::ucValida(const string &uc) const {
     return (ucs.find(uc) != ucs.end());
 }
 
-//! Verifica se uma turma é válida
+//! Verifica se uma turma é válida retornando true nesse caso e false no caso contrário
 bool Manager::turmaValida(const string &turma) const {
     for (const auto& element : ucs) {
         for (const auto& turmaUc : element.getUcTurma()) {
@@ -601,6 +601,7 @@ bool Manager::turmaValida(const string &turma) const {
     return false;
 }
 
+//! Função utilizada para verificar se uma aula já foi contabilizada no horário. Retorna true caso a aula já esteja no horário e false caso contrário O(n)
 bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pair<string,pair<string,Aula>> &aula) const {
     string line;
     for (const auto& slot : horario) {
@@ -612,7 +613,7 @@ bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pa
 
     auto it = ucs.find(aula.first);
 
-
+    //! O primeiro turno é atribuído às turmas com o número inferior ao valor médio de turmas dessa UC e o segundo às turmas com valor superior
     if (turno <= it->getMedia()) {
         line = "Turno 1";
     }
@@ -623,7 +624,8 @@ bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pa
     return false;
 }
 
-// Printers
+//! Printers
+//! Da print do histórico de pedidos executados 0(n)
 void Manager::printHistorico() const {
     if (!this->printHist.empty()) {
         cout << "---------------------------------------------------------------------" << endl;
@@ -639,13 +641,15 @@ void Manager::printHistorico() const {
     }
 }
 
+//!
 void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma, bool orderByNumber, bool ascending) const {
-    auto it = ucs.find(uc);
+    auto it = ucs.find(uc); //! O(log(n))
 
     if (it != ucs.end()) {
         map<string,TurmaInfo> turmaInfo = it->getUcTurma();
-        auto iterator = turmaInfo.find(turma);
-        if(iterator->second.estudantes.empty()){
+        auto iterator = turmaInfo.find(turma); //! O(log(n))
+        //! No caso da turma não ter alunos
+        if (iterator->second.estudantes.empty()) {
             cout << string(56,'-')<<endl;
             cout << '|' << string ( 12, ' ') << "Não existem alunos nesta turma"<< string(12, ' ') << '|' << endl;
             cout << string(56,'-')<<endl;
@@ -656,11 +660,11 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
             cout << string(56,'-') << endl;
             cout <<'|' << string(16,' ') << "UC: " << it->getCodigoUc() << " | Turma: " << iterator->first << string(12,' ') << '|' << endl;
             cout << string(56,'-') << endl;
-            list<pair<int,string>> studentList = iterator->second.estudantes;
+            vector<pair<int,string>> studentList = iterator->second.estudantes;
 
-            if (orderByNumber) studentList.sort(compareFirstElement);
+            if (orderByNumber) sort(studentList.begin(), studentList.end() ,compareFirstElement);
 
-            else studentList.sort(compareSecondElement);
+            else sort(studentList.begin(), studentList.end() ,compareSecondElement);
 
             if (ascending){
                 for (const auto& element : studentList){
