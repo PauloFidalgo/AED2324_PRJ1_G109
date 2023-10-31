@@ -277,7 +277,6 @@ void Manager::removerEstudanteDaUc(Pedido &pedido) {
 
     if (it != ucs.end()) {
         UC atualizada = UC(*it);
-        cout << estudante.getTurma(uc) << " " << pedido.getTurma() << endl;
         atualizada.removeEstudante(pedido.getTurma(), estudante.getStudentNumber(), estudante.getStudentName());
         ucs.erase(it);
         ucs.insert(atualizada);
@@ -1509,8 +1508,13 @@ set<pair<int,string>> Manager::getOcupacaoTurmas(const string &uc) const {
     }
     return allTurmas;
 }
-void Manager::printSets(int n, const bool& mais) const {
-    set<pair<int,string>> allTurmas = getOcupacaoUcs();
+
+
+void Manager::printSets(int n, const string& uc, const bool& mais) const {
+    set<pair<int,string>> allTurmas;
+
+    if (uc == "") allTurmas = getOcupacaoUcs();
+    else allTurmas = getOcupacaoTurmas(uc);
 
     if (!allTurmas.empty()) {
         float tamanho = allTurmas.rbegin()->first;
@@ -1584,7 +1588,12 @@ vector<pair<int, int>> Manager::getNumeroDeAlunosPorAno() const {
     return result;
 }
 
-void Manager::printVectors(vector<pair<int,int>>& res, const bool &ordered, const bool& ascending) const{
+void Manager::printVectors(const char &tipo, const bool &ordered, const bool& ascending) const {
+    vector<pair<int,int>> res;
+
+    if (tipo == 'A') res = getNumeroDeAlunosPorAno();
+    else res = getAlunosPorNIncscricoes();
+
     if (!res.empty()) {
         cout << "       |" << endl;
         float tamanho = -1;
@@ -1607,5 +1616,13 @@ void Manager::printVectors(vector<pair<int,int>>& res, const bool &ordered, cons
             cout << "       |" << string(lenBarra, '-') << endl;
             cout << "       |" << endl;
         }
+    }
+}
+
+int Manager::getNumeroTurmas(const string& uc) {
+    auto it = ucs.find(uc);
+
+    if (it != ucs.end()) {
+        return it->getNumeroTurmas();
     }
 }
