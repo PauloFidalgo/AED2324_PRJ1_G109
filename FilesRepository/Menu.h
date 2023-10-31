@@ -44,7 +44,6 @@ enum ListagemUc {
 enum OrdenacaoTotal {
     estudantesPorAno,
     estudantesPorUc,
-    estudantesPorTurmaPorUc,
     estudantesNucs,
     numeroEstuntesPorTurmaPorUc,
     estudantesPorTurmaNaUc,
@@ -73,50 +72,55 @@ private:
     std::vector<std::function<void(Menu&)>> menuHistory;
 
 public:
+    //Construtor
     Menu();
+
+    //Destrutor
     ~Menu();
-    void vereficarHorario();
-    void menuInicial(const tm* hora);
-    void menuOrdenacaoParcial();
-    void menuListagens();
-    void menuOrdenacaoEstudanteUc();
-    void menuTurmasEstudante();
-    void menuOpcoesPedidos();
-    void menuEstatistica();
-    void horarioEstudante();
-    void horarioTurma();
-    void trocarHorarioUc();
-    void getNTurmas();
-    void adicionarUc();
-    void horarioUc();
-    void removerUc();
-    void iniciar();
-    void updateTime();
-    void updatePedidos();
+
+    //Getters
+
     void getSecondStudent();
     void getUserInput();
     void getStudentNumber();
-    void escolhaOrdenado(const bool& first);
-    void menuOpcoesTurmas(map<string,list<Aula>> turmas);
     void getUC();
     void getNuc();
     void getTurma();
-    void getUC_Turma();
     void getAno();
-    void menuAnoUc();
+
+
+    //Menus
+
+    void iniciar();
+    void menuInicial(const tm* hora);
+    void menuListagens();
+    void menuOpcoesPedidos();
+    void menuEstatistica();
     void menuOpçoes1Ano(Cadeiras cadeira, const bool &mais = true);
     void menuOpçoes2Ano(Cadeiras cadeira, const bool &mais = true);
     void menuOpçoes3Ano(Cadeiras cadeira, const bool &mais = true);
     void menuTurmaPorAno(const int &ano);
-    void menuAnoTurma();
-    void menuOrdenacaoPesquisaEstudanteNome();
     void menuListagemTurmasPorUc(const string& uc);
     void menuListagemUc(const int &ano, ListagemUc listagem);
-    void menuOrdenaçãoListagemTurmaNaUc(const string &uc,const string &turma);
     void menuAno(Tipo tipo);
-    void menuListagemUcGetAno();
+    void escolhaOrdenado(const bool& first);
+    void menuOpcoesTurmas(map<string,list<Aula>> turmas);
+    void vereficarHorario();
+
+    //Ordenações
+
     void ordenaçãoParcial(OrdenacaoParcial ord, string uc = "");
     void ordernaçãoTotal(OrdenacaoTotal ord, int ano = 1, string uc = "", string turma = "");
+
+    // Execuções
+
+    void horarioEstudante();
+    void trocarHorarioUc();
+    void adicionarUc();
+    void removerUc();
+    void updateTime();
+    void updatePedidos();
+
 };
 
 #endif // PROJECT_MENU_H

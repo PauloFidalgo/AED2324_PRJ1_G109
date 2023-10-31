@@ -5,7 +5,7 @@
 #include "UC.h"
 
 #include <utility>
-
+//! Construtor por cópia
 UC::UC(const UC &other) {
     this->codigoUC = other.codigoUC;
     this->ucTurma = other.ucTurma;
@@ -13,6 +13,7 @@ UC::UC(const UC &other) {
     this->ano = other.ano;
 }
 
+//! Construtor com todos os parâmetros
 UC::UC(const std::string &codigoUc, const std::map<std::string, TurmaInfo> &ucTurma, int media) {
     this->codigoUC = codigoUc;
     this->ucTurma = ucTurma;
@@ -24,8 +25,10 @@ UC::UC(const std::string &codigoUc, const std::map<std::string, TurmaInfo> &ucTu
     }
 }
 
+//! Construtor com código, usado para procurar UC's pelo código
 UC::UC(const std::string codigoUc) : codigoUC(codigoUc) {}
 
+//! Retorna o map ucTurma
 std::map<std::string, TurmaInfo> UC::getUcTurma() const {
     return this->ucTurma;
 }
@@ -116,12 +119,17 @@ void UC::addEstudante(const std::string &turma, const int &estudante, const std:
     }
 }
 
-//! Remove um estudante de uma turma O(log(n))
+//! Remove um estudante de uma turma O(n)
 void UC::removeEstudante(const std::string &turma, const int &numero, const std::string &nome) {
     auto it = ucTurma.find(turma);
 
     if (it != ucTurma.end()) {
-        it -> second.estudantes.remove({numero, nome});
+        for (auto est = it->second.estudantes.begin(); est != it->second.estudantes.end(); est++) {
+            if (est->first == numero && est->second == nome) {
+                it->second.estudantes.erase(est);
+                break;
+            }
+        }
     }
 }
 

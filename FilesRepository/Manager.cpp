@@ -7,12 +7,12 @@
 #include <cmath>
 #include <algorithm>
 
-// Constructor
+//! Constructor
 Manager::Manager() {
     this->nPedido = 1;
 }
 
-// Parsing
+//! Parsing
 void Manager::readFiles()
 {
     // reading students_classes.csv
@@ -136,7 +136,208 @@ void Manager::readFiles()
     iff.close();
 }
 
-// Getters
+//! Carrega as alterações pendentes, bem como as executadas
+void Manager::readChanges() {
+    fstream iff;
+    try {
+        iff.open("../Changes/changes.txt", ios::in);
+        string line, tipo, estudante1, uc, turma, estudante2, reverse;
+        while (getline(iff, line)) {
+            istringstream iss(line);
+            iss >> reverse;
+
+            if (reverse == "N") {
+                iss >> tipo;
+
+                if (tipo == "R") {
+                    iss >> estudante1;
+                    iss >> uc;
+                    iss >> turma;
+                    Estudante student = getEstudante(stoi(estudante1));
+                    Pedido pedido = Pedido(uc,student,tipo, turma);
+                    historico.push(pedido);
+                    printHist.insert({this->nPedido, pedido.pedidoToString()});
+                    this->nPedido++;
+                    removerEstudanteDaUc(pedido);
+                }
+                else if (tipo == "A") {
+                    iss >> estudante1;
+                    iss >> uc;
+                    iss >> turma;
+                    Estudante student = getEstudante(stoi(estudante1));
+                    Pedido pedido = Pedido(uc,student,tipo, turma);
+                    historico.push(pedido);
+                    printHist.insert({this->nPedido, pedido.pedidoToString()});
+                    this->nPedido++;
+                    adicionarUcAoEstudante(pedido);
+                }
+                else if (tipo == "H") {
+                    iss >> estudante1;
+                    iss >> uc;
+                    iss >> turma;
+                    iss >> estudante2;
+                    Estudante student = getEstudante(stoi(estudante1));
+                    Estudante student2 = getEstudante(stoi(estudante2));
+                    Pedido pedido = Pedido(uc,student, student2);
+                    historico.push(pedido);
+                    printHist.insert({this->nPedido, pedido.pedidoToString()});
+                    this->nPedido++;
+                    executarPedidoTrocaHorario(pedido);
+                }
+            }
+            else if (reverse == "R") {
+                iss >> tipo;
+                if (tipo == "R") {
+                    iss >> estudante1;
+                    iss >> uc;
+                    iss >> turma;
+                    Estudante student = getEstudante(stoi(estudante1));
+                    Pedido pedido = Pedido(uc,student,tipo, turma);
+                    string s = "Reverteu o pedido " + pedido.pedidoToString();
+                    historico.pop();
+                    printHist.insert({this->nPedido, s});
+                    this->nPedido++;
+                    adicionarUcAoEstudante(pedido);
+                }
+                else if (tipo == "A") {
+                    iss >> estudante1;
+                    iss >> uc;
+                    iss >> turma;
+                    Estudante student = getEstudante(stoi(estudante1));
+                    Pedido pedido = Pedido(uc,student,tipo, turma);
+                    string s = "Reverteu o pedido " + pedido.pedidoToString();
+                    historico.pop();
+                    printHist.insert({this->nPedido, s});
+                    this->nPedido++;
+                    removerEstudanteDaUc(pedido);
+                }
+                else if (tipo == "H") {
+                    iss >> estudante1;
+                    iss >> uc;
+                    iss >> turma;
+                    iss >> estudante2;
+                    Estudante student = getEstudante(stoi(estudante1));
+                    Estudante student2 = getEstudante(stoi(estudante2));
+                    Pedido pedido = Pedido(uc,student, student2);
+                    string s = "Reverteu o pedido " + pedido.pedidoToString();
+                    historico.pop();
+                    printHist.insert({this->nPedido, s});
+                    this->nPedido++;
+                    executarPedidoTrocaHorario(pedido);
+                }
+            }
+        }
+        iff.close();
+    }
+    catch (exception e) {
+        cout << "Falha ao abrir o ficheiro";
+    }
+    try {
+        ifstream wagnerSalvadorDaPatria("../Changes/queue.txt");
+        string line, tipo, estudante1, uc, turma, estudante2;
+
+        while (getline(wagnerSalvadorDaPatria, line)) {
+            istringstream iss(line);
+            iss >> tipo;
+
+            if (tipo == "H") {
+                iss >> estudante1;
+                iss >> uc;
+                iss >> turma;
+                iss >> estudante2;
+                Estudante student = getEstudante(stoi(estudante1));
+                Estudante student2 = getEstudante(stoi(estudante2));
+                Pedido pedido = Pedido(uc,student, student2);
+                pedidos.push(pedido);
+                pedidosEspera.push_back(pedido);
+            }
+            else {
+                iss >> estudante1;
+                iss >> uc;
+                iss >> turma;
+                Estudante student = getEstudante(stoi(estudante1));
+                Pedido pedido = Pedido(uc,student,tipo, turma);
+                pedidos.push(pedido);
+                pedidosEspera.push_back(pedido);
+            }
+        }
+        wagnerSalvadorDaPatria.close();
+    }
+    catch (exception e) {
+        cout << "Falha ao abrir o ficheiro" << endl;
+    }
+}
+
+//! Escreve as alterações permanentes num ficheiro
+void Manager::writeRequestInFile(const Pedido& pedido, const bool& reverse) {
+    fstream off("../Changes/changes.txt", off.app);
+    try {
+        string n = reverse ? "R " : "N ";
+        switch (pedido.getTipoAlteracao()) {
+            case TipoAlteracao::R: {
+                string line = n + "R " + to_string(pedido.getEstudante().getStudentNumber()) + " " + pedido.getUc() + " " +
+                        pedido.getTurma() + "\n";
+                off << line;
+                break;
+            }
+            case TipoAlteracao::A: {
+                string line = n +
+                        "A " + to_string(pedido.getEstudante().getStudentNumber()) + " " + pedido.getUc() + " " +
+                        pedido.getTurma() + "\n";
+                off << line;
+                break;
+            }
+            case TipoAlteracao::H: {
+                string line = n +
+                        "H " + to_string(pedido.getEstudante().getStudentNumber()) + " " + pedido.getUc() + " " +
+                        to_string(pedido.getOutroEstudante().getStudentNumber()) + "\n";
+                off << line;
+                break;
+            }
+        }
+        off.close();
+    }
+    catch (exception e) {
+        cout << "Falha a abrir o ficheiro" << endl;
+    }
+}
+
+//! Escreve os pedidos pendentes num ficheiro
+void Manager::guardaPedidosPendentes() {
+    ofstream off;
+    try {
+        off.open("../Changes/queue.txt", ofstream ::trunc);
+        vector<Pedido> pedidoPendentes = this->pedidosEspera;
+        for (auto it = pedidoPendentes.begin(); it != pedidoPendentes.end(); it++) {
+            Pedido pedido = *it;
+            switch (pedido.getTipoAlteracao()) {
+                case TipoAlteracao::R: {
+                    string line = "R " + to_string(pedido.getEstudante().getStudentNumber()) + " " + pedido.getUc() + " " +
+                                  pedido.getTurma() + "\n";
+                    off << line;
+                    break;
+                }
+                case TipoAlteracao::A: {
+                    string line = "A " + to_string(pedido.getEstudante().getStudentNumber()) + " " + pedido.getUc() + " " +
+                                  pedido.getTurma() + "\n";
+                    off << line;
+                    break;
+                }
+                case TipoAlteracao::H: {
+                    string line = "H " + to_string(pedido.getEstudante().getStudentNumber()) + " " + pedido.getUc() + " " +
+                                  to_string(pedido.getOutroEstudante().getStudentNumber()) + "\n";
+                    off << line;
+                    break;
+                }
+            }
+        }
+    }
+    catch (exception e) {
+        cout << "Falha a abrir o ficheiro" << endl;
+    }
+}
+
+//! Getters
 //! Retorna o número de pedidos pendentes
 int Manager::getPedidos() const {
     return this->pedidos.size();
@@ -155,8 +356,8 @@ Estudante Manager::getEstudante(const int &numero) const {
 //! Retorna um vetor de pares, formado por uma string que corresponde ao nome da UC, e um par formado pelo nome da turma e a aula correspondente
 vector<pair<string,pair<string,Aula>>> Manager::getAulas(const Estudante &estudante) const {
     vector<pair<string,pair<string,Aula>>> result;
-    set<pair<string,string>> turmas = estudante.getTurmas();
-    for (const auto& par : turmas) {
+    set<pair<string,string>> turmas = estudante.getTurmas(); // O(1)
+    for (const auto& par : turmas) { // O(n)
         TurmaInfo turmaInfo = obterInfoUc(par.first, par.second);
         for (const auto& element : turmaInfo.aulas) {
             result.emplace_back(par.first, make_pair(par.second, element));
@@ -165,10 +366,11 @@ vector<pair<string,pair<string,Aula>>> Manager::getAulas(const Estudante &estuda
     return result;
 }
 
+//! Retorna a lista de aulas de um estudante, excluindo uma unidade curricular em específico
 list<Aula> Manager::obterHorarioEstudantePraticasExceto(const Estudante &estudante, const string &uc) const {
-    set<pair<string,string>> turmas = estudante.getTurmas();
+    set<pair<string,string>> turmas = estudante.getTurmas(); // O(1)
     list<Aula> res;
-    for (const auto& par : turmas) {
+    for (const auto& par : turmas) { // O(n)
         if (par.first != uc) {
             res.push_back(obterPraticaUc(par.first, par.second));
         }
@@ -178,9 +380,11 @@ list<Aula> Manager::obterHorarioEstudantePraticasExceto(const Estudante &estudan
     return res;
 }
 
+//! Retorna a lista de aulas práticas de um estudante
 list<Aula> Manager::obterHorarioEstudantePraticas(const Estudante &estudante) const {
     set<pair<string,string>> turmas = estudante.getTurmas();
     list<Aula> res;
+
     for (const auto& par : turmas) {
         res.push_back(obterPraticaUc(par.first, par.second));
 
@@ -189,36 +393,39 @@ list<Aula> Manager::obterHorarioEstudantePraticas(const Estudante &estudante) co
     return res;
 }
 
+//! Retorna a informação da turma na UC
 TurmaInfo Manager::obterInfoUc(const string &uc, const string &turma) const {
     TurmaInfo res;
 
-    for (const auto& u : ucs) {
-        if (uc == u.getCodigoUc()) {
-            map<string, TurmaInfo> turmaInfo = u.getUcTurma();
-            auto it = turmaInfo.find(turma);
-            if (it->first == turma) {
-                res = it->second;
-            }
+    auto it = ucs.find(uc); // O(log(n))
+
+    if (it != ucs.end()) {
+        map<string, TurmaInfo> turmaInfo = it->getUcTurma();
+        auto it = turmaInfo.find(turma);
+        if (it->first == turma) {
+            res = it->second;
         }
     }
+
 
     return res;
 }
 
+//! Retorna a aula prática da turma na UC O(log(n))
 Aula Manager::obterPraticaUc(const string &uc, const string &turma) const {
     Aula res;
+    auto it = ucs.find(uc);
 
-    for (const auto& u : ucs) {
-        if (uc == u.getCodigoUc()) {
-            res = u.getPratica(turma);
-        }
+    if (it != ucs.end()) {
+        res = it->getPratica(turma);
     }
 
     return res;
 }
 
+//! Retorna um map com todas as turmas e aulas correspondentes de uma UC em que é possível inserir o estudante
 map<string,list<Aula>> Manager::getTurmasPossiveis(const string &uc, list<Aula> &horarioPraticas) {
-    auto it = ucs.find(uc);
+    auto it = ucs.find(uc); // O(log(n))
     map<string,list<Aula>> res;
 
     if (it != ucs.end()) {
@@ -228,6 +435,7 @@ map<string,list<Aula>> Manager::getTurmasPossiveis(const string &uc, list<Aula> 
             Aula pratica = obterPraticaUc(uc, t.first);
             if (verificarAulaSobreposta(horarioPraticas,pratica)) {
                 TurmaInfo info = obterInfoUc(uc,t.first);
+                //! Verifica se a turma tem menos de 30 alunos e se adicionando um elemento não compromete o equilíbrio entre as turmas
                 if (info.estudantes.size() < 30 && it->checkBalance(t.first)) {
                     res.insert({t.first, info.aulas});
                 }
@@ -237,6 +445,7 @@ map<string,list<Aula>> Manager::getTurmasPossiveis(const string &uc, list<Aula> 
     return res;
 }
 
+//! Função utilizada pelo Menu para visualizar as turmas em que é possível inserir o estudante e as respetivas aulas
 map<string,list<Aula>> Manager::enviaListaDeAulaPossivel(const string &uc, const int &estudante) {
     Estudante student = getEstudante(estudante);
 
@@ -245,6 +454,7 @@ map<string,list<Aula>> Manager::enviaListaDeAulaPossivel(const string &uc, const
     return res;
 }
 
+//! Retorna um set de UC's de um determinado ano O(n)
 set<string> Manager::getUcPorAno(const int &ano) const {
     set<string> res;
     for (const auto& uc : ucs) {
@@ -255,6 +465,7 @@ set<string> Manager::getUcPorAno(const int &ano) const {
     return res;
 }
 
+//! Retorna um set de turmas num determinado ano
 set<string> Manager::getTurmasPorAno(const int &ano) const {
     set<string> res;
     for (const auto& uc : ucs) {
@@ -267,6 +478,7 @@ set<string> Manager::getTurmasPorAno(const int &ano) const {
     return res;
 }
 
+//! Retorna um set de turmas de uma turminada uc
 set<string> Manager::getTurmasPorUc(const string& uc) const {
     auto it = ucs.find(uc);
     set<string> res;
@@ -279,6 +491,7 @@ set<string> Manager::getTurmasPorUc(const string& uc) const {
     return res;
 }
 
+//! Retorna um set de pares, com o nome da UC e turma em que o estudante está incrito, de forma a aparecer listado no menu, quando pretender remover uma UC
 set<pair<string,string>> Manager::enviaUCParaRemover(const int &numero) const {
     auto estudante = estudantesNumero.find(numero);
     set<pair<string, string>> res;
@@ -289,15 +502,16 @@ set<pair<string,string>> Manager::enviaUCParaRemover(const int &numero) const {
     return res;
 }
 
+//! Retorna um set de pares com o número de estudantes de uma UC e o respetivo nome da UC O(n^2)
 set<pair<int,string>> Manager::getOcupacaoUcs() const {
     set<pair<int,string>> allUCs;
     for (const auto& uc : ucs) {
-        int alunos = uc.getNumeroAlunosTotal();
-        allUCs.insert({alunos, uc.getCodigoUc()});
+        allUCs.insert({uc.getNumeroAlunosTotal(), uc.getCodigoUc()});
     }
     return allUCs;
 }
 
+//! Retorna um set de pares com o número de alunos de uma turma e o nome da turma
 set<pair<int,string>> Manager::getOcupacaoTurmas(const string &uc) const {
     auto it = ucs.find(uc);
     set<pair<int, string>> allTurmas;
@@ -310,6 +524,7 @@ set<pair<int,string>> Manager::getOcupacaoTurmas(const string &uc) const {
     return allTurmas;
 }
 
+//! Retorna um vetor de pares de inteiros, em que o valor da esquerda corresponde ao nº de estudantes inscritos no nº da direita UC's O(n)
 vector<pair<int, int>> Manager::getAlunosPorNIncscricoes() const {
     vector<pair<int,int>> result = {{0,1}, {0,2}, {0,3}, {0,4}, {0,5}, {0,6}, {0,7}};
     for (const auto& estudante : estudantesNumero){
@@ -319,6 +534,7 @@ vector<pair<int, int>> Manager::getAlunosPorNIncscricoes() const {
     return result;
 }
 
+//! Retorna um vetor de pares de inteiros, em que o valor da esquerda corresponde ao nº de alunos no ano da direita O(n)
 vector<pair<int, int>> Manager::getNumeroDeAlunosPorAno() const {
     vector<pair<int, int>> result = {{0,1}, {0,2}, {0,3}};
     int first = 0, second = 0, third = 0;
@@ -329,6 +545,7 @@ vector<pair<int, int>> Manager::getNumeroDeAlunosPorAno() const {
     return result;
 }
 
+//! Retorna o número de turmas de uma UC O(log(n))
 int Manager::getNumeroTurmas(const string& uc) {
     auto it = ucs.find(uc);
     int res = 0;
@@ -338,7 +555,8 @@ int Manager::getNumeroTurmas(const string& uc) {
     return res;
 }
 
-// Auxiliary
+//! Auxiliary
+//! Função auxiliar utilizada para construir as horas no horário e na tabela de aulas sobrepostas
 string getHoras(const float& begin, const float& duration = 0.5){
     string result ="| ";
     if (begin < 10){
@@ -361,7 +579,8 @@ string getHoras(const float& begin, const float& duration = 0.5){
     return result;
 }
 
-string ucToString(const string &uc) {
+//! Retorna a abreviatura de uma UC, consoante o seu código, utilizado no horário
+string Manager::ucToString(const string &uc) const {
     map<string,string> maps = {{"L.EIC001","ALGA"},
                                {"L.EIC002", "AM I"},
                                {"L.EIC003", "FP"},
@@ -383,27 +602,32 @@ string ucToString(const string &uc) {
     return maps[uc];
 }
 
+//! Função auxiliar que compara um par de interiros e strings pelo primeiro elemento
 auto compareFirstElement = [](const std::pair<int, std::string>& a, const std::pair<int, std::string>& b) {
     return a.first < b.first;
 };
 
+//! Função auxiliar que compara um par de interiros e strings pelo segundo elemento
 auto compareSecondElement = [](const std::pair<int, std::string>& a, const std::pair<int, std::string>& b)  {
     return a.second < b.second;
 };
 
+//! Struct utilizada para criar um set
 struct CompareByFirst{
     bool operator()(const pair<int, string>& a, const pair<int, string>& b) const {
         return a.first < b.first;
     }
 };
 
+//! Struct utilizada para criar um set
 struct CompareBySecond{
     bool operator()(const pair<int, string>& a, const pair<int, string>& b) const {
         return a.second < b.second;
     }
 };
 
-// Validators
+//! Validators
+//! Verifica se o novo pedido é concorrente com um pedido ainda em espera. Retorna true caso não seja concorrente com nenhum pedido em espera e false no caso contrário.O(n)
 bool Manager::verificarPedidosRepetidos(const Pedido &pedido) {
     for (auto p : pedidosEspera) {
         if (! p.pedidosConcorrentes(pedido)) {
@@ -413,29 +637,35 @@ bool Manager::verificarPedidosRepetidos(const Pedido &pedido) {
     return true;
 }
 
+//! Adiciona um pedido novo à fila de pedidos e ao vetor de pedidos pendentes, se o pedido não for concorrente com os pedidos em espera e se for válido, dependendo do tipo de pedido. Retorna true no caso de ter adicionado e false no caso contrário
 bool Manager::addPedido(Pedido pedido) {
     bool res = false;
 
     if (!verificarPedidosRepetidos(pedido)) return false;
 
     switch (pedido.getTipoAlteracao()) {
+        //! No caso de ser uma alteração de turma entre dois estudantes
         case TipoAlteracao::H: res = trocaValida(pedido);
             break;
+            //! No caso de ser um pedido de remoção de UC
         case TipoAlteracao::R: res = removerValida(pedido);
             break;
+            //! No caso de ser um pedido de adicionar UC
         case TipoAlteracao::A: res = validarNovaUc(pedido.getUc(), pedido.getEstudante().getStudentNumber());
             break;
     }
     if (res) {
-        cout << "-----------------------------------"  << endl;
-        cout << "Pedido adicionado à fila de espera" << endl;
-        cout << "-----------------------------------"  << endl;
+        cout << string(38,'-') << endl;
+        cout << "| Pedido adicionado à fila de espera |" << endl;
+        cout << string(38,'-') << endl;
         pedidos.push(pedido);
         pedidosEspera.push_back(pedido);
+        guardaPedidosPendentes();
     }
     return res;
 }
 
+//! Verifica se o estudante pode remover uma UC, para isso tem de estar inscrito. Retorna true se é válido e false se é inválido
 bool Manager::removerValida(Pedido &pedido) {
     Estudante estudante = pedido.getEstudante();
     string uc = pedido.getUc();
@@ -447,47 +677,50 @@ bool Manager::removerValida(Pedido &pedido) {
     return true;
 }
 
+//! Verifica se a troca de turma entre dois estudantes é válida, não sendo quando um deles não está inscrito na UC, quando ambos já estão na mesma turma ou quando não existe compatibilidade de horário (Aulas PL e P sobrepostas). Retorna true no caso de ser válida e false no outro caso
 bool Manager::trocaValida(Pedido &pedido) const {
     Estudante estudante = pedido.getEstudante();
     Estudante outro = pedido.getOutroEstudante();
     std::string uc = pedido.getUc();
 
-
+    //! Verifica se os dois estudantes estão inscritos na UC
     if (!(estudante.inscrito(uc) && outro.inscrito(uc))) {
         // Pelo menos um dos alunos não esta inscrito na UC
-        cout << "------------------------------------------------"  << endl;
-        cout << "Troca inválida, a Unidade curricular não é comum" << endl;
-        cout << "------------------------------------------------"  << endl;
+        cout << string(52,'-') << endl;
+        cout << "| Troca inválida, a Unidade curricular não é comum |" << endl;
+        cout << string(52,'-') << endl;
         return false;
     }
 
     std::string turma = estudante.getTurma(uc);
     std::string outraTurma = outro.getTurma(uc);
 
-
+    //! Verifica se os dois estudantes já são da mesma turma
     if (turma == outraTurma) {
         // Já são de turmas iguais
-        cout << "-------------------------------------------"  << endl;
-        cout << "Troca inválida, já são da mesma turma" << endl;
-        cout << "-------------------------------------------"  << endl;
+        cout << string(47,'-') << endl;
+        cout << "| Troca inválida, já são da mesma turma |" << endl;
+        cout << string(47,'-') << endl;
         return false;
     }
 
-    // Verificar o horário de cada estudante
+    //! Verifica o horário de cada estudante (excluindo a aula que quero trocar)
     list<Aula> horarioUm = obterHorarioEstudantePraticasExceto(estudante,uc);
     Aula aula = obterPraticaUc(uc,outraTurma);
     list<Aula> horarioOutro = obterHorarioEstudantePraticasExceto(outro,uc);
     Aula aulaNova = obterPraticaUc(uc,turma);
 
+    //! Caso algum aluno não tenha compatibilidade de horário para trocar, a troca é inválida
     if (!(verificarAulaSobreposta(horarioUm,aula) && verificarAulaSobreposta(horarioOutro, aulaNova))) {
-        cout << "-------------------------------------------"  << endl;
-        cout << "Alteração inválida, aula Prática sobreposta" << endl;
-        cout << "-------------------------------------------"  << endl;
+        cout << string(47,'-') << endl;
+        cout << "| Alteração inválida, aula Prática sobreposta |" << endl;
+        cout << string(47,'-') << endl;
         return false;
     }
     return true;
 }
 
+//! Verifica se uma nova aula é sobreposta a alguma aula de um horário, retornando true quando a aula é compativel com o horário e false no caso contrário
 bool Manager::verificarAulaSobreposta(const list<Aula> &horario, const Aula &aulaNova) {
     for (const auto &aula : horario) {
         if (aula.sobreposta(aulaNova)) {
@@ -497,23 +730,24 @@ bool Manager::verificarAulaSobreposta(const list<Aula> &horario, const Aula &aul
     return true;
 }
 
-// Verificar se o estudante tem possibilidade de se inscrever na nova turma
+//! Verificar se o estudante tem possibilidade de se inscrever na nova turma. Para isso não pode estar já inscrito nessa UC, não pode estar inscrito a 7 UC's e tem de ter compatibilidade de horário com as auals da UC. Retorna true se a nova UC é válida e false no caso contrário
 bool Manager::validarNovaUc(const string &uc, const int &student) {
-    auto estudante = getEstudante(student);
+    auto estudante = getEstudante(student); // O(log(n))
     if (estudante.inscrito(const_cast<string &>(uc))) {
-        cout << "---------------------------------"  << endl;
+        cout << string(33,'-')  << endl;
         cout << "O estudante já está incrito na UC" << endl;
-        cout << "---------------------------------"  << endl;
+        cout << string(33,'-')  << endl;
         return false;
     }
 
     if (estudante.getTurmas().size() >= 7) {
-        cout << "----------------------------------------------------------" << endl;
+        cout << string(58,'-') << endl;
         cout << "O estudante já está incrito a muitas Unidades Curriculares" << endl;
-        cout << "----------------------------------------------------------" << endl;
+        cout << string(58,'-') << endl;
         return false;
     }
 
+    // O(log(n))
     auto it = ucs.find(uc);
     list<Aula> praticas = obterHorarioEstudantePraticas(estudante);
 
@@ -527,23 +761,26 @@ bool Manager::validarNovaUc(const string &uc, const int &student) {
         cout << "O estudante não tem compatibilidade de horário" << endl;
         return false;
     }
-    cout << "---------------"  << endl;
-    cout << "A UC não existe" << endl;
-    cout << "---------------"  << endl;
+    cout << string(19,'-')  << endl;
+    cout << "| A UC não existe |" << endl;
+    cout << string(19,'-')  << endl;
     return false;
 }
 
+//! Verifica se um número n uc's é válido. Retorna true se for válido e false caso contrário
 bool Manager::nUcValido(const int &n) const {
     return (n > 0 && n <= ucs.size());
 }
 
+//! Verifica se o número de estudante é válido. Retorna true se for válido e false caso contrário O(log(n)).
 bool Manager::estudanteValido(const int &numero) const {
     auto it = estudantesNumero.find(numero);
     return it != estudantesNumero.end();
 }
 
+//! Recebe um pedido do Menu para criar um novo pedido. Cria o pedido e envia para as funções que verificam se é válido, retornando true nesse caso e false no caso contrário
 bool Manager::inputToPedido(const string& uc, const int &estudante, const string &tipo, const int outro, const string &turma) {
-    Estudante student1 = getEstudante(estudante);
+    Estudante student1 = getEstudante(estudante); //! O(log(n))
     if (tipo == "H") {
         Estudante student2 = getEstudante(outro);
         return addPedido(Pedido(uc, student1, student2));
@@ -551,10 +788,12 @@ bool Manager::inputToPedido(const string& uc, const int &estudante, const string
     return addPedido(Pedido(uc, student1, tipo, turma));
 }
 
+//! Verifica se uma UC é válida, retornando true nesse caso e false no caso contrário O(log(n))
 bool Manager::ucValida(const string &uc) const {
     return (ucs.find(uc) != ucs.end());
 }
 
+//! Verifica se uma turma é válida retornando true nesse caso e false no caso contrário
 bool Manager::turmaValida(const string &turma) const {
     for (const auto& element : ucs) {
         for (const auto& turmaUc : element.getUcTurma()) {
@@ -566,6 +805,7 @@ bool Manager::turmaValida(const string &turma) const {
     return false;
 }
 
+//! Função utilizada para verificar se uma aula já foi contabilizada no horário. Retorna true caso a aula já esteja no horário e false caso contrário O(n)
 bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pair<string,pair<string,Aula>> &aula) const {
     string line;
     for (const auto& slot : horario) {
@@ -577,7 +817,7 @@ bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pa
 
     auto it = ucs.find(aula.first);
 
-
+    //! O primeiro turno é atribuído às turmas com o número inferior ao valor médio de turmas dessa UC e o segundo às turmas com valor superior
     if (turno <= it->getMedia()) {
         line = "Turno 1";
     }
@@ -588,31 +828,32 @@ bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pa
     return false;
 }
 
-// Printers
+//! Printers
+//! Da print do histórico de pedidos executados 0(n)
 void Manager::printHistorico() const {
     if (!this->printHist.empty()) {
-        cout << "---------------------------------------------------------------------" << endl;
+        cout << string(69,'-') << endl;
         cout << "Histórico de alterações: " << endl;
-        cout << "---------------------------------------------------------------------" << endl;
+        cout << string(69,'-') << endl;
         for (const auto& line : this->printHist) {
             cout << line.first << " - " << line.second;
         }
-        cout << "---------------------------------------------------------------------" << endl;
+        cout << string(69,'-') << endl;
     }
     else {
         cout << "Não existem pedidos" << endl;
     }
 }
 
-//! Lista o número e nome dos estudantes inscritos numa determinada turma de uma determinada UC, ordenados pelos número ou nome, de forma crescente ou decrescente.
+//! Da print dos estudantes por turma, com opção de ordenação por número ou nome por ordem crescente e decrescente
 void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma, bool orderByNumber, bool ascending) const {
-    auto it = ucs.find(uc);
+    auto it = ucs.find(uc); //! O(log(n))
 
     if (it != ucs.end()) {
         map<string,TurmaInfo> turmaInfo = it->getUcTurma();
-        auto iterator = turmaInfo.find(turma);
-        // Caso a turma esteja vazia.
-        if(iterator->second.estudantes.empty()){
+        auto iterator = turmaInfo.find(turma); //! O(log(n))
+        //! No caso da turma não ter alunos
+        if (iterator->second.estudantes.empty()) {
             cout << string(56,'-')<<endl;
             cout << '|' << string ( 12, ' ') << "Não existem alunos nesta turma"<< string(12, ' ') << '|' << endl;
             cout << string(56,'-')<<endl;
@@ -621,17 +862,16 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
         }
         if (iterator != turmaInfo.end()) {
             cout << string(56,'-') << endl;
-            cout <<'|' << string(16,' ') << "UC: " << it->getCodigoUc() << " | Turma: " << iterator->first << string(12,' ') << '|' << endl;
+            cout <<'|' << string(14,' ') << "UC: " << it->getCodigoUc() << " | Turma: " << iterator->first << string(56-14-4-12-it->getCodigoUc().length()-iterator->first.length(),' ') << '|' << endl;
             cout << string(56,'-') << endl;
-            list<pair<int,string>> studentList = iterator->second.estudantes;
+            vector<pair<int,string>> studentList = iterator->second.estudantes;
+            //! Ordena pelo primeiro elemento O(nlog(n))
+            if (orderByNumber) sort(studentList.begin(), studentList.end() ,compareFirstElement);
 
-            // Ordem de acordo com o número do estudante.
-            if (orderByNumber) studentList.sort(compareFirstElement);
+            //! Ordena pelo segundo elemento O(nlog(n))
+            else sort(studentList.begin(), studentList.end() ,compareSecondElement);
 
-            // Ordem de acordo com o nome do Estudante.
-            else studentList.sort(compareSecondElement);
-
-            // Ordem crescente.
+            //! No caso de pretender ascendente
             if (ascending){
                 for (const auto& element : studentList){
 
@@ -644,8 +884,7 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
                     cout << '|'<< string(18,' ') << element.first << ' ' << element.second << string(totalWidth-element.second.length(),' ') << '|' << endl;
                 }
             }
-
-            // Ordem decrescente.
+            //! No caso de pretender descendente
             else{
                 for (auto i = studentList.rbegin(); i != studentList.rend(); ++i){
                     int totalWidth = 26;
@@ -665,9 +904,9 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
 //! Lista o número de estudantes por turma numa determinada UC, de acordo com o código da turma ou o número de estudantes, por ordem crescente ou decrescente.
 void Manager::printNumeroEstudantesPorTurmaPorUc(const std::string &uc, const bool &orderByFirst , const bool &ascending) const {
     vector<pair<string,int>> turmas;
-    cout << "-----------------------------------"  << endl;
-    cout << "|     Estudantes na UC: " << uc << "  |"<< endl;
-    cout << "-----------------------------------"  << endl;
+    cout << string(35,'-') << endl;
+    cout << '|' <<string(4, ' ') << "Estudantes na UC: " << uc << string(10 - uc.length(), ' ') <<" |"<< endl;
+    cout << string(35,'-') << endl;
     auto it = ucs.find(uc);
 
     if (it != ucs.end()) {
@@ -1154,11 +1393,12 @@ void Manager::printInfoEstudante(const int &numero) const {
     if (estudante.getStudentNumber() != 0) {
         lista = estudante.getTurmas();
     }
-    // L.EIC001
+
+
     int len, lenf;
     auto it = lista.begin();
-    cout << "---------------------------------------------------------" << endl;
-    cout << "|                                  |    UC    |  Turma  |" << endl;
+    cout << string(57 , '-') << endl;
+    cout << "|" << string(34,' ') << "|    UC    |  Turma  |" << endl;
     for (int i = 0; i < lista.size() || i < 3; i++){
         if (i == 0){
             len = (10 - it->first.length()) / 2;
@@ -1223,9 +1463,9 @@ void Manager::printEstudantesPorNome(string& nome, const bool& ascending) const 
         }
     }
     if (!students.empty()) {
-        cout << "------------------------------------------------" << endl;
+        cout << string(47,'-')<< endl;
         cout << "|            Nome            |  Número   | Ano |" << endl;
-        cout << "------------------------------------------------" << endl;
+        cout << string(47,'-')<< endl;
 
         if (ascending) {
             for (const auto &elem: students) {
@@ -1246,9 +1486,9 @@ void Manager::printEstudantesPorNome(string& nome, const bool& ascending) const 
         }
     }
     else {
-        cout << "------------------------------------------------------" << endl;
-        cout << "Não existem estudantes com o nome " << nome << endl;
-        cout << "------------------------------------------------------" << endl;
+        cout << string(47,'-')<< endl;
+        cout <<'|' << string(3,' ') <<  "Não existem estudantes com o nome " << nome << string(8 - nome.length(),' ') << '|' << endl;
+        cout << string(47,'-')<< endl;
     }
 }
 
@@ -1262,17 +1502,17 @@ void Manager::printNumeroEstudantesDeTodasUc() const {
     cout << "|      1º Ano      |      2º Ano      |      3º Ano      |" << endl;
     cout << "----------------------------------------------------------" << endl;
     cout << "|    UC       Nº   |    UC       Nº   |    UC       Nº   |" << endl;
-    cout << "| L.EIC001:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC011:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC021:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "|   Alga:     " <<ucs.find(ucP)->getNumeroAlunosTotal() << "   |   AED:     " << ucs.find(ucS)->getNumeroAlunosTotal() << "   |   FSI:     " << ucs.find(ucT)->getNumeroAlunosTotal() << "   |" << endl;
     ucP = "L.EIC002", ucS = "L.EIC012", ucT = "L.EIC022";
-    cout << "| L.EIC002:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC012:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC022:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "|   AM I:     " << ucs.find(ucP)->getNumeroAlunosTotal() << "   |   BD:      " << ucs.find(ucS)->getNumeroAlunosTotal() << "   |   IPC:     " << ucs.find(ucT)->getNumeroAlunosTotal() << "   |" << endl;
     ucP = "L.EIC003", ucS = "L.EIC013", ucT = "L.EIC023";
-    cout << "| L.EIC003:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC013:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC023:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "|   FP:       "<< ucs.find(ucP)->getNumeroAlunosTotal() << "   |   F II:    " << ucs.find(ucS)->getNumeroAlunosTotal() << "   |   LBAW:    " << ucs.find(ucT)->getNumeroAlunosTotal() << "   |" << endl;
     ucP = "L.EIC004", ucS = "L.EIC014", ucT = "L.EIC024";
-    cout << "| L.EIC004:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC014:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC024:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "|   FSC:      " << ucs.find(ucP)->getNumeroAlunosTotal() << "   |   LDTS:    " << ucs.find(ucS)->getNumeroAlunosTotal() << "   |   PFL:     " << ucs.find(ucT)->getNumeroAlunosTotal() << "   |" << endl;
     ucP = "L.EIC005", ucS = "L.EIC015", ucT = "L.EIC025";
-    cout << "| L.EIC005:   " << ucs.find(ucP)->getNumeroAlunosTotal() << "   | L.EIC015:   " << ucs.find(ucS)->getNumeroAlunosTotal() << "  | L.EIC025:   " << ucs.find(ucT)->getNumeroAlunosTotal() << "  |" << endl;
+    cout << "|   MD:       " <<  ucs.find(ucP)->getNumeroAlunosTotal() << "   |   SO:      " << ucs.find(ucS)->getNumeroAlunosTotal() << "   |   RC:      " << ucs.find(ucT)->getNumeroAlunosTotal() << "   |" << endl;
     ucP = "UP001";
-    cout << "| UP001:       " << ucs.find(ucP)->getNumeroAlunosTotal() << "   |                  |                  |" << endl;
+    cout << "|   PUP:      " << ucs.find(ucP)->getNumeroAlunosTotal() << "    |                  |                  |" << endl;
     cout << "----------------------------------------------------------" << endl;
     cout << endl;
 }
@@ -1290,20 +1530,21 @@ void Manager::printSets(int n, const string& uc, const bool& mais) const {
             auto it = allTurmas.rbegin();
             cout << "          |" << endl;
             while(n != 0 && it != allTurmas.rend()){
-                int len = (10 - it->second.length()) / 2;
-                int lenf = (10 - it->second.length()) % 2 == 0 ? len : len + 1;
+                int len = (9 - ucToString(it->second).length());
+
+
                 if (it->first == 0){
                     cout << "          |" << endl;
-                    cout << string(len, ' ') << it->second << string(lenf, ' ') << "|" << it->first << endl;
+                    cout << string(len, ' ') << ucToString(it->second) << " |" << it->first << endl;
                     cout << "          |" << endl;
                     n--;
                     it++;
                     continue;
                 }
                 int lenBarra = (it->first / tamanho) * 80;
-                cout << string(len + lenf + it-> second.length(), ' ') << "|" << string(lenBarra, '-') << endl;
-                cout << string(len, ' ') << it->second << string(lenf, ' ') << "|" << string(lenBarra - 1, ' ') << "| " << it->first << endl;
-                cout << string(len + lenf + it-> second.length(), ' ') << "|" << string(lenBarra, '-') << endl;
+                cout << string(10, ' ') << "|" << string(lenBarra, '-') << endl;
+                cout << string(len, ' ') << ucToString( it->second ) << " |" << string(lenBarra - 1, ' ') << "| " << it->first << endl;
+                cout << string(10, ' ') << "|" << string(lenBarra, '-') << endl;
                 cout << "          |" << endl;
                 n--;
                 it++;
@@ -1374,8 +1615,8 @@ void Manager::printVectors(const char &tipo, const bool &ordered, const bool& as
     }
 }
 
-// Execution
 
+//! Execution
 //! É utilizado no Menu, para permitir a visualização do horário de um estudante, caso passe a integrar uma determinada turma de uma nova UC.
 void Manager::verHorarioAntesDeConfirmar(const int &numero, const string &uc, const string &turma, const list<Aula> &aulas) const {
     auto estudante = getEstudante(numero);
@@ -1606,6 +1847,7 @@ void Manager::adicionarUcAoEstudante(Pedido &pedido) {
 //! Executa o próximo Pedido que se encontra nos Pedidos, coloca esse Pedido no histórico e remove-o dos Pedidos em espera.
 void Manager::proximoPedido() {
     if (!(pedidos.empty())) {
+        writeRequestInFile(pedidos.front(), false);
         switch (pedidos.front().getTipoAlteracao()) {
             case TipoAlteracao::H: {
                 executarPedidoTrocaHorario(pedidos.front());
@@ -1636,6 +1878,7 @@ void Manager::proximoPedido() {
             }
         }
         pedidos.pop();
+        guardaPedidosPendentes();
     }
     else {
         cout << "-----------------------------"  << endl;
@@ -1649,6 +1892,7 @@ void Manager::reverterPedido() {
     if (!(historico.empty())) {
         Pedido last = historico.top();
         string temp = "Reverteu o pedido: " + last.pedidoToString();
+        writeRequestInFile(last,  true);
         switch (last.getTipoAlteracao()) {
             case TipoAlteracao::H: {
                 executarPedidoTrocaHorario(last);

@@ -20,16 +20,25 @@ private:
 
 
 public:
+    //! Constructors
     Pedido(const std::string &uc, const Estudante &estudante, const Estudante &outroEstudante);
     Pedido(const std::string &uc, const Estudante &estudante, const std::string &tipo, const std::string &turma = "");
-    Estudante getEstudante();
-    Estudante getOutroEstudante();
-    void setTurma(const std::string &turma);
-    std::string pedidoToString() const;
-    bool pedidosConcorrentes(const Pedido &pedido);
+
+    //! Getters
+    Estudante getEstudante() const;
+    Estudante getOutroEstudante() const;
     std::string getUc() const;
     std::string getTurma() const;
     TipoAlteracao getTipoAlteracao() const;
+
+    //! Setters
+    void setTurma(const std::string &turma);
+
+    //! To string
+    std::string pedidoToString() const;
+
+    //! Validators
+    bool pedidosConcorrentes(const Pedido &pedido);
     bool operator==(const Pedido &other) const;
 };
 
