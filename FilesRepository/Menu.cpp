@@ -13,14 +13,14 @@ Menu::Menu() {
     Manager manager;
     this->manager = manager;
     this->manager.readFiles();
-    this->pedidosAtivo = 0;
+    this->manager.readChanges();
+    this->pedidosAtivo = manager.getPedidos();
     this->menu = false;
 }
 
 Menu::~Menu() {
     exitTimeThread = true;
     exitPedidoThread =  true;
-    // Join the time update thread in the destructor
     if (timeThread.joinable() || pedidoThread.joinable()) {
         timeThread.join();
         pedidoThread.join();
@@ -440,7 +440,7 @@ void Menu::menuInicial(const tm* hora) {
     this->menu = false;
     getUserInput();
 
-} 
+}
 
 void Menu::vereficarHorario(){
     while(true){

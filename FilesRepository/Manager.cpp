@@ -134,7 +134,208 @@ void Manager::readFiles()
     iff.close();
 }
 
-// Getters
+void Manager::readChanges() {
+    fstream iff;
+    try {
+        iff.open("../Changes/changes.txt", ios::in);
+        string line, tipo, estudante1, uc, turma, estudante2, reverse;
+        while (getline(iff, line)) {
+            istringstream iss(line);
+            iss >> reverse;
+
+            if (reverse == "N") {
+                iss >> tipo;
+
+                if (tipo == "R") {
+                    iss >> estudante1;
+                    iss >> uc;
+                    iss >> turma;
+                    Estudante student = getEstudante(stoi(estudante1));
+                    Pedido pedido = Pedido(uc,student,tipo, turma);
+                    historico.push(pedido);
+                    printHist.insert({this->nPedido, pedido.pedidoToString()});
+                    this->nPedido++;
+                    removerEstudanteDaUc(pedido);
+                }
+                else if (tipo == "A") {
+                    iss >> estudante1;
+                    iss >> uc;
+                    iss >> turma;
+                    Estudante student = getEstudante(stoi(estudante1));
+                    Pedido pedido = Pedido(uc,student,tipo, turma);
+                    historico.push(pedido);
+                    printHist.insert({this->nPedido, pedido.pedidoToString()});
+                    this->nPedido++;
+                    adicionarUcAoEstudante(pedido);
+                }
+                else if (tipo == "H") {
+                    iss >> estudante1;
+                    iss >> uc;
+                    iss >> turma;
+                    iss >> estudante2;
+                    Estudante student = getEstudante(stoi(estudante1));
+                    Estudante student2 = getEstudante(stoi(estudante2));
+                    Pedido pedido = Pedido(uc,student, student2);
+                    historico.push(pedido);
+                    printHist.insert({this->nPedido, pedido.pedidoToString()});
+                    this->nPedido++;
+                    executarPedidoTrocaHorario(pedido);
+                }
+            }
+            else if (reverse == "R") {
+                iss >> tipo;
+                if (tipo == "R") {
+                    iss >> estudante1;
+                    iss >> uc;
+                    iss >> turma;
+                    Estudante student = getEstudante(stoi(estudante1));
+                    Pedido pedido = Pedido(uc,student,tipo, turma);
+                    string s = "Reverteu o pedido " + pedido.pedidoToString();
+                    historico.pop();
+                    printHist.insert({this->nPedido, s});
+                    this->nPedido++;
+                    adicionarUcAoEstudante(pedido);
+                }
+                else if (tipo == "A") {
+                    iss >> estudante1;
+                    iss >> uc;
+                    iss >> turma;
+                    Estudante student = getEstudante(stoi(estudante1));
+                    Pedido pedido = Pedido(uc,student,tipo, turma);
+                    string s = "Reverteu o pedido " + pedido.pedidoToString();
+                    historico.pop();
+                    printHist.insert({this->nPedido, s});
+                    this->nPedido++;
+                    removerEstudanteDaUc(pedido);
+                }
+                else if (tipo == "H") {
+                    iss >> estudante1;
+                    iss >> uc;
+                    iss >> turma;
+                    iss >> estudante2;
+                    Estudante student = getEstudante(stoi(estudante1));
+                    Estudante student2 = getEstudante(stoi(estudante2));
+                    Pedido pedido = Pedido(uc,student, student2);
+                    string s = "Reverteu o pedido " + pedido.pedidoToString();
+                    historico.pop();
+                    printHist.insert({this->nPedido, s});
+                    this->nPedido++;
+                    executarPedidoTrocaHorario(pedido);
+                }
+            }
+        }
+        iff.close();
+    }
+    catch (exception e) {
+        cout << "Falha ao abrir o ficheiro";
+    }
+    try {
+        ifstream wagnerSalvadorDaPatria("../Changes/queue.txt");
+        cout << "estudante1" << " " << "uc" << endl;
+        string line, tipo, estudante1, uc, turma, estudante2;
+
+        while (getline(wagnerSalvadorDaPatria, line)) {
+            istringstream iss(line);
+            iss >> tipo;
+
+            if (tipo == "H") {
+                iss >> estudante1;
+                iss >> uc;
+                iss >> turma;
+                iss >> estudante2;
+                Estudante student = getEstudante(stoi(estudante1));
+                Estudante student2 = getEstudante(stoi(estudante2));
+                Pedido pedido = Pedido(uc,student, student2);
+                pedidos.push(pedido);
+                pedidosEspera.push_back(pedido);
+            }
+            else {
+                cout << estudante1 << " " << uc << endl;
+                iss >> estudante1;
+                iss >> uc;
+                iss >> turma;
+                Estudante student = getEstudante(stoi(estudante1));
+                Pedido pedido = Pedido(uc,student,tipo, turma);
+                pedidos.push(pedido);
+                pedidosEspera.push_back(pedido);
+            }
+        }
+        wagnerSalvadorDaPatria.close();
+    }
+    catch (exception e) {
+        cout << "Falha ao abrir o ficheiro" << endl;
+    }
+}
+
+//! Saves changes
+void Manager::writeRequestInFile(const Pedido& pedido, const bool& reverse) {
+    fstream off("../Changes/changes.txt", off.app);
+    try {
+        string n = reverse ? "R " : "N ";
+        switch (pedido.getTipoAlteracao()) {
+            case TipoAlteracao::R: {
+                string line = n + "R " + to_string(pedido.getEstudante().getStudentNumber()) + " " + pedido.getUc() + " " +
+                        pedido.getTurma() + "\n";
+                off << line;
+                break;
+            }
+            case TipoAlteracao::A: {
+                string line = n +
+                        "A " + to_string(pedido.getEstudante().getStudentNumber()) + " " + pedido.getUc() + " " +
+                        pedido.getTurma() + "\n";
+                off << line;
+                break;
+            }
+            case TipoAlteracao::H: {
+                string line = n +
+                        "H " + to_string(pedido.getEstudante().getStudentNumber()) + " " + pedido.getUc() + " " +
+                        to_string(pedido.getOutroEstudante().getStudentNumber()) + "\n";
+                off << line;
+                break;
+            }
+        }
+        off.close();
+    }
+    catch (exception e) {
+        cout << "Falha a abrir o ficheiro" << endl;
+    }
+}
+
+void Manager::guardaPedidosPendentes() {
+    ofstream off;
+    try {
+        off.open("../Changes/queue.txt", ofstream ::trunc);
+        vector<Pedido> pedidoPendentes = this->pedidosEspera;
+        for (auto it = pedidoPendentes.begin(); it != pedidoPendentes.end(); it++) {
+            Pedido pedido = *it;
+            switch (pedido.getTipoAlteracao()) {
+                case TipoAlteracao::R: {
+                    string line = "R " + to_string(pedido.getEstudante().getStudentNumber()) + " " + pedido.getUc() + " " +
+                                  pedido.getTurma() + "\n";
+                    off << line;
+                    break;
+                }
+                case TipoAlteracao::A: {
+                    string line = "A " + to_string(pedido.getEstudante().getStudentNumber()) + " " + pedido.getUc() + " " +
+                                  pedido.getTurma() + "\n";
+                    off << line;
+                    break;
+                }
+                case TipoAlteracao::H: {
+                    string line = "H " + to_string(pedido.getEstudante().getStudentNumber()) + " " + pedido.getUc() + " " +
+                                  to_string(pedido.getOutroEstudante().getStudentNumber()) + "\n";
+                    off << line;
+                    break;
+                }
+            }
+        }
+    }
+    catch (exception e) {
+        cout << "Falha a abrir o ficheiro" << endl;
+    }
+}
+
+//! Getters
 //! Retorna o número de pedidos pendentes
 int Manager::getPedidos() const {
     return this->pedidos.size();
@@ -457,6 +658,7 @@ bool Manager::addPedido(Pedido pedido) {
         cout << "-----------------------------------"  << endl;
         pedidos.push(pedido);
         pedidosEspera.push_back(pedido);
+        guardaPedidosPendentes();
     }
     return res;
 }
@@ -641,7 +843,7 @@ void Manager::printHistorico() const {
     }
 }
 
-//!
+//! Da print dos estudantes por turma, com opção de ordenação por número ou nome por ordem crescente e decrescente
 void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma, bool orderByNumber, bool ascending) const {
     auto it = ucs.find(uc); //! O(log(n))
 
@@ -662,10 +864,13 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
             cout << string(56,'-') << endl;
             vector<pair<int,string>> studentList = iterator->second.estudantes;
 
+            //! Ordena pelo primeiro elemento O(nlog(n))
             if (orderByNumber) sort(studentList.begin(), studentList.end() ,compareFirstElement);
 
+            //! Ordena pelo segundo elemento O(nlog(n))
             else sort(studentList.begin(), studentList.end() ,compareSecondElement);
 
+            //! No caso de pretender ascendente
             if (ascending){
                 for (const auto& element : studentList){
 
@@ -678,6 +883,7 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
                     cout << '|'<< string(18,' ') << element.first << ' ' << element.second << string(totalWidth-element.second.length(),' ') << '|' << endl;
                 }
             }
+            //! No caso de pretender descendente
             else{
                 for (auto i = studentList.rbegin(); i != studentList.rend(); ++i){
                     int totalWidth = 26;
@@ -1360,7 +1566,7 @@ void Manager::printVectors(const char &tipo, const bool &ordered, const bool& as
     }
 }
 
-// Execution
+//! Execution
 void Manager::verHorarioAntesDeConfirmar(const int &numero, const string &uc, const string &turma, const list<Aula> &aulas) const {
     auto estudante = getEstudante(numero);
 
@@ -1582,6 +1788,7 @@ void Manager::adicionarUcAoEstudante(Pedido &pedido) {
 
 void Manager::proximoPedido() {
     if (!(pedidos.empty())) {
+        writeRequestInFile(pedidos.front(), false);
         switch (pedidos.front().getTipoAlteracao()) {
             case TipoAlteracao::H: {
                 executarPedidoTrocaHorario(pedidos.front());
@@ -1612,6 +1819,7 @@ void Manager::proximoPedido() {
             }
         }
         pedidos.pop();
+        guardaPedidosPendentes();
     }
     else {
         cout << "-----------------------------"  << endl;
@@ -1624,6 +1832,7 @@ void Manager::reverterPedido() {
     if (!(historico.empty())) {
         Pedido last = historico.top();
         string temp = "Reverteu o pedido: " + last.pedidoToString();
+        writeRequestInFile(last,  true);
         switch (last.getTipoAlteracao()) {
             case TipoAlteracao::H: {
                 executarPedidoTrocaHorario(last);

@@ -40,13 +40,16 @@ private:
     int nPedido;
 
 public:
-    // Constructor
+    //! Constructor
     Manager();
 
-    // Initialize
+    //! Initialize
     void readFiles();
+    void readChanges();
+    void writeRequestInFile(const Pedido& pedido, const bool& reverse);
+    void guardaPedidosPendentes();
 
-    // Printers
+    //! Printers
     void printHistorico() const;
     void printHorario(vector<pair<string,pair<string,Aula>>> horario) const;
     void inputToHorario(const char &tipo, const string &uc, const string &turma, const int &numero);
@@ -62,7 +65,7 @@ public:
     void printSets(int n, const string& uc, const bool& mais = true) const;
     void printVectors(const char &tipo = ' ', const bool &ordered = false, const bool& ascending = true) const;
 
-    // Getters
+    //! Getters
     int getPedidos() const;
     Estudante getEstudante(const int &numero) const;
     vector<pair<string,pair<string,Aula>>> getAulas(const Estudante &estudante) const;
@@ -84,7 +87,7 @@ public:
 
 
 
-    // Validators
+    //! Validators
     bool nUcValido(const int &n) const;
     bool addPedido(Pedido pedido);
     bool estudanteValido(const int &numero) const;
@@ -98,7 +101,7 @@ public:
     bool verificarPedidosRepetidos(const Pedido &pedido);
     bool inputToPedido(const string& uc, const int &estudante, const string &tipo, const int outro = 0, const string &turma = "");
 
-    // Execution
+    //! Execution
     void executarPedidoTrocaHorario(Pedido &pedido);
     void proximoPedido();
     void reverterPedido();
