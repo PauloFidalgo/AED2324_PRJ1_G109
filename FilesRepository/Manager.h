@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include "Pedido.h"
 #include <stack>
+#include <iomanip>
 #include <map>
 
 using namespace std;
@@ -37,6 +38,7 @@ private:
     stack<Pedido> historico;
     set<pair<int,string>> printHist;
     int nPedido;
+
 
 public:
     // Constructor

@@ -65,6 +65,12 @@ void Menu::getStudentNumber() {
                     continue;
                 }
             }
+            else{
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cin.clear();
+                cout << "Número inválido" << endl;
+                continue;
+            }
             break;
         }
         catch (exception e) {

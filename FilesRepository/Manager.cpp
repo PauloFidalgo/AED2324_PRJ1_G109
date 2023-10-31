@@ -11,13 +11,13 @@ int Manager::getPedidos() const {
 
 void Manager::printHistorico() const {
     if (this->printHist.size() != 0) {
-        cout << "---------------------------------------------------------------------" << endl;
+        cout << string(69,'-')<< endl;
         cout << "Histórico de alterações: " << endl;
-        cout << "---------------------------------------------------------------------" << endl;
+        cout << string(69,'-')<< endl;
         for (auto line : this->printHist) {
-            cout << line.first << " - " << line.second;
+            cout << line.first << " - " << line.second ;
         }
-        cout << "---------------------------------------------------------------------" << endl;
+        cout << string(69, '-') << endl;
     }
     else {
         cout << "Não existem pedidos" << endl;
@@ -158,9 +158,9 @@ bool Manager::addPedido(Pedido pedido) {
             break;
     }
     if (res) {
-        cout << "-----------------------------------"  << endl;
-        cout << "Pedido adicionado à fila de espera" << endl;
-        cout << "-----------------------------------"  << endl;
+        cout << string(38,'-') << endl;
+        cout << "| Pedido adicionado à fila de espera |" << endl;
+        cout << string(38,'-') << endl;
         pedidos.push(pedido);
     }
     return res;
@@ -185,9 +185,9 @@ bool Manager::trocaValida(Pedido &pedido) {
 
     if (!(estudante.inscrito(uc) && outro.inscrito(uc))) {
         // Pelo menos um dos alunos não esta inscrito na UC
-        cout << "------------------------------------------------"  << endl;
-        cout << "Troca inválida, a Unidade curricular não é comum" << endl;
-        cout << "------------------------------------------------"  << endl;
+        cout << string(52,'-') << endl;
+        cout << "| Troca inválida, a Unidade curricular não é comum |" << endl;
+        cout << string(52,'-') << endl;
         return false;
     }
 
@@ -197,9 +197,9 @@ bool Manager::trocaValida(Pedido &pedido) {
 
     if (turma == outraTurma) {
         // Já são de turmas iguais
-        cout << "-------------------------------------------"  << endl;
-        cout << "Troca inválida, já são da mesma turma" << endl;
-        cout << "-------------------------------------------"  << endl;
+        cout << string(47,'-') << endl;
+        cout << "| Troca inválida, já são da mesma turma |" << endl;
+        cout << string(47,'-') << endl;
         return false;
     }
 
@@ -210,9 +210,9 @@ bool Manager::trocaValida(Pedido &pedido) {
     Aula aulaNova = obterPraticaUc(uc,turma);
 
     if (!(verificarAulaSobreposta(horarioUm,aula) && verificarAulaSobreposta(horarioOutro, aulaNova))) {
-        cout << "-------------------------------------------"  << endl;
-        cout << "Alteração inválida, aula Prática sobreposta" << endl;
-        cout << "-------------------------------------------"  << endl;
+        cout << string(47,'-') << endl;
+        cout << "| Alteração inválida, aula Prática sobreposta |" << endl;
+        cout << string(47,'-') << endl;
         return false;
     }
     return true;
@@ -419,10 +419,13 @@ void Manager::adicionarUcAoEstudante(Pedido &pedido) {
 void Manager::proximoPedido() {
     if (!(pedidos.empty())) {
         switch (pedidos.front().getTipoAlteracao()) {
+
             case TipoAlteracao::H: {
                 executarPedidoTrocaHorario(pedidos.front());
                 ostringstream oss;
-                oss << "Troca de turma entre o estudante " << pedidos.front().getEstudante().getStudentNumber() << " e o estudante " << pedidos.front().getOutroEstudante().getStudentNumber() << " na UC " << pedidos.front().getUc() << endl;
+                string numero_tostring = to_string(pedidos.front().getEstudante().getStudentNumber());
+                oss << "Troca de turma entre o estudante " << pedidos.front().getEstudante().getStudentNumber() << " e o estudante " << pedidos.front().getOutroEstudante().getStudentNumber() << " na UC " << pedidos.front().getUc()
+                << string(22 -numero_tostring.length()-pedidos.front().getUc().length(),' ') << '|' << endl;
                 cout << oss.str();
                 printHist.insert({this->nPedido, oss.str()});
                 this->nPedido++;
@@ -431,6 +434,7 @@ void Manager::proximoPedido() {
             case TipoAlteracao::R: {
                 removerEstudanteDaUc(pedidos.front());
                 ostringstream oss;
+                string numero_tostring = to_string(pedidos.front().getEstudante().getStudentNumber());
                 oss << "Removeu o estudante " << pedidos.front().getEstudante().getStudentNumber() << " da UC " << pedidos.front().getUc() << endl;
                 cout << oss.str();
                 printHist.insert({this->nPedido, oss.str()});
@@ -440,7 +444,9 @@ void Manager::proximoPedido() {
             case TipoAlteracao::A: {
                 adicionarUcAoEstudante(pedidos.front());
                 ostringstream oss;
-                oss << "Adicionou o estudante " << pedidos.front().getEstudante().getStudentNumber() << " na UC " << pedidos.front().getUc() << endl;
+                string numero_tostring = to_string(pedidos.front().getEstudante().getStudentNumber());
+
+                oss << "Adicionou o estudante " << pedidos.front().getEstudante().getStudentNumber() << " na UC "<< pedidos.front().getUc() << endl;
                 cout << oss.str();
                 printHist.insert({this->nPedido, oss.str()});
                 this->nPedido++;
@@ -451,9 +457,9 @@ void Manager::proximoPedido() {
         pedidos.pop();
     }
     else {
-        cout << "-----------------------------"  << endl;
-        cout << "Não existem pedidos pendentes" << endl;
-        cout << "-----------------------------"  << endl;
+        cout << string(33,'-') << endl;
+        cout << "| Não existem pedidos pendentes |" << endl;
+        cout << string(33,'-') << endl;
     }
 }
 
@@ -633,9 +639,9 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
 
 void Manager::printNumeroEstudantesPorTurmaPorUc(const std::string &uc, const bool &orderByFirst , const bool &ascending) const {
     vector<pair<string,int>> turmas;
-    cout << "-----------------------------------"  << endl;
-    cout << "|     Estudantes na UC: " << uc << "  |"<< endl;
-    cout << "-----------------------------------"  << endl;
+    cout << string(35,'-') << endl;
+    cout << '|' <<string(4, ' ') << "Estudantes na UC: " << uc << string(10 - uc.length(), ' ') <<" |"<< endl;
+    cout << string(35,'-') << endl;
     auto it = ucs.find(uc);
 
     if (it != ucs.end()) {
@@ -1346,11 +1352,12 @@ void Manager::printInfoEstudante(const int &numero) const {
     if (estudante.getStudentNumber() != 0) {
         lista = estudante.getTurmas();
     }
-    // L.EIC001
+
+
     int len, lenf;
     auto it = lista.begin();
-    cout << "---------------------------------------------------------" << endl;
-    cout << "|                                  |    UC    |  Turma  |" << endl;
+    cout << string(57 , '-') << endl;
+    cout << "|" << string(34,' ') << "|    UC    |  Turma  |" << endl;
     for (int i = 0; i < lista.size() || i < 3; i++){
         if (i == 0){
             len = (10 - it->first.length()) / 2;
@@ -1543,9 +1550,9 @@ void Manager::printEstudantesPorNome(string& nome, const bool& ascending) const 
         }
     }
     if (!students.empty()) {
-        cout << "------------------------------------------------" << endl;
+        cout << string(47,'-')<< endl;
         cout << "|            Nome            |  Número   | Ano |" << endl;
-        cout << "------------------------------------------------" << endl;
+        cout << string(47,'-')<< endl;
 
         if (ascending) {
             for (const auto &elem: students) {
@@ -1566,9 +1573,9 @@ void Manager::printEstudantesPorNome(string& nome, const bool& ascending) const 
         }
     }
     else {
-        cout << "------------------------------------------------------" << endl;
-        cout << "Não existem estudantes com o nome " << nome << endl;
-        cout << "------------------------------------------------------" << endl;
+        cout << string(47,'-')<< endl;
+        cout <<'|' << string(3,' ') <<  "Não existem estudantes com o nome " << nome << string(8 - nome.length(),' ') << '|' << endl;
+        cout << string(47,'-')<< endl;
     }
 }
 
