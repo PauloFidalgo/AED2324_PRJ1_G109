@@ -23,7 +23,7 @@ void Manager::readFiles()
 
         getline(iff, line);
 
-        unordered_map<string,TurmaInfo> turmaUc;
+        map<string,TurmaInfo> turmaUc;
 
         while (getline(iff,line)) {
             stringstream s(line);
@@ -37,7 +37,7 @@ void Manager::readFiles()
             turmaInfo.aulas.emplace_back(dia, stof(inicio), stof(duracao), tipo);
 
             if (tipo != "T") {
-                n += stoi(turma.substr(5));
+                n += stof(turma.substr(5));
                 i++;
             }
 
@@ -135,10 +135,12 @@ void Manager::readFiles()
 }
 
 // Getters
+//! Retorna o número de pedidos pendentes
 int Manager::getPedidos() const {
     return this->pedidos.size();
 }
 
+//! Retorna um estudante, procurado no set de estudantes pelo número 0(log(n))
 Estudante Manager::getEstudante(const int &numero) const {
     Estudante res;
     auto it = estudantesNumero.find(numero);
@@ -148,12 +150,13 @@ Estudante Manager::getEstudante(const int &numero) const {
     return res;
 }
 
+//! Retorna um vetor de pares, formado por uma string que corresponde ao nome da UC, e um par formado pelo nome da turma e a aula correspondente
 vector<pair<string,pair<string,Aula>>> Manager::getAulas(const Estudante &estudante) const {
     vector<pair<string,pair<string,Aula>>> result;
     set<pair<string,string>> turmas = estudante.getTurmas();
     for (const auto& par : turmas) {
         TurmaInfo turmaInfo = obterInfoUc(par.first, par.second);
-        for (const auto& element : turmaInfo.aulas){
+        for (const auto& element : turmaInfo.aulas) {
             result.emplace_back(par.first, make_pair(par.second, element));
         }
     }
@@ -173,18 +176,6 @@ list<Aula> Manager::obterHorarioEstudantePraticasExceto(const Estudante &estudan
     return res;
 }
 
-unordered_map<string,list<Aula>> Manager::obterHorarioEstudante(const Estudante &estudante) const {
-    set<pair<string,string>> turmas = estudante.getTurmas();
-    unordered_map<string,list<Aula>> res;
-
-    for (const auto& par : turmas) {
-        TurmaInfo turmaInfo = obterInfoUc(par.first, par.second);
-        res.insert({par.first, turmaInfo.aulas});
-    }
-
-    return res;
-}
-
 list<Aula> Manager::obterHorarioEstudantePraticas(const Estudante &estudante) const {
     set<pair<string,string>> turmas = estudante.getTurmas();
     list<Aula> res;
@@ -199,9 +190,9 @@ list<Aula> Manager::obterHorarioEstudantePraticas(const Estudante &estudante) co
 TurmaInfo Manager::obterInfoUc(const string &uc, const string &turma) const {
     TurmaInfo res;
 
-    for (auto u : ucs) {
+    for (const auto& u : ucs) {
         if (uc == u.getCodigoUc()) {
-            unordered_map<string, TurmaInfo> turmaInfo = u.getUcTurma();
+            map<string, TurmaInfo> turmaInfo = u.getUcTurma();
             auto it = turmaInfo.find(turma);
             if (it->first == turma) {
                 res = it->second;
@@ -229,7 +220,7 @@ map<string,list<Aula>> Manager::getTurmasPossiveis(const string &uc, list<Aula> 
     map<string,list<Aula>> res;
 
     if (it != ucs.end()) {
-        unordered_map<string,TurmaInfo> turmas = it->getUcTurma();
+        map<string,TurmaInfo> turmas = it->getUcTurma();
 
         for (const auto& t : turmas) {
             Aula pratica = obterPraticaUc(uc, t.first);
@@ -254,7 +245,7 @@ map<string,list<Aula>> Manager::enviaListaDeAulaPossivel(const string &uc, const
 
 set<string> Manager::getUcPorAno(const int &ano) const {
     set<string> res;
-    for (auto uc : ucs) {
+    for (const auto& uc : ucs) {
         if (uc.getAno() == ano) {
             res.insert(uc.getCodigoUc());
         }
@@ -528,7 +519,7 @@ bool Manager::validarNovaUc(const string &uc, const int &student) {
     list<Aula> praticas = obterHorarioEstudantePraticas(estudante);
 
     if (it != ucs.end()) {
-        unordered_map<string,TurmaInfo> turmas = it->getUcTurma();
+        map<string,TurmaInfo> turmas = it->getUcTurma();
         for (const auto &t : turmas) {
             if ((verificarAulaSobreposta(praticas, obterPraticaUc(uc,t.first)))) {
                 return true;
@@ -618,7 +609,7 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
     auto it = ucs.find(uc);
 
     if (it != ucs.end()) {
-        unordered_map<string,TurmaInfo> turmaInfo = it->getUcTurma();
+        map<string,TurmaInfo> turmaInfo = it->getUcTurma();
         auto iterator = turmaInfo.find(turma);
 
         if (iterator != turmaInfo.end()) {
@@ -903,8 +894,8 @@ void Manager::inputToHorario(const char &tipo, const string &uc, const string &t
 void Manager::printHorario(vector<pair<string,pair<string,Aula>>> horario) const {
 
     vector<pair<string,pair<string,Aula>>> sobrepostas = createSobrepostas(horario);
-    unordered_map<string,string> translate = {{"Monday","Segunda"}, {"Tuesday","Terça"}, {"Wednesday","Quarta"}, {"Thursday","Quinta"}, {"Friday","Sexta"}};
-    unordered_map<string,int> weekdays = {{"Monday",1}, {"Tuesday",2}, {"Wednesday",3}, {"Thursday",4}, {"Friday",5}};
+    map<string,string> translate = {{"Monday","Segunda"}, {"Tuesday","Terça"}, {"Wednesday","Quarta"}, {"Thursday","Quinta"}, {"Friday","Sexta"}};
+    map<string,int> weekdays = {{"Monday",1}, {"Tuesday",2}, {"Wednesday",3}, {"Thursday",4}, {"Friday",5}};
     map<pair<int,int>,string> sparseMatrix;
     static int LEN = 15;
 

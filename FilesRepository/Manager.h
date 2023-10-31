@@ -71,7 +71,6 @@ public:
     list<Aula> obterHorarioEstudantePraticasExceto(const Estudante &estudante, const string &uc) const;
     TurmaInfo obterInfoUc(const std::string &uc, const std::string &turma) const;
     Aula obterPraticaUc(const string &uc, const string &turma) const;
-    unordered_map<string,list<Aula>> obterHorarioEstudante(const Estudante &estudante) const;
     set<pair<string,string>> enviaUCParaRemover(const int &numero) const;
     map<string,list<Aula>> enviaListaDeAulaPossivel(const string &uc, const int &estudante);
     set<string> getUcPorAno(const int &ano) const;
