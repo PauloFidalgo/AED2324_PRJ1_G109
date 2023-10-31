@@ -13,6 +13,7 @@ Menu::Menu() {
     Manager manager;
     this->manager = manager;
     this->manager.readFiles();
+    this->pedidosAtivo = 0;
     this->menu = false;
     this->pedidosAtivo = 0;
 }
