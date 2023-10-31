@@ -30,6 +30,7 @@ bool Aula::mesmoHorario(const Aula &aula) const {
 }
 
 bool Aula::sobreposta(const Aula &aula) const {
-    return (this->dia != aula.dia || (((this->inicio + this->duracao) <= aula.inicio) || ((this->inicio >= aula.inicio + aula.duracao))) ? false : true);
+    return !(this->dia != aula.dia ||
+             (((this->inicio + this->duracao) <= aula.inicio) || ((this->inicio >= aula.inicio + aula.duracao))));
 }
 

@@ -94,6 +94,7 @@ bool Pedido::pedidosConcorrentes(const Pedido &pedido) {
                     return false;
                 }
             }
+            break;
         }
     }
     return true;

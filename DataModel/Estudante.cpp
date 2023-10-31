@@ -39,7 +39,7 @@ const std::string Estudante::getTurma(const std::string &uc) const {
     return res;
 }
 
-int const Estudante::getAno() const {return ano;}
+const int Estudante::getAno() const {return ano;}
 
 const std::set<std::pair<std::string, std::string>> Estudante::setTurmas(std::set<std::pair<std::string, std::string>> &turmas) {
     this->turmas = turmas;

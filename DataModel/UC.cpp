@@ -24,7 +24,7 @@ UC::UC(const std::string &codigoUc, const std::unordered_map<std::string, TurmaI
     }
 }
 
-UC::UC(const std::string &codigoUc) : codigoUC(std::move(codigoUc)) {}
+UC::UC(const std::string codigoUc) : codigoUC(codigoUc) {}
 
 std::unordered_map<std::string, TurmaInfo> UC::getUcTurma() const {
     return this->ucTurma;
@@ -90,7 +90,7 @@ std::list<Aula> UC::getAulasTurma(const std::string &turma) const {
 
 int UC::getNumeroAlunos(const std::string &turma) const {
     auto it = ucTurma.find(turma);
-    int res;
+    int res = 0;
 
     if (it != ucTurma.end()) {
         res = it->second.estudantes.size();
@@ -102,10 +102,9 @@ void UC::addEstudante(const std::string &turma, const int &estudante, const std:
     auto it = ucTurma.find(turma);
 
     if (it != ucTurma.end()) {
-        it -> second.estudantes.push_back({estudante,nome});
+        it -> second.estudantes.emplace_back(estudante,nome);
     }
 }
-
 
 void UC::removeEstudante(const std::string &turma, const int &numero, const std::string &nome) {
     auto it = ucTurma.find(turma);
@@ -162,7 +161,6 @@ bool UC::checkBalance(const std::string &turma) const {
    }
     return true;
 }
-
 
 bool UC::operator<(const UC uc) const {
     return this->codigoUC < uc.codigoUC;

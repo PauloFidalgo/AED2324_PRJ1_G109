@@ -26,7 +26,7 @@ private:
 
 public:
     UC(const std::string &codigoUc, const std::unordered_map<std::string, TurmaInfo> &ucTurma, int media = 0);
-    UC(const std::string &codigoUc);
+    UC(std::string codigoUc);
     UC(const UC &other);
 
     // Getters
