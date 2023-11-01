@@ -72,7 +72,6 @@ private:
     string uc;
     string turma;
     int ano;
-    std::vector<std::function<void(Menu&)>> menuHistory;
 
 public:
     //Construtor

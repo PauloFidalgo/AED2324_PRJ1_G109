@@ -895,8 +895,11 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
             return;
         }
         if (iterator != turmaInfo.end()) {
+            string line = ucToString(it->getCodigoUc());
+            int len = (54 - 27 - 4 - line.length()) / 2;
+            int lenf = (54 - 27 - 4 - line.length()) % 2 == 0 ? len : len + 1;
             cout << string(56,'-') << endl;
-            cout <<'|' << string(14,' ') << "UC: " << it->getCodigoUc() << " | Turma: " << iterator->first << string(56-14-4-12-it->getCodigoUc().length()-iterator->first.length(),' ') << '|' << endl;
+            cout <<'|' << string(len,' ') << "UC: " << line << string(lenf, ' ') << "|      Turma: " << iterator->first << string(6,' ') << '|' << endl;
             cout << string(56,'-') << endl;
 
 
@@ -1024,8 +1027,11 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
             return;
         }
 
+        string line = ucToString(it->getCodigoUc());
+        int lenI = (54 - (28 + line.length())) / 2;
+        int lenF = (54 - (28 + line.length())) % 2 == 0 ? lenI : lenI + 1;
         cout << string (56,'-')  << endl;
-        cout <<"|" << string(10,' ') <<"Estudantes inscritos na UC: " << it->getCodigoUc() << string(8,' ') << "|"<<endl;
+        cout <<"|" << string(lenI,' ') <<"Estudantes inscritos na UC: " << line << string(lenF,' ') << "|"<<endl;
         cout << string (56,'-')  << endl;
         // Ordem ascendente
         if (ascending){
@@ -1074,8 +1080,11 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
             return;
         }
 
+        string line = ucToString(it->getCodigoUc());
+        int lenI = (54 - (28 + line.length())) / 2;
+        int lenF = (54 - (28 + line.length())) % 2 == 0 ? lenI : lenI + 1;
         cout << string (56,'-')  << endl;
-        cout <<"|" << string(10,' ') <<"Estudantes inscritos na UC: " << ucToString(it->getCodigoUc()) << string(8,' ') << "|"<<endl;
+        cout <<"|" << string(lenI,' ') <<"Estudantes inscritos na UC: " << ucToString(it->getCodigoUc()) << string(lenF,' ') << "|"<<endl;
         cout << string (56,'-')  << endl;
 
         // Ordem ascendente
@@ -1194,7 +1203,10 @@ void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, c
 void Manager::printTurmasPorUC(const std::string &uc, const bool &ascending) const {
     set<string> turmas;
     cout <<  string (35,'-')<< endl;
-    cout << "|" << string (6,' ') << "Turmas da UC: " << uc <<string(5,' ')<<"|"<<endl ;
+    string line = ucToString(uc);
+    int lenI = (33 - (14 + line.length())) / 2;
+    int lenF = (33 - (14 + line.length())) % 2 == 0 ? lenI : lenI + 1;
+    cout << "|" << string (lenI,' ') << "Turmas da UC: " << line <<string(lenF,' ')<<"|"<<endl ;
     cout <<  string (35,'-')<< endl;
     auto it = ucs.find(uc); // O(log(n))
 
@@ -1472,19 +1484,17 @@ void Manager::printInfoEstudante(const int &numero) const {
     cout << "|" << string(34,' ') << "|    UC    |  Turma  |" << endl;
     for (int i = 0; i < lista.size() || i < 3; i++) {
         if (i == 0){
-            len = (10 - it->first.length()) / 2;
-            lenf = (10 - it->first.length()) % 2 == 0 ? len : len + 1;
+            len = (7 - ucToString(it->first).length());
             cout << "| Nome: " << estudante.getStudentName() << string(27 - estudante.getStudentName().length(), ' ') << '|';
-            cout << string(len, ' ') << it -> first << string(lenf, ' ') << '|';
+            cout << string(3, ' ') << ucToString(it->first) << string(len, ' ') << '|';
             cout << ' ' << it->second << " |" << endl;
             it++;
         }
         else if (i == 1){
             if (it != lista.end()){
-                len = (10 - it->first.length()) / 2;
-                lenf = (10 - it->first.length()) % 2 == 0 ? len : len + 1;
+                len = (7 - ucToString(it->first).length());
                 cout << "| Número: " << estudante.getStudentNumber() << string(16 , ' ') << '|';
-                cout << string(len, ' ') << it -> first << string(lenf, ' ') << '|';
+                cout << string(3, ' ') << ucToString(it->first) << string(len, ' ') << '|';
                 cout << ' ' << it->second << " |" << endl;
                 it++;
             }
@@ -1495,10 +1505,9 @@ void Manager::printInfoEstudante(const int &numero) const {
         }
         else if (i == 2){
             if (it != lista.end()){
-                len = (10 - it->first.length()) / 2;
-                lenf = (10 - it->first.length()) % 2 == 0 ? len : len + 1;
+                len = (7 - ucToString(it->first).length());
                 cout << "| Ano: " << estudante.getAno() << string(27, ' ') << '|';
-                cout << string(len, ' ') << it -> first << string(lenf, ' ') << '|';
+                cout << string(3, ' ') << ucToString(it->first) << string(len, ' ') << '|';
                 cout << ' ' << it->second << " |" << endl;
                 it++;
             }
@@ -1509,9 +1518,8 @@ void Manager::printInfoEstudante(const int &numero) const {
         }
         else{
             cout << "|                                  |";
-            len = (10 - it->first.length()) / 2;
-            lenf = (10 - it->first.length()) % 2 == 0 ? len : len + 1;
-            cout << string(len, ' ') << it -> first << string(lenf, ' ') << '|';
+            len = (7 - ucToString(it->first).length());
+            cout << string(3, ' ') << ucToString(it -> first) << string(len, ' ') << '|';
             cout << ' ' << it->second << " |" << endl;
             it++;
         }

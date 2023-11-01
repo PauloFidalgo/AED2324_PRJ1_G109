@@ -91,14 +91,14 @@ void Menu::getStudentNumber() {
         string line;
         cin >> line;
 
-        //! Se o input em vez de um numero de um estudante for 'sair' então retorna ao menu anterior
+        //! Se o input em vez de um número de um estudante for 'sair' então retorna ao menu anterior
         if (line == "sair") {
             this->sair = true;
             return;
         }
 
         try {
-            //! Verfiica se o mumero intruduzido pelo utilizador se tem o tamanho certo de um numero de estudante e depois verefica se corresponde a algum aluno
+            //! Verifica se o mumero intruduzido pelo utilizador se tem o tamanho certo de um numero de estudante e depois verifica se corresponde a algum aluno
             this->numero_estudante = stoi(line);
             if (line.length() == 9) {
                 if (!manager.estudanteValido(this->numero_estudante)) {
