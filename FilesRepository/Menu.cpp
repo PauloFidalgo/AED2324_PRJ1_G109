@@ -39,7 +39,7 @@ void Menu::getSecondStudent(){
         string line;
         cin >> line;
 
-        //! Se o input em vez de um numero de um estudante for 'sair' então retorna ao menu anterior
+        //! Se o input em vez de um número de um estudante for 'sair' então retorna ao menu anterior
         if (line == "sair") {
             this->sair = true;
             return;
@@ -47,7 +47,7 @@ void Menu::getSecondStudent(){
 
         try {
             this->estudante2 = stoi(line);
-            //! Verifica se o input tem o numero de caracteres correspondentes a um numero de um estudante
+            //! Verifica se o input tem o número de caracteres correspondentes a um número de um estudante
             if (line.length() == 9) {
                 //! Verfifica se o input corresponde a um estudante
                 if (!manager.estudanteValido(this->estudante2)) {
@@ -91,14 +91,14 @@ void Menu::getStudentNumber() {
         string line;
         cin >> line;
 
-        //! Se o input em vez de um número de um estudante for 'sair' então retorna ao menu anterior
+        //! Se o input em vez de um número de um estudante for 'sair' então volta ao menu anterior
         if (line == "sair") {
             this->sair = true;
             return;
         }
 
         try {
-            //! Verifica se o mumero intruduzido pelo utilizador se tem o tamanho certo de um numero de estudante e depois verifica se corresponde a algum aluno
+            //! Verifica se o número introduzido pelo utilizador se tem o tamanho certo de um número de estudante e depois verifica se corresponde a algum aluno
             this->numero_estudante = stoi(line);
             if (line.length() == 9) {
                 if (!manager.estudanteValido(this->numero_estudante)) {
@@ -134,7 +134,7 @@ void Menu::getUC() {
             this->sair = true;
             return;
         }
-        //! Verfifica se a UC inserida pelo Utilizador corresponde a alguma UC existente
+        //! Verifica se a UC inserida pelo Utilizador corresponde a alguma UC existente
         if (!manager.ucValida(uc)) {
             cout << "UC não encontrada! " << endl;
             continue;
@@ -428,7 +428,7 @@ void Menu::menuEstatistica() {
     }
 }
 
-//! Mostra ao utilizador as turmas do ano escolhido do meu anterior e consoante a escolha do utilizador mostra o hórario da turma selecionada
+//! Mostra ao utilizador as turmas do ano escolhido do meu anterior e consoante a escolha do utilizador mostra o horário da turma selecionada
 void Menu::menuTurmaPorAno(const int &ano) {
     map<string,TurmaInfo> turmas = manager.getTurmasPorAno(ano);
     while (true) {
@@ -483,7 +483,7 @@ void Menu::menuTurmaPorAno(const int &ano) {
     }
 }
 
-//! Mostra ao utilizador as turmas correspondentes a UC que o utilizador selecionou no menu anterior e em seguida mostra o menu onde o utilizador pode escolher a forma como a informação é ordenada
+//! Mostra ao utilizador as turmas correspondentes a UC que o utilizador selecionou no menu anterior e em seguida mostra o menu onde o utilizador pode escolher como a informação é ordenada
 void Menu::menuListagemTurmasPorUc(const string& uc) {
     set<string> turmas = manager.getTurmasPorUc(uc);
 
@@ -539,7 +539,7 @@ void Menu::menuListagemTurmasPorUc(const string& uc) {
     }
 }
 
-//! Menu que mostra ao utilizador as Uc's correspodentes ao ano selecionado no menu anterior e em seguida msotra o horario da UC selecionada
+//! Menu que mostra ao utilizador as Uc's correspondentes ao ano selecionado no menu anterior e em seguida mostra o horário da UC selecionada
 void Menu::menuListagemUc(const int &ano, ListagemUc listagem) {
     vector<string> ucs = manager.getUcPorAno(ano);
     while (true) {
@@ -909,7 +909,7 @@ void Menu::menuAno(Tipo tipo) {
     }
 }
 
-//! Menu que permite ao utilizador escolher se quer o nuemro de alunos por ano e o numero de estudantes por numero de UC's ordenado or não
+//! Menu que permite ao utilizador escolher se quer o número de alunos por ano e o número de estudantes por número de UC's ordenado ou não ordenado
 void Menu::escolhaOrdenado(const bool& first) {
     while(true){
 
@@ -1001,7 +1001,7 @@ void Menu::menuOpcoesTurmas(map<string,list<Aula>> turmas) {
     cout << "--------------------------------" << endl;
 }
 
-//! Mostra ao utilizador um Menu com as opções de hórario que pode ver
+//! Mostra ao utilizador um Menu com as opções de horário que pode ver
 void Menu::verificarHorario(){
     while(true){
         cout << "____________________________________________________________________________________________________" << endl;
@@ -1045,7 +1045,7 @@ void Menu::verificarHorario(){
 }
 
 //! Ordenações
-//! Menu onde permite ao utilizador escolher como a informação é ordenada ( numero e ordem crescente, numero e ordem decrescente, nome e ordem crescente, nome e ordem decrescente )
+//! Menu onde permite ao utilizador escolher como a informação é ordenada (número e ordem crescente, numero e ordem decrescente, nome e ordem crescente, nome e ordem decrescente)
 void Menu::ordernaçãoTotal(OrdenacaoTotal ord, int ano, string uc, string turma) {
     while (true) {
         cout << "________________________________________________________________________________________________________" <<endl;
@@ -1334,7 +1334,7 @@ void Menu::ordenaçãoParcial(OrdenacaoParcial ord, string uc) {
 }
 
 //! Execuções
-//! Mostra o horário do estudante consoante o numero de estudante que o utilizador inseriu
+//! Mostra o horário do estudante consoante o número de estudante que o utilizador inseriu
 void Menu::horarioEstudante() {
     getStudentNumber();
     if (sair) {sair = false; return;}
@@ -1342,7 +1342,7 @@ void Menu::horarioEstudante() {
     manager.inputToHorario('E', "", "", this->numero_estudante);
 }
 
-//! Quando o utilizador volta ao menu principal permite atualizar a hora consoate a hora atual
+//! Quando o utilizador volta ao menu principal permite atualizar a hora consoante a hora atual
 void Menu::updateTime() {
     while (!exitTimeThread) {
         // Get the current time
@@ -1353,7 +1353,7 @@ void Menu::updateTime() {
     }
 }
 
-//! Permite atuaizars a contagem dos pedidos no menu principal
+//! Permite atualizar a contagem dos pedidos no menu principal
 void Menu::updatePedidos() {
     while (!exitPedidoThread) {
         pedidosAtivo = manager.getPedidos();
@@ -1465,7 +1465,7 @@ void Menu::adicionarUc() {
     }
 }
 
-//! Permite ao utilizador remover uma UC do seu horario
+//! Permite ao utilizador remover uma UC do seu horário
 void Menu::removerUc() {
     //! Pede ao utilizadar um estudante e a UC que pretende remover
     getStudentNumber();
