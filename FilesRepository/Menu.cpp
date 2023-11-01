@@ -189,7 +189,7 @@ void Menu::iniciar() {
         menuInicial(hora);
         switch (this->userInput) {
             case '1':  // Horário
-                vereficarHorario();
+                verificarHorario();
                 break;
             case '2': // Listagens
                 menuListagens();
@@ -234,7 +234,7 @@ void Menu::menuInicial(const tm* hora) {
     cout << "|                                                                                                   |" << endl;
     cout << "|                      1 - Horários                         4 - Fazer pedido                        |" << endl;
     cout << "|                      2 - Listagens                        5 - Executar Pedido                     |" << endl;
-    cout << "|                      3 - Estatisticas                     6 - Histórico de Pedidos                |" << endl;
+    cout << "|                      3 - Estatísticas                     6 - Histórico de Pedidos                |" << endl;
     cout << "|                                                           7 - Reverter Pedido                     |" << endl;
     cout << "|                                                                                                   |" << endl;
     cout << "|                                                                                                   |" << endl;
@@ -1348,7 +1348,7 @@ void Menu::menuOpcoesTurmas(map<string,list<Aula>> turmas) {
 }
 
 //! Mostra ao utilizador um Menu com as opções de hórario que pode ver
-void Menu::vereficarHorario(){
+void Menu::verificarHorario(){
     while(true){
         cout << "____________________________________________________________________________________________________" << endl;
         cout << "|                                                                                                  |" << endl;
