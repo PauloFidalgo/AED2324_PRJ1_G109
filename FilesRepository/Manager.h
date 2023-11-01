@@ -64,7 +64,7 @@ public:
     void printInfoEstudante(const int &numero) const;
     void printNumeroEstudantesDeTodasUc() const;
     void printEstudantesPorNome(string &nome, const bool &ascending) const;
-    void printSets(int n, const string& uc, const bool& mais = true) const;
+    void printSets(int n, const string& uc = "", const bool& mais = true) const;
     void printVectors(const char &tipo = ' ', const bool &ordered = false, const bool& ascending = true) const;
 
     //! Getters
@@ -78,8 +78,8 @@ public:
     Aula obterPraticaUc(const string &uc, const string &turma) const;
     set<pair<string,string>> enviaUCParaRemover(const int &numero) const;
     map<string,list<Aula>> enviaListaDeAulaPossivel(const string &uc, const int &estudante);
-    set<string> getUcPorAno(const int &ano) const;
-    set<string> getTurmasPorAno(const int &ano) const;
+    vector<string> getUcPorAno(const int &ano) const;
+    map<string,TurmaInfo> getTurmasPorAno(const int &ano) const;
     set<string> getTurmasPorUc(const string &uc) const;
     set<pair<int, string>> getOcupacaoTurmas(const string &uc) const;
     set<pair<int, string>> getOcupacaoUcs() const;

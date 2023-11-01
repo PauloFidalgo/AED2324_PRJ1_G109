@@ -11,6 +11,7 @@ UC::UC(const UC &other) {
     this->ucTurma = other.ucTurma;
     this->media = other.media;
     this->ano = other.ano;
+    this->nAlunos = other.nAlunos;
 }
 
 //! Construtor com todos os parâmetros
@@ -18,6 +19,7 @@ UC::UC(const std::string &codigoUc, const std::map<std::string, TurmaInfo> &ucTu
     this->codigoUC = codigoUc;
     this->ucTurma = ucTurma;
     this->media = media;
+    this->nAlunos = 0;
 
     auto it = ucTurma.begin();
     if (it != ucTurma.end()) {
@@ -43,14 +45,9 @@ int UC::getAno() const {
     return this->ano;
 }
 
-//! Retorna o número de alunos total da UC O(n)
+//! Retorna o número de alunos total da UC O(1)
 int UC::getNumeroAlunosTotal() const {
-    int res = 0;
-
-    for (auto turma : ucTurma) {
-        res += turma.second.estudantes.size();
-    }
-    return res;
+    return this->nAlunos;
 }
 
 //! Retorna a aula prática da turma (turma) O(log(n))
@@ -58,11 +55,7 @@ Aula UC::getPratica(const std::string &turma) const {
     Aula res;
     auto it = this->ucTurma.find(turma);
     if (it != this->ucTurma.end()) {
-        for (const auto& element : it->second.aulas) {
-            if (element.getTipo() != "T") {
-                res = element;
-            }
-        }
+        res = it->second.pratica;
     }
     return res;
 }
@@ -76,9 +69,10 @@ int UC::getNumeroTurmas() const {
 std::vector<std::pair<std::string,std::pair<std::string,Aula>>> UC::getAulasUc() const {
     std::vector<std::pair<std::string,std::pair<std::string,Aula>>> res;
     for (const auto& turma : ucTurma) {
-        for (const auto& aula : turma.second.aulas) {
+        for (const auto& aula : turma.second.aulasTeoricas) {
             res.push_back({codigoUC, {turma.first, aula}});
         }
+        res.push_back({codigoUC, {turma.first, turma.second.pratica}});
     }
     return res;
 }
@@ -94,8 +88,10 @@ std::list<Aula> UC::getAulasTurma(const std::string &turma) const {
     std::list<Aula> res;
 
     if (it != ucTurma.end()) {
-        res = it->second.aulas;
+        res = it->second.aulasTeoricas;
+        res.push_back(it->second.pratica);
     }
+
     return res;
 }
 
@@ -115,21 +111,19 @@ void UC::addEstudante(const std::string &turma, const int &estudante, const std:
     auto it = ucTurma.find(turma);
 
     if (it != ucTurma.end()) {
-        it -> second.estudantes.emplace_back(estudante,nome);
+        it -> second.estudantes.insert({estudante,nome});
+        this->nAlunos++;
     }
 }
 
-//! Remove um estudante de uma turma O(n)
+//! Remove um estudante de uma turma O(log(n))
 void UC::removeEstudante(const std::string &turma, const int &numero, const std::string &nome) {
-    auto it = ucTurma.find(turma);
+    auto it = ucTurma.find(turma); // O(log(n))
 
-    if (it != ucTurma.end()) {
-        for (auto est = it->second.estudantes.begin(); est != it->second.estudantes.end(); est++) {
-            if (est->first == numero && est->second == nome) {
-                it->second.estudantes.erase(est);
-                break;
-            }
-        }
+    auto estudante  = it->second.estudantes.find({numero,nome});
+    if (estudante != it->second.estudantes.end()) {
+        it->second.estudantes.erase(estudante);
+        this->nAlunos--;
     }
 }
 

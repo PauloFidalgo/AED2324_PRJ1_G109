@@ -8,13 +8,15 @@
 #include <map>
 #include <list>
 #include <vector>
+#include <set>
 
 
 #include "Aula.h"
 
 struct TurmaInfo {
-    std::vector<std::pair<int,std::string>> estudantes;
-    std::list<Aula> aulas;
+    std::set<std::pair<int,std::string>> estudantes;
+    std::list<Aula> aulasTeoricas;
+    Aula pratica;
 };
 
 class UC {
@@ -22,6 +24,7 @@ private:
     std::string codigoUC;
     std::map<std::string, TurmaInfo> ucTurma;
     float media;
+    int nAlunos;
     int ano;
 
 public:

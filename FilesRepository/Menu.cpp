@@ -453,16 +453,16 @@ void Menu::menuOpçoes1Ano(Cadeiras cadeira, const bool &mais) {
         switch (cadeira) {
             case Cadeiras::escolha: {
                 switch (this->userInput) {
-                    case '1':// turmas por uc
+                    case '1':
                         manager.inputToHorario('U',"L.EIC001","",0);
                         break;
-                    case '2': // estudantes por ano
+                    case '2':
                         manager.inputToHorario('U',"L.EIC002","",0);
                         break;
-                    case '3': // estudante por uc
+                    case '3':
                         manager.inputToHorario('U',"L.EIC003","",0);
                         break;
-                    case '4' : // estudante por turma por uc
+                    case '4' :
                         manager.inputToHorario('U',"L.EIC004","",0);
                         break;
                     case '5' :
@@ -672,7 +672,7 @@ void Menu::menuOpçoes3Ano(Cadeiras cadeira, const bool &mais) {
         cout << "|                                   Escolha a Unidade Curricular:                                      |" << endl;
         cout << "|                                                                                                      |" << endl;
         cout << "|                               1 - Fundamentos de Segurança Informática                               |"<< endl;
-        cout << "|                               2 - Interação Pessoa Computador                                        |"<< endl;
+        cout << "|                               2 - Interação Pessoa-Computador                                        |"<< endl;
         cout << "|                               3 - Laboratório de Bases de Dados e Aplicações Web                     |"<< endl;
         cout << "|                               4 - Programação Funcional e em Lógica                                  |"<< endl;
         cout << "|                               5 - Redes de Computadores                                              |"<< endl;
@@ -776,7 +776,7 @@ void Menu::menuOpçoes3Ano(Cadeiras cadeira, const bool &mais) {
 
 //! Mostra ao utilizador as turmas do ano escolhido do meu anterior e consoante a escolha do utilizador mostra o hórario da turma selecionada
 void Menu::menuTurmaPorAno(const int &ano) {
-    set<string> turmas = manager.getTurmasPorAno(ano);
+    map<string,TurmaInfo> turmas = manager.getTurmasPorAno(ano);
     while (true) {
         int i = 1;
 
@@ -786,9 +786,9 @@ void Menu::menuTurmaPorAno(const int &ano) {
         cout << "|                                                                                                      |" << endl;
         for (auto turma: turmas) {
             int leni = to_string(i).length();
-            int len = (102 - 3 - turma.length() - leni) / 2;
-            int lenf = (102 - 3 - turma.length() - leni) % 2 == 0 ? len : len + 1;
-            cout << "|" << string(lenf, ' ') << i << " - " << turma << string(len, ' ') << "|" <<  endl;
+            int len = (102 - 3 - turma.first.length() - leni) / 2;
+            int lenf = (102 - 3 - turma.first.length() - leni) % 2 == 0 ? len : len + 1;
+            cout << "|" << string(lenf, ' ') << i << " - " << turma.first << string(len, ' ') << "|" <<  endl;
             i++;
         }
         cout << "|  m - menu                                                                                            |" << endl;
@@ -816,7 +816,7 @@ void Menu::menuTurmaPorAno(const int &ano) {
                 }
 
                 if (it != turmas.end()) {
-                    manager.inputToHorario('T', "", *it,0);
+                    manager.inputToHorario('T', "", it->first,0);
                     break;
                 }
             }
@@ -887,7 +887,7 @@ void Menu::menuListagemTurmasPorUc(const string& uc) {
 
 //! Menu que mostra ao utilizador as Uc's correspodentes ao ano selecionado no menu anterior e em seguida msotra o horario da UC selecionada
 void Menu::menuListagemUc(const int &ano, ListagemUc listagem) {
-    set<string> ucs = manager.getUcPorAno(ano);
+    vector<string> ucs = manager.getUcPorAno(ano);
     while (true) {
         int i = 1;
         cout << "________________________________________________________________________________________________________" << endl;
@@ -944,6 +944,29 @@ void Menu::menuListagemUc(const int &ano, ListagemUc listagem) {
                             if (this->menu) return;
                             break;
                         }
+                        case ListagemUc::horário: {
+                            manager.inputToHorario('U',*it,"",0);
+                            if (this->menu) return;
+                            break;
+                        }
+                        case ListagemUc::nTurmasMais: {
+                            getNuc();
+                            if (sair) {
+                                sair = false;
+                                return;
+                            }
+                            manager.printSets(this->nU, *it, true);
+                            break;
+                        }
+                        case ListagemUc::nTurmasMenos: {
+                            getNuc();
+                            if (sair) {
+                                sair = false;
+                                return;
+                            }
+                            manager.printSets(this->nU, *it, false);
+                            break;
+                            }
                     }
                     break;
                 }
@@ -1007,15 +1030,15 @@ void Menu::menuAno(Tipo tipo) {
                 getUserInput();
                 switch (userInput){
                     case '1':
-                        menuOpçoes1Ano(Cadeiras::escolha);
+                        menuListagemUc(1,ListagemUc::horário);
                         if (this->menu) return;
                         break;
                     case'2':
-                        menuOpçoes2Ano(Cadeiras::escolha);
+                        menuListagemUc(2,ListagemUc::horário);
                         if (this->menu) return;
                         break;
                     case '3':
-                        menuOpçoes3Ano(Cadeiras::escolha);
+                        menuListagemUc(3,ListagemUc::horário);
                         if (this->menu) return;
                         break;
                     case 'm':
@@ -1174,15 +1197,15 @@ void Menu::menuAno(Tipo tipo) {
                     getUserInput();
                     switch (userInput){
                         case '1':
-                            menuOpçoes1Ano(Cadeiras::estatistica);
+                            menuListagemUc(1, ListagemUc::nTurmasMais);
                             if (this->menu) return;
                             break;
                         case'2':
-                            menuOpçoes2Ano(Cadeiras::estatistica);
+                            menuListagemUc(2, ListagemUc::nTurmasMais);
                             if (this->menu) return;
                             break;
                         case '3':
-                            menuOpçoes3Ano(Cadeiras::estatistica);
+                            menuListagemUc(3, ListagemUc::nTurmasMais);
                             if (this->menu) return;
                             break;
                         case 'm':
@@ -1202,15 +1225,15 @@ void Menu::menuAno(Tipo tipo) {
                     getUserInput();
                     switch (userInput){
                         case '1':
-                            menuOpçoes1Ano(Cadeiras::estatistica, false);
+                            menuListagemUc(1, ListagemUc::nTurmasMenos);
                             if (this->menu) return;
                             break;
                         case'2':
-                            menuOpçoes2Ano(Cadeiras::estatistica, false);
+                            menuListagemUc(2, ListagemUc::nTurmasMenos);
                             if (this->menu) return;
                             break;
                         case '3':
-                            menuOpçoes3Ano(Cadeiras::estatistica, false);
+                            menuListagemUc(3, ListagemUc::nTurmasMenos);
                             if (this->menu) return;
                             break;
                         case 'm':

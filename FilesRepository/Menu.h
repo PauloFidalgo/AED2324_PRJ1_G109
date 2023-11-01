@@ -39,6 +39,9 @@ enum ListagemUc {
     uc,
     numeroUc,
     printTurmas,
+    horário,
+    nTurmasMais,
+    nTurmasMenos,
 };
 
 enum OrdenacaoTotal {
