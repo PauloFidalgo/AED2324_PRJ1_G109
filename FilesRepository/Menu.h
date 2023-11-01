@@ -72,7 +72,6 @@ private:
     string uc;
     string turma;
     int ano;
-    std::vector<std::function<void(Menu&)>> menuHistory;
 
 public:
     //Construtor
@@ -108,7 +107,7 @@ public:
     void menuAno(Tipo tipo);
     void escolhaOrdenado(const bool& first);
     void menuOpcoesTurmas(map<string,list<Aula>> turmas);
-    void vereficarHorario();
+    void verificarHorario();
 
     //Ordenações
 
