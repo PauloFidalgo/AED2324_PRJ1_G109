@@ -970,8 +970,11 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
 //! O(n log(n))
 void Manager::printNumeroEstudantesPorTurmaPorUc(const std::string &uc, const bool &orderByFirst , const bool &ascending) const {
     vector<pair<string,int>> turmas;
+    string line = ucToString(uc);
+    int len = (32 - (18 + line.length())) / 2;
+    int lenF = (32 - (18 + line.length())) % 2 == 0 ? len : len + 1;
     cout << string(35,'-') << endl;
-    cout << '|' <<string(4, ' ') << "Estudantes na UC: " << uc << string(10 - uc.length(), ' ') <<" |"<< endl;
+    cout << '|' <<string(len, ' ') << "Estudantes na UC: " << line << string(lenF, ' ') <<" |"<< endl;
     cout << string(35,'-') << endl;
     auto it = ucs.find(uc); // O(log(n))
 
@@ -992,13 +995,15 @@ void Manager::printNumeroEstudantesPorTurmaPorUc(const std::string &uc, const bo
     // Ordem crescente
     if (ascending) {
         for (const auto& elem : turmas) {
-            cout <<"|          "<< elem.first << " Nº: " << elem.second << "          |"<<endl;
+            int len = (11 - to_string(elem.second).length());
+            cout <<"|          "<< elem.first << " Nº: " << elem.second << string(len, ' ') << "|" <<endl;
         }
     }
     // Ordem decrescente
     else {
         for (auto it = turmas.rbegin(); it != turmas.rend(); it++) {
-            cout <<"|          "<< it->first << " Nº: " << it->second<< "          |" << endl;
+            int len = (11 - to_string(it->second).length());
+            cout <<"|          "<< it->first << " Nº: " << it->second << string(len, ' ') << "|" << endl;
         }
     }
     cout << "-----------------------------------"  << endl;
