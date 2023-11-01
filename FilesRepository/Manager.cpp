@@ -1069,13 +1069,13 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
 
         if (studentList.empty()){
             cout << string (56,'-')  << endl;
-            cout <<"|" << string(10,' ')<< "Não existem estudantes na UC: " << uc << string(9,' ') << "|"<<endl;
+            cout <<"|" << string(10,' ')<< "Não existem estudantes na UC: " << ucToString(uc) << string(9,' ') << "|"<<endl;
             cout << string (56,'-')  << endl;
             return;
         }
 
         cout << string (56,'-')  << endl;
-        cout <<"|" << string(10,' ') <<"Estudantes inscritos na UC: " << it->getCodigoUc() << string(8,' ') << "|"<<endl;
+        cout <<"|" << string(10,' ') <<"Estudantes inscritos na UC: " << ucToString(it->getCodigoUc()) << string(8,' ') << "|"<<endl;
         cout << string (56,'-')  << endl;
 
         // Ordem ascendente
