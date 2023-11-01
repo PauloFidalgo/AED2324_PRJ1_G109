@@ -331,7 +331,7 @@ void Menu::menuOpcoesPedidos(){
         cout << "|                                         2 - Adicionar UC                                             |" << endl;
         cout << "|                                         3 - Remover UC                                               |" << endl;
         cout << "|                                                                                                      |" << endl;
-        cout << "|  b - menu                                                                                            |"<< endl;
+        cout << "|  b - anterior                                                                                        |"<< endl;
         cout << "|  q - sair                                                                                            |" << endl;
         cout << "--------------------------------------------------------------------------------------------------------" << endl;
 
