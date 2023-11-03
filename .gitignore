@@ -4,4 +4,7 @@
 .idea
 *.o
 cmake-build-debug/
+html
+latex
+dconfig
 
