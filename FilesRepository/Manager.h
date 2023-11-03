@@ -42,16 +42,16 @@ private:
 
 
 public:
-    //! Constructor
+    // Constructor
     Manager();
 
-    //! Initialize
+    // Initialize
     void readFiles();
     void readChanges();
     void writeRequestInFile(const Pedido& pedido, const bool& reverse);
     void guardaPedidosPendentes();
 
-    //! Printers
+    // Printers
     void printHistorico() const;
     void printHorario(vector<pair<string,pair<string,Aula>>> horario) const;
     void inputToHorario(const char &tipo, const string &uc, const string &turma, const int &numero);
@@ -67,7 +67,7 @@ public:
     void printSets(int n, const string& uc = "", const bool& mais = true) const;
     void printVectors(const char &tipo = ' ', const bool &ordered = false, const bool& ascending = true) const;
 
-    //! Getters
+    // Getters
     int getPedidos() const;
     Estudante getEstudante(const int &numero) const;
     vector<pair<string,pair<string,Aula>>> getAulas(const Estudante &estudante) const;
@@ -89,13 +89,12 @@ public:
 
 
 
-    //! Validators
+    // Validators
     bool nUcValido(const int &n) const;
     bool addPedido(Pedido pedido);
     bool estudanteValido(const int &numero) const;
     bool trocaValida(Pedido &pedido) const;
     bool ucValida(const string &uc) const;
-    bool turmaValida(const string &turma) const;
     static bool verificarAulaSobreposta(const list<Aula> &horario, const Aula &aulaNova) ;
     bool validarNovaUc(const string &uc, const int &student);
     static bool removerValida(Pedido &pedido);
@@ -104,7 +103,7 @@ public:
     bool inputToPedido(const string& uc, const int &estudante, const string &tipo, const int outro = 0, const string &turma = "");
     bool nomeValido(string &nome) const;
 
-    //! Execution
+    // Execution
     void executarPedidoTrocaHorario(Pedido &pedido);
     void proximoPedido();
     void reverterPedido();
@@ -113,8 +112,7 @@ public:
     void trocaTurma(const string &uc, const string& turma1, const int &numero1, const string &nome1, const string& turma2, const int &numero2, const string &nome2);
     vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario) const;
     void verHorarioAntesDeConfirmar(const int &numero, const string &uc, const string &turma, const list<Aula> &aulas) const;
-
-    string ucToString(const string &uc) const ;
+    string ucToString(const string &uc) const;
 
 
 };

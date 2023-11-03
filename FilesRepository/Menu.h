@@ -115,7 +115,7 @@ public:
     void ordenaçãoParcial(OrdenacaoParcial ord, string uc = "");
     void ordernaçãoTotal(OrdenacaoTotal ord, int ano = 1, string uc = "", string turma = "");
 
-    // Execuções
+    //Execuções
 
     void horarioEstudante();
     void trocarHorarioUc();
