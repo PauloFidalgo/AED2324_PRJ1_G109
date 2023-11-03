@@ -1,0 +1,173 @@
+\doxysection{Aula Class Reference}
+\hypertarget{classAula}{}\label{classAula}\index{Aula@{Aula}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classAula_a8d76c855afa3252523e4ba97535bd2db}{Aula}} ()
+\item 
+\mbox{\hyperlink{classAula_ad11c0541509da1ce5a2c471306bc9403}{Aula}} (std\+::string dia, float inicio, float duracao, std\+::string tipo)
+\item 
+const std\+::string \mbox{\hyperlink{classAula_ad7b74a16b27abbd827f884f55aad3800}{get\+Tipo}} () const
+\item 
+const std\+::string \mbox{\hyperlink{classAula_a4158cdc732bfc5401be6e4ba9344f690}{get\+Dia}} () const
+\item 
+const float \mbox{\hyperlink{classAula_a6cce25ebd6e7b6888b56628076d8981a}{get\+Duracao}} () const
+\item 
+const float \mbox{\hyperlink{classAula_aa68508613bc3dd9974220b76bbd44b7e}{get\+Inicio}} () const
+\item 
+bool \mbox{\hyperlink{classAula_af205c0b8a804d5c61b64b8bfca14aedb}{sobreposta}} (const \mbox{\hyperlink{classAula}{Aula}} \&aula) const
+\item 
+bool \mbox{\hyperlink{classAula_a343b88f55420b5ecf15506e135336b91}{mesmo\+Horario}} (const \mbox{\hyperlink{classAula}{Aula}} \&aula) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{Aula_8h_source_l00010}{10}} of file \mbox{\hyperlink{Aula_8h_source}{Aula.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classAula_a8d76c855afa3252523e4ba97535bd2db}\label{classAula_a8d76c855afa3252523e4ba97535bd2db} 
+\index{Aula@{Aula}!Aula@{Aula}}
+\index{Aula@{Aula}!Aula@{Aula}}
+\doxysubsubsection{\texorpdfstring{Aula()}{Aula()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Aula\+::\+Aula (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Construtor vazio 
+
+Definition at line \mbox{\hyperlink{Aula_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{Aula_8cpp_source}{Aula.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00011\ :\ dia(\textcolor{stringliteral}{"{}"{}}),\ inicio(0),\ duracao(0),\ tipo(\textcolor{stringliteral}{"{}"{}})\ \{\}}
+
+\end{DoxyCode}
+\Hypertarget{classAula_ad11c0541509da1ce5a2c471306bc9403}\label{classAula_ad11c0541509da1ce5a2c471306bc9403} 
+\index{Aula@{Aula}!Aula@{Aula}}
+\index{Aula@{Aula}!Aula@{Aula}}
+\doxysubsubsection{\texorpdfstring{Aula()}{Aula()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Aula\+::\+Aula (\begin{DoxyParamCaption}\item[{std\+::string}]{dia,  }\item[{float}]{inicio,  }\item[{float}]{duracao,  }\item[{std\+::string}]{tipo }\end{DoxyParamCaption})}
+
+Construtor com todos os parâmetros 
+
+Definition at line \mbox{\hyperlink{Aula_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{Aula_8cpp_source}{Aula.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00008\ :\ dia(dia),\ inicio(inicio),\ duracao(duracao),\ tipo(tipo)\ \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classAula_a4158cdc732bfc5401be6e4ba9344f690}\label{classAula_a4158cdc732bfc5401be6e4ba9344f690} 
+\index{Aula@{Aula}!getDia@{getDia}}
+\index{getDia@{getDia}!Aula@{Aula}}
+\doxysubsubsection{\texorpdfstring{getDia()}{getDia()}}
+{\footnotesize\ttfamily const std\+::string Aula\+::get\+Dia (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna o dia de uma \doxylink{classAula}{Aula} 
+
+Definition at line \mbox{\hyperlink{Aula_8cpp_source_l00019}{19}} of file \mbox{\hyperlink{Aula_8cpp_source}{Aula.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>dia;}
+\DoxyCodeLine{00021\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classAula_a6cce25ebd6e7b6888b56628076d8981a}\label{classAula_a6cce25ebd6e7b6888b56628076d8981a} 
+\index{Aula@{Aula}!getDuracao@{getDuracao}}
+\index{getDuracao@{getDuracao}!Aula@{Aula}}
+\doxysubsubsection{\texorpdfstring{getDuracao()}{getDuracao()}}
+{\footnotesize\ttfamily const float Aula\+::get\+Duracao (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna a duração da \doxylink{classAula}{Aula} 
+
+Definition at line \mbox{\hyperlink{Aula_8cpp_source_l00029}{29}} of file \mbox{\hyperlink{Aula_8cpp_source}{Aula.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>duracao;}
+\DoxyCodeLine{00031\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classAula_aa68508613bc3dd9974220b76bbd44b7e}\label{classAula_aa68508613bc3dd9974220b76bbd44b7e} 
+\index{Aula@{Aula}!getInicio@{getInicio}}
+\index{getInicio@{getInicio}!Aula@{Aula}}
+\doxysubsubsection{\texorpdfstring{getInicio()}{getInicio()}}
+{\footnotesize\ttfamily const float Aula\+::get\+Inicio (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna a hora de início de uma \doxylink{classAula}{Aula} 
+
+Definition at line \mbox{\hyperlink{Aula_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{Aula_8cpp_source}{Aula.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>inicio;}
+\DoxyCodeLine{00026\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classAula_ad7b74a16b27abbd827f884f55aad3800}\label{classAula_ad7b74a16b27abbd827f884f55aad3800} 
+\index{Aula@{Aula}!getTipo@{getTipo}}
+\index{getTipo@{getTipo}!Aula@{Aula}}
+\doxysubsubsection{\texorpdfstring{getTipo()}{getTipo()}}
+{\footnotesize\ttfamily const std\+::string Aula\+::get\+Tipo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna o tipo de uma \doxylink{classAula}{Aula} 
+
+Definition at line \mbox{\hyperlink{Aula_8cpp_source_l00014}{14}} of file \mbox{\hyperlink{Aula_8cpp_source}{Aula.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>tipo;}
+\DoxyCodeLine{00016\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classAula_a343b88f55420b5ecf15506e135336b91}\label{classAula_a343b88f55420b5ecf15506e135336b91} 
+\index{Aula@{Aula}!mesmoHorario@{mesmoHorario}}
+\index{mesmoHorario@{mesmoHorario}!Aula@{Aula}}
+\doxysubsubsection{\texorpdfstring{mesmoHorario()}{mesmoHorario()}}
+{\footnotesize\ttfamily bool Aula\+::mesmo\+Horario (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classAula}{Aula}} \&}]{aula }\end{DoxyParamCaption}) const}
+
+Verifica se as aulas têm exatamente o mesmo horário e tipo 
+
+Definition at line \mbox{\hyperlink{Aula_8cpp_source_l00034}{34}} of file \mbox{\hyperlink{Aula_8cpp_source}{Aula.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{return}\ (this-\/>dia\ ==\ aula.dia\ \&\&\ this-\/>inicio\ ==\ aula.inicio\ \&\&\ this-\/>duracao\ ==\ aula.duracao\ \&\&\ this-\/>tipo\ ==\ aula.tipo);}
+\DoxyCodeLine{00036\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classAula_af205c0b8a804d5c61b64b8bfca14aedb}\label{classAula_af205c0b8a804d5c61b64b8bfca14aedb} 
+\index{Aula@{Aula}!sobreposta@{sobreposta}}
+\index{sobreposta@{sobreposta}!Aula@{Aula}}
+\doxysubsubsection{\texorpdfstring{sobreposta()}{sobreposta()}}
+{\footnotesize\ttfamily bool Aula\+::sobreposta (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classAula}{Aula}} \&}]{aula }\end{DoxyParamCaption}) const}
+
+Verifica se uma aula é sobreposta a outra 
+
+Definition at line \mbox{\hyperlink{Aula_8cpp_source_l00039}{39}} of file \mbox{\hyperlink{Aula_8cpp_source}{Aula.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{return}\ !(this-\/>dia\ !=\ aula.dia\ ||}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ (((this-\/>inicio\ +\ this-\/>duracao)\ <=\ aula.inicio)\ ||\ ((this-\/>inicio\ >=\ aula.inicio\ +\ aula.duracao))));}
+\DoxyCodeLine{00042\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Data\+Model/Aula.\+h\item 
+Data\+Model/Aula.\+cpp\end{DoxyCompactItemize}

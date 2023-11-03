@@ -1,0 +1,126 @@
+\doxysection{Manager.\+h}
+\hypertarget{Manager_8h_source}{}\label{Manager_8h_source}\index{FilesRepository/Manager.h@{FilesRepository/Manager.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ Paulo\ Fidalgo\ on\ 19/10/2023.}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00005}00005\ \textcolor{preprocessor}{\#ifndef\ PROJECT\_MANAGER\_H}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00006}00006\ \textcolor{preprocessor}{\#define\ PROJECT\_MANAGER\_H}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <queue>}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}../DataModel/Estudante.h"{}}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include"{}../DataModel/UC.h"{}}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}Pedido.h"{}}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <stack>}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00017}00017\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00019}\mbox{\hyperlink{structCompareByNumber}{00019}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structCompareByNumber}{CompareByNumber}}\ \{}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00020}00020\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator()(\textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\&\ b)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ <\ b.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}();}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00022}00022\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00023}00023\ \};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00025}\mbox{\hyperlink{structCompareByName}{00025}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structCompareByName}{CompareByName}}\{}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00026}00026\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator()(\textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\&\ b)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.\mbox{\hyperlink{classEstudante_a901107b45b8949688b0945c37bef3690}{getStudentName}}()\ <\ b.\mbox{\hyperlink{classEstudante_a901107b45b8949688b0945c37bef3690}{getStudentName}}();}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00028}00028\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00029}00029\ \};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00032}\mbox{\hyperlink{classManager}{00032}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classManager}{Manager}}\ \{}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00033}00033\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00034}00034\ \ \ \ \ set<Estudante,CompareByNumber>\ estudantesNumero;}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00035}00035\ \ \ \ \ set<Estudante,CompareByName>\ estudantesNome;}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00036}00036\ \ \ \ \ set<UC>\ ucs;}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00037}00037\ \ \ \ \ queue<Pedido>\ pedidos;}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00038}00038\ \ \ \ \ vector<Pedido>\ pedidosEspera;}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00039}00039\ \ \ \ \ stack<Pedido>\ historico;}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00040}00040\ \ \ \ \ set<pair<int,string>>\ printHist;}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00041}00041\ \ \ \ \ \textcolor{keywordtype}{int}\ nPedido;}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00044}00044\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00045}00045\ \ \ \ \ \textcolor{comment}{//\ Constructor}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00046}00046\ \ \ \ \ \mbox{\hyperlink{classManager_a1658ff9f18e38ccd9cb8b0b371b9c20b}{Manager}}();}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00048}00048\ \ \ \ \ \textcolor{comment}{//\ Initialize}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00049}00049\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_a44467ab75c54691cfc2e2c46f18a409b}{readFiles}}();}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00050}00050\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_a2f5e9991f4b59f69dcc2a3d3981f09e8}{readChanges}}();}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00051}00051\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_aa341b77037ace20dade5d0e8a9bcb46a}{writeRequestInFile}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classPedido}{Pedido}}\&\ pedido,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\&\ reverse);}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00052}00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_a0fbf955be0e3e016fdf9fff51ddcfe22}{guardaPedidosPendentes}}();}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00054}00054\ \ \ \ \ \textcolor{comment}{//\ Printers}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00055}00055\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_af42e964f00c62d9e7bef36ec58cbcba7}{printHistorico}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00056}00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_a7de4e963ff24aa786488cc82c311c4e7}{printHorario}}(vector<pair<\textcolor{keywordtype}{string},pair<string,Aula>>>\ horario)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00057}00057\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_ad25b22fccdd1ab6c64aea56f45026b7f}{inputToHorario}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \&tipo,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&turma,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&numero);}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00058}00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_a335f4c681987aba97794f56541d4535c}{printEstudantesPorTurmaNaUc}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ turma,\ \textcolor{keywordtype}{bool}\ orderByNumber\ =\ \textcolor{keyword}{true},\ \textcolor{keywordtype}{bool}\ ascending\ =\ \textcolor{keyword}{true})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00059}00059\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_aad20fa3dbf24c06517b52f02f9dbd7d1}{printEstudantesPorUC}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\&\ orderByNumber\ =\ \textcolor{keyword}{true},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\&\ ascending\ =\ \textcolor{keyword}{true})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00060}00060\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_adbd77f40dd93217c35a0e64203a20868}{printEstudantesPorAno}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\&\ ano,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\&\ orderByNumber\ =\ \textcolor{keyword}{true},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\&\ ascending\ =\ \textcolor{keyword}{true})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00061}00061\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_ab1ed00da4d9d733c3b4cadca843a2f2c}{printTurmasPorUC}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\&\ ascending\ =\ \textcolor{keyword}{true})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00062}00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_a27c2998f4a32b3a03f38098b10a631d6}{numeroEstudantesEmPeloMenosNUCS}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\&\ nUcs,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\&\ orderByNumber\ =\ \textcolor{keyword}{true},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\&\ ascending\ =\ \textcolor{keyword}{true})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00063}00063\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_a1131317cc51b170bb8abb11c42787330}{printNumeroEstudantesPorTurmaPorUc}}(\textcolor{keyword}{const}\ std::string\ \&uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ \&orderByFirst\ =\ \textcolor{keyword}{true},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ \&ascending\ =\ \textcolor{keyword}{true})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00064}00064\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_ab320dadc0095a8d6ae5d1abaa303d345}{printInfoEstudante}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&numero)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00065}00065\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_a966c5209eba63a17ca100fce3a4a594c}{printNumeroEstudantesDeTodasUc}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00066}00066\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_a7c3ebcba6740a1f05ab8f985f4618525}{printEstudantesPorNome}}(\textcolor{keywordtype}{string}\ \&nome,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ \&ascending)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00067}00067\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_a417f4ca75827e408ee86a559f3826a41}{printSets}}(\textcolor{keywordtype}{int}\ n,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ uc\ =\ \textcolor{stringliteral}{"{}"{}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\&\ mais\ =\ \textcolor{keyword}{true})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00068}00068\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_ac0feadf44d6834fbe23dd387c2ce66fd}{printVectors}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \&tipo\ =\ \textcolor{charliteral}{'\ '},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ \&ordered\ =\ \textcolor{keyword}{false},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\&\ ascending\ =\ \textcolor{keyword}{true})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00070}00070\ \ \ \ \ \textcolor{comment}{//\ Getters}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00071}00071\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classManager_ad4162298131ca195db1a5ff72aa88ba0}{getPedidos}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00072}00072\ \ \ \ \ \mbox{\hyperlink{classEstudante}{Estudante}}\ \mbox{\hyperlink{classManager_a7f910b08891898d632260a7643714021}{getEstudante}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&numero)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00073}00073\ \ \ \ \ vector<pair<string,pair<string,Aula>>>\ \mbox{\hyperlink{classManager_a138df1b11d65b19532b4a6eef3626e8b}{getAulas}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \&estudante)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00074}00074\ \ \ \ \ map<string,list<Aula>>\ \mbox{\hyperlink{classManager_adedefad6b4dfd4ca20bc5c57adac9dc9}{getTurmasPossiveis}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&uc,\ list<Aula>\ \&horarioPraticas);}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00075}00075\ \ \ \ \ list<Aula>\ \mbox{\hyperlink{classManager_a411143d1b051133fa842f670d62558fa}{obterHorarioEstudantePraticas}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \&estudante)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00076}00076\ \ \ \ \ list<Aula>\ \mbox{\hyperlink{classManager_a7741c089820acd39d328d90a39cb4d66}{obterHorarioEstudantePraticasExceto}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \&estudante,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&uc)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00077}00077\ \ \ \ \ \mbox{\hyperlink{structTurmaInfo}{TurmaInfo}}\ \mbox{\hyperlink{classManager_afb1c7adbd150db55d1eb73f0b6735f0f}{obterInfoUc}}(\textcolor{keyword}{const}\ std::string\ \&uc,\ \textcolor{keyword}{const}\ std::string\ \&turma)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00078}00078\ \ \ \ \ \mbox{\hyperlink{classAula}{Aula}}\ \mbox{\hyperlink{classManager_a5edba2429b43272dc0d4ecdf0bd56614}{obterPraticaUc}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&turma)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00079}00079\ \ \ \ \ set<pair<string,string>>\ \mbox{\hyperlink{classManager_af19b549e7fcb6bcb5d6fbc9469547f31}{enviaUCParaRemover}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&numero)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00080}00080\ \ \ \ \ map<string,list<Aula>>\ \mbox{\hyperlink{classManager_a9affcae52f4c3a5550db0c3f007788d9}{enviaListaDeAulaPossivel}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&estudante);}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00081}00081\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classManager_a9d2c50b6e5cfb1dcf24e4cf64a750f9c}{getUcPorAno}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&ano)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00082}00082\ \ \ \ \ map<string,TurmaInfo>\ \mbox{\hyperlink{classManager_acd6536041410baf0137985c2a3114ff4}{getTurmasPorAno}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&ano)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00083}00083\ \ \ \ \ set<string>\ \mbox{\hyperlink{classManager_a631cc41b004511b02c3517833318deca}{getTurmasPorUc}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&uc)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00084}00084\ \ \ \ \ set<pair<int,\ string>>\ \mbox{\hyperlink{classManager_ab53a0da55abe6497cea62e12e3887a79}{getOcupacaoTurmas}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&uc)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00085}00085\ \ \ \ \ set<pair<int,\ string>>\ \mbox{\hyperlink{classManager_ac25cb643f5d5a5e691e059c6962ef977}{getOcupacaoUcs}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00086}00086\ \ \ \ \ vector<pair<int,\ int>>\ \mbox{\hyperlink{classManager_aa144bcc5c4e8433ee85e031a65315de1}{getNumeroDeAlunosPorAno}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00087}00087\ \ \ \ \ vector<pair<int,\ int>>\ \mbox{\hyperlink{classManager_af94a4b6a1ed89a299a9d740f1953744b}{getAlunosPorNIncscricoes}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00088}00088\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classManager_af060103af583232f46d9f7c673e75a6f}{getNumeroTurmas}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ uc);}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00092}00092\ \ \ \ \ \textcolor{comment}{//\ Validators}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00093}00093\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classManager_ad948323b8bcc44ced50a2ee173b241cd}{nUcValido}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&n)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00094}00094\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classManager_a201011ddb863d1229c195b83055cd760}{addPedido}}(\mbox{\hyperlink{classPedido}{Pedido}}\ pedido);}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00095}00095\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classManager_aeaed1a74d57376028117327d6dc7c743}{estudanteValido}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&numero)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00096}00096\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classManager_a31fc4f2836d35294b2ef132ea97552de}{trocaValida}}(\mbox{\hyperlink{classPedido}{Pedido}}\ \&pedido)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00097}00097\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classManager_af3ffed635cea31ff108e13210ae3c5ea}{ucValida}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&uc)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00098}00098\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classManager_acca38a4f16e22657601c15647d9dc37a}{verificarAulaSobreposta}}(\textcolor{keyword}{const}\ list<Aula>\ \&horario,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classAula}{Aula}}\ \&aulaNova)\ ;}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00099}00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classManager_a6ff422f1a72961bbecc977e8848d4b08}{validarNovaUc}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&student);}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00100}00100\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classManager_a0321b41b1fe90426ab5ed8c208d4ec91}{removerValida}}(\mbox{\hyperlink{classPedido}{Pedido}}\ \&pedido);}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00101}00101\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classManager_acfea884f3731c311b8b071a987cd7fd0}{checkAlreadyIn}}(vector<pair<\textcolor{keywordtype}{string},pair<string,Aula>>>\ \&horario,\ pair<\textcolor{keywordtype}{string},pair<string,Aula>>\ \&aula)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00102}00102\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classManager_a18ed4822c62f7aa3ac3c1333d8342b4f}{verificarPedidosRepetidos}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classPedido}{Pedido}}\ \&pedido);}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00103}00103\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classManager_ae1bfce0eed768e8a78ba6f8af5b24d04}{inputToPedido}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&estudante,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&tipo,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ outro\ =\ 0,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&turma\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00104}00104\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classManager_a843171950a6a95c48b4deeb0cb1a9279}{nomeValido}}(\textcolor{keywordtype}{string}\ \&nome)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00106}00106\ \ \ \ \ \textcolor{comment}{//\ Execution}}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00107}00107\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_a7bec0e8a33672a2125016a2adffdb30e}{executarPedidoTrocaHorario}}(\mbox{\hyperlink{classPedido}{Pedido}}\ \&pedido);}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00108}00108\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_a6fb44a4a4ca7b504e234081519301f7d}{proximoPedido}}();}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00109}00109\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_ab5f7622be3e18b7407835b63e50785da}{reverterPedido}}();}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00110}00110\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_a29783c07f071861d37a4a70979cb7965}{removerEstudanteDaUc}}(\mbox{\hyperlink{classPedido}{Pedido}}\ \&pedido);}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00111}00111\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_a5c310f002904772268ab4e358c50cee0}{adicionarUcAoEstudante}}(\mbox{\hyperlink{classPedido}{Pedido}}\ \&pedido);}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00112}00112\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_ade7334b010ba3ffd3cfd838498dee059}{trocaTurma}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ turma1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&numero1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&nome1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ turma2,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&numero2,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&nome2);}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00113}00113\ \ \ \ \ vector<pair<string,pair<string,Aula>>>\ \mbox{\hyperlink{classManager_a18143aa960a05bedb1a7d30a1f0b0a03}{createSobrepostas}}\ (vector<pair<\textcolor{keywordtype}{string},pair<string,Aula>>>\ \&horario)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00114}00114\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classManager_a2f548da6656b00329d659cb5ec9b52ca}{verHorarioAntesDeConfirmar}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&numero,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&turma,\ \textcolor{keyword}{const}\ list<Aula>\ \&aulas)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00115}00115\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classManager_ad1f7a9a7dfc91f394c60082ca4ef7879}{ucToString}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&uc)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00118}00118\ \};}
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{Manager_8h_source_l00120}00120\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//PROJECT\_MANAGER\_H}}
+
+\end{DoxyCode}

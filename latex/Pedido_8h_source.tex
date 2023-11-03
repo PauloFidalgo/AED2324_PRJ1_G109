@@ -1,0 +1,52 @@
+\doxysection{Pedido.\+h}
+\hypertarget{Pedido_8h_source}{}\label{Pedido_8h_source}\index{FilesRepository/Pedido.h@{FilesRepository/Pedido.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ Paulo\ Fidalgo\ on\ 23/10/2023.}}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00005}00005\ \textcolor{preprocessor}{\#ifndef\ PROJECT\_PEDIDO\_H}}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00006}00006\ \textcolor{preprocessor}{\#define\ PROJECT\_PEDIDO\_H}}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}../DataModel/Estudante.h"{}}}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <stack>}}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00013}00013\ \textcolor{keyword}{enum}\ TipoAlteracao\ \{H,\ A,\ R\};}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00015}\mbox{\hyperlink{classPedido}{00015}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classPedido}{Pedido}}\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00016}00016\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00017}00017\ \ \ \ \ std::string\ uc,\ turma;}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00018}00018\ \ \ \ \ \mbox{\hyperlink{classEstudante}{Estudante}}\ estudante,\ outroEstudante;}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00019}00019\ \ \ \ \ TipoAlteracao\ tipo;}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00022}00022\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00023}00023\ \ \ \ \ \textcolor{comment}{//\ Constructors}}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00024}00024\ \ \ \ \ \mbox{\hyperlink{classPedido}{Pedido}}(\textcolor{keyword}{const}\ std::string\ \&uc,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \&estudante,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \&outroEstudante);}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00025}00025\ \ \ \ \ \mbox{\hyperlink{classPedido}{Pedido}}(\textcolor{keyword}{const}\ std::string\ \&uc,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \&estudante,\ \textcolor{keyword}{const}\ std::string\ \&tipo,\ \textcolor{keyword}{const}\ std::string\ \&turma\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00027}00027\ \ \ \ \ \textcolor{comment}{//\ Getters}}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00028}00028\ \ \ \ \ \mbox{\hyperlink{classEstudante}{Estudante}}\ \mbox{\hyperlink{classPedido_a564a848114d388fcbcc7951d5f45fc12}{getEstudante}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00029}00029\ \ \ \ \ \mbox{\hyperlink{classEstudante}{Estudante}}\ \mbox{\hyperlink{classPedido_a338f926c6bffd730b684866c4d983497}{getOutroEstudante}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00030}00030\ \ \ \ \ std::string\ \mbox{\hyperlink{classPedido_adeb2b116251619b8117a738202361f89}{getUc}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00031}00031\ \ \ \ \ std::string\ \mbox{\hyperlink{classPedido_aabf629ce0d6b2eb60f81d28d373a294f}{getTurma}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00032}00032\ \ \ \ \ TipoAlteracao\ \mbox{\hyperlink{classPedido_a6d14642a9f044b663377eecb53191ddf}{getTipoAlteracao}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00034}00034\ \ \ \ \ \textcolor{comment}{//\ Setters}}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00035}00035\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPedido_afc358847332f43fd0df921fdf12cb376}{setTurma}}(\textcolor{keyword}{const}\ std::string\ \&turma);}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00037}00037\ \ \ \ \ \textcolor{comment}{//\ To\ string}}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00038}00038\ \ \ \ \ std::string\ \mbox{\hyperlink{classPedido_a91f0a58dd961a6244d1be38c63e60424}{pedidoToString}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00040}00040\ \ \ \ \ \textcolor{comment}{//\ Validators}}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00041}00041\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classPedido_a0c83e29078985e743d4f34ce0e313989}{pedidosConcorrentes}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classPedido}{Pedido}}\ \&pedido);}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00042}00042\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classPedido_a0d76dd9be251d6c5eda4b7f7e2e34590}{operator==}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classPedido}{Pedido}}\ \&other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00043}00043\ \};}
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8h_source_l00046}00046\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//PROJECT\_PEDIDO\_H}}
+
+\end{DoxyCode}

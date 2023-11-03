@@ -1,0 +1,69 @@
+\doxysection{UC.\+h}
+\hypertarget{UC_8h_source}{}\label{UC_8h_source}\index{DataModel/UC.h@{DataModel/UC.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ Paulo\ Fidalgo\ on\ 18/10/2023.}}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00005}00005\ \textcolor{preprocessor}{\#ifndef\ PROJECT\_UC\_H}}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00006}00006\ \textcolor{preprocessor}{\#define\ PROJECT\_UC\_H}}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <list>}}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}Aula.h"{}}}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00016}\mbox{\hyperlink{structTurmaInfo}{00016}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structTurmaInfo}{TurmaInfo}}\ \{}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00017}00017\ \ \ \ \ std::set<std::pair<int,std::string>>\ estudantes;}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00018}00018\ \ \ \ \ std::list<Aula>\ aulasTeoricas;}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00019}00019\ \ \ \ \ \mbox{\hyperlink{classAula}{Aula}}\ pratica;}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00020}00020\ \};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00022}\mbox{\hyperlink{classUC}{00022}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classUC}{UC}}\ \{}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00023}00023\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00024}00024\ \ \ \ \ std::string\ codigoUC;}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00025}00025\ \ \ \ \ std::map<std::string,\ TurmaInfo>\ ucTurma;}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00026}00026\ \ \ \ \ \textcolor{keywordtype}{float}\ media;}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00027}00027\ \ \ \ \ \textcolor{keywordtype}{int}\ nAlunos;}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00028}00028\ \ \ \ \ \textcolor{keywordtype}{int}\ ano;}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00030}00030\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00031}00031\ \ \ \ \ \textcolor{comment}{//\ Constructors}}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00032}00032\ \ \ \ \ \mbox{\hyperlink{classUC}{UC}}(\textcolor{keyword}{const}\ std::string\ \&codigoUc,\ \textcolor{keyword}{const}\ std::map<std::string,\ TurmaInfo>\ \&ucTurma,\ \textcolor{keywordtype}{int}\ media\ =\ 0);}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00033}00033\ \ \ \ \ \mbox{\hyperlink{classUC}{UC}}(std::string\ codigoUc);}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00034}00034\ \ \ \ \ \mbox{\hyperlink{classUC}{UC}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classUC}{UC}}\ \&other);}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00036}00036\ \ \ \ \ \textcolor{comment}{//\ Getters}}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00037}00037\ \ \ \ \ std::map<std::string,\ TurmaInfo>\ \mbox{\hyperlink{classUC_a7bae831b9b63064eeff1ac1f921ef474}{getUcTurma}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00038}00038\ \ \ \ \ std::list<Aula>\ \mbox{\hyperlink{classUC_aeb928e223c04b56e8f58f38cba528373}{getAulasTurma}}(\textcolor{keyword}{const}\ std::string\ \&turma)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00039}00039\ \ \ \ \ std::vector<std::pair<std::string,std::pair<std::string,Aula>>>\ \mbox{\hyperlink{classUC_af083b5d5cac499be6788101f3d9d86be}{getAulasUc}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00040}00040\ \ \ \ \ std::string\ \mbox{\hyperlink{classUC_aa73f694c740af45b0a8eb9727a830e14}{getCodigoUc}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00041}00041\ \ \ \ \ \mbox{\hyperlink{classAula}{Aula}}\ \mbox{\hyperlink{classUC_a7f389975e3aa7c94dea3de0a911b4a0d}{getPratica}}(\textcolor{keyword}{const}\ std::string\ \&turma)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00042}00042\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classUC_aba7ec3ba70adbc071d4209a3ea42d223}{getNumeroAlunos}}(\textcolor{keyword}{const}\ std::string\ \&turma)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00043}00043\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classUC_a1945b0161492a0664356c5cd5dd06173}{getMinimum}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00044}00044\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classUC_ac6c585b21fe6f6a41a809a6842a980f0}{getAno}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00045}00045\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classUC_a65f21da1f6cb31868e8145872d13e413}{getNumeroAlunosTotal}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00046}00046\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classUC_a0f9f147018fb7929c52bf3a1296aa168}{getNumeroTurmas}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00047}00047\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{classUC_adc3346d573d709a2974b8987067d9334}{getMedia}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00049}00049\ \ \ \ \ \textcolor{comment}{//\ Setters}}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00050}00050\ \ \ \ \ \textcolor{keywordtype}{void}\ addTurma(\textcolor{keyword}{const}\ std::string\ \&turma,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTurmaInfo}{TurmaInfo}}\ \&turmaInfo);}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00051}00051\ \ \ \ \ \textcolor{keywordtype}{void}\ addEstudantes(\textcolor{keyword}{const}\ std::string\ \&turma,\ \textcolor{keyword}{const}\ std::list<std::pair<int,std::string>>\ \&estudantes);}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00052}00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classUC_ae3a501e780670864c67a4d0aad0c5383}{addEstudante}}(\textcolor{keyword}{const}\ std::string\ \&turma,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&estudante,\textcolor{keyword}{const}\ std::string\ \&nome);}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00053}00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classUC_a21d5f052561bd0d67e43664d97f4253e}{removeEstudante}}(\textcolor{keyword}{const}\ std::string\ \&turma,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \&numero,\ \textcolor{keyword}{const}\ std::string\ \&nome);}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00055}00055\ \ \ \ \ \textcolor{comment}{//\ Validators}}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00056}00056\ \ \ \ \ \textcolor{keywordtype}{bool}\ verificarTurma(\textcolor{keyword}{const}\ std::string\ \&turma)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00057}00057\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classUC_a5d8750b2ba2144690af69ec3fdd7bbee}{checkBalance}}(\textcolor{keyword}{const}\ std::string\ \&turma)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00058}00058\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classUC_af8c79ec0b2b9de45729608d311621285}{operator<}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classUC}{UC}}\ uc)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00060}00060\ \};}
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{UC_8h_source_l00063}00063\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//PROJECT\_UC\_H}}
+
+\end{DoxyCode}

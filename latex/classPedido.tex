@@ -1,0 +1,278 @@
+\doxysection{Pedido Class Reference}
+\hypertarget{classPedido}{}\label{classPedido}\index{Pedido@{Pedido}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classPedido_ace0651e55f8a0e0a05ca747ca64ce533}{Pedido}} (const std\+::string \&uc, const \mbox{\hyperlink{classEstudante}{Estudante}} \&estudante, const \mbox{\hyperlink{classEstudante}{Estudante}} \&outro\+Estudante)
+\item 
+\mbox{\hyperlink{classPedido_a861ae2915fb613d19c194e109a021d64}{Pedido}} (const std\+::string \&uc, const \mbox{\hyperlink{classEstudante}{Estudante}} \&estudante, const std\+::string \&tipo, const std\+::string \&turma="{}"{})
+\item 
+\mbox{\hyperlink{classEstudante}{Estudante}} \mbox{\hyperlink{classPedido_a564a848114d388fcbcc7951d5f45fc12}{get\+Estudante}} () const
+\item 
+\mbox{\hyperlink{classEstudante}{Estudante}} \mbox{\hyperlink{classPedido_a338f926c6bffd730b684866c4d983497}{get\+Outro\+Estudante}} () const
+\item 
+std\+::string \mbox{\hyperlink{classPedido_adeb2b116251619b8117a738202361f89}{get\+Uc}} () const
+\item 
+std\+::string \mbox{\hyperlink{classPedido_aabf629ce0d6b2eb60f81d28d373a294f}{get\+Turma}} () const
+\item 
+Tipo\+Alteracao \mbox{\hyperlink{classPedido_a6d14642a9f044b663377eecb53191ddf}{get\+Tipo\+Alteracao}} () const
+\item 
+void \mbox{\hyperlink{classPedido_afc358847332f43fd0df921fdf12cb376}{set\+Turma}} (const std\+::string \&turma)
+\item 
+std\+::string \mbox{\hyperlink{classPedido_a91f0a58dd961a6244d1be38c63e60424}{pedido\+To\+String}} () const
+\item 
+bool \mbox{\hyperlink{classPedido_a0c83e29078985e743d4f34ce0e313989}{pedidos\+Concorrentes}} (const \mbox{\hyperlink{classPedido}{Pedido}} \&pedido)
+\item 
+bool \mbox{\hyperlink{classPedido_a0d76dd9be251d6c5eda4b7f7e2e34590}{operator==}} (const \mbox{\hyperlink{classPedido}{Pedido}} \&other) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{Pedido_8h_source_l00015}{15}} of file \mbox{\hyperlink{Pedido_8h_source}{Pedido.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classPedido_ace0651e55f8a0e0a05ca747ca64ce533}\label{classPedido_ace0651e55f8a0e0a05ca747ca64ce533} 
+\index{Pedido@{Pedido}!Pedido@{Pedido}}
+\index{Pedido@{Pedido}!Pedido@{Pedido}}
+\doxysubsubsection{\texorpdfstring{Pedido()}{Pedido()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Pedido\+::\+Pedido (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{uc,  }\item[{const \mbox{\hyperlink{classEstudante}{Estudante}} \&}]{estudante,  }\item[{const \mbox{\hyperlink{classEstudante}{Estudante}} \&}]{outro\+Estudante }\end{DoxyParamCaption})}
+
+Construtor 
+
+Definition at line \mbox{\hyperlink{Pedido_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{Pedido_8cpp_source}{Pedido.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00022\ \ \ \ \ this-\/>uc\ =\ uc;}
+\DoxyCodeLine{00023\ \ \ \ \ this-\/>estudante\ =\ estudante;}
+\DoxyCodeLine{00024\ \ \ \ \ this-\/>outroEstudante\ =\ outroEstudante;}
+\DoxyCodeLine{00025\ \ \ \ \ this-\/>tipo\ =\ TipoAlteracao::H;}
+\DoxyCodeLine{00026\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classPedido_a861ae2915fb613d19c194e109a021d64}\label{classPedido_a861ae2915fb613d19c194e109a021d64} 
+\index{Pedido@{Pedido}!Pedido@{Pedido}}
+\index{Pedido@{Pedido}!Pedido@{Pedido}}
+\doxysubsubsection{\texorpdfstring{Pedido()}{Pedido()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Pedido\+::\+Pedido (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{uc,  }\item[{const \mbox{\hyperlink{classEstudante}{Estudante}} \&}]{estudante,  }\item[{const std\+::string \&}]{tipo,  }\item[{const std\+::string \&}]{turma = {\ttfamily "{}"{}} }\end{DoxyParamCaption})}
+
+Construtor 
+
+Definition at line \mbox{\hyperlink{Pedido_8cpp_source_l00029}{29}} of file \mbox{\hyperlink{Pedido_8cpp_source}{Pedido.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00030\ \ \ \ \ this-\/>uc\ =\ uc;}
+\DoxyCodeLine{00031\ \ \ \ \ this-\/>estudante\ =\ estudante;}
+\DoxyCodeLine{00032\ \ \ \ \ this-\/>tipo\ =\ stringToTipo(tipo);}
+\DoxyCodeLine{00033\ \ \ \ \ this-\/>turma\ =\ turma;}
+\DoxyCodeLine{00034\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classPedido_a564a848114d388fcbcc7951d5f45fc12}\label{classPedido_a564a848114d388fcbcc7951d5f45fc12} 
+\index{Pedido@{Pedido}!getEstudante@{getEstudante}}
+\index{getEstudante@{getEstudante}!Pedido@{Pedido}}
+\doxysubsubsection{\texorpdfstring{getEstudante()}{getEstudante()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classEstudante}{Estudante}} Pedido\+::get\+Estudante (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna o primeiro estudante do pedido 
+
+Definition at line \mbox{\hyperlink{Pedido_8cpp_source_l00037}{37}} of file \mbox{\hyperlink{Pedido_8cpp_source}{Pedido.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>estudante;}
+\DoxyCodeLine{00039\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classPedido_a338f926c6bffd730b684866c4d983497}\label{classPedido_a338f926c6bffd730b684866c4d983497} 
+\index{Pedido@{Pedido}!getOutroEstudante@{getOutroEstudante}}
+\index{getOutroEstudante@{getOutroEstudante}!Pedido@{Pedido}}
+\doxysubsubsection{\texorpdfstring{getOutroEstudante()}{getOutroEstudante()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classEstudante}{Estudante}} Pedido\+::get\+Outro\+Estudante (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna o segundo estudante do pedido 
+
+Definition at line \mbox{\hyperlink{Pedido_8cpp_source_l00047}{47}} of file \mbox{\hyperlink{Pedido_8cpp_source}{Pedido.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>outroEstudante;}
+\DoxyCodeLine{00049\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classPedido_a6d14642a9f044b663377eecb53191ddf}\label{classPedido_a6d14642a9f044b663377eecb53191ddf} 
+\index{Pedido@{Pedido}!getTipoAlteracao@{getTipoAlteracao}}
+\index{getTipoAlteracao@{getTipoAlteracao}!Pedido@{Pedido}}
+\doxysubsubsection{\texorpdfstring{getTipoAlteracao()}{getTipoAlteracao()}}
+{\footnotesize\ttfamily Tipo\+Alteracao Pedido\+::get\+Tipo\+Alteracao (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna o tipo de alteração do pedido 
+
+Definition at line \mbox{\hyperlink{Pedido_8cpp_source_l00062}{62}} of file \mbox{\hyperlink{Pedido_8cpp_source}{Pedido.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>tipo;}
+\DoxyCodeLine{00064\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classPedido_aabf629ce0d6b2eb60f81d28d373a294f}\label{classPedido_aabf629ce0d6b2eb60f81d28d373a294f} 
+\index{Pedido@{Pedido}!getTurma@{getTurma}}
+\index{getTurma@{getTurma}!Pedido@{Pedido}}
+\doxysubsubsection{\texorpdfstring{getTurma()}{getTurma()}}
+{\footnotesize\ttfamily std\+::string Pedido\+::get\+Turma (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna a turma do pedido 
+
+Definition at line \mbox{\hyperlink{Pedido_8cpp_source_l00057}{57}} of file \mbox{\hyperlink{Pedido_8cpp_source}{Pedido.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>turma;}
+\DoxyCodeLine{00059\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classPedido_adeb2b116251619b8117a738202361f89}\label{classPedido_adeb2b116251619b8117a738202361f89} 
+\index{Pedido@{Pedido}!getUc@{getUc}}
+\index{getUc@{getUc}!Pedido@{Pedido}}
+\doxysubsubsection{\texorpdfstring{getUc()}{getUc()}}
+{\footnotesize\ttfamily std\+::string Pedido\+::get\+Uc (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna a \doxylink{classUC}{UC} do pedido 
+
+Definition at line \mbox{\hyperlink{Pedido_8cpp_source_l00052}{52}} of file \mbox{\hyperlink{Pedido_8cpp_source}{Pedido.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>uc;}
+\DoxyCodeLine{00054\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classPedido_a0d76dd9be251d6c5eda4b7f7e2e34590}\label{classPedido_a0d76dd9be251d6c5eda4b7f7e2e34590} 
+\index{Pedido@{Pedido}!operator==@{operator==}}
+\index{operator==@{operator==}!Pedido@{Pedido}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily bool Pedido\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classPedido}{Pedido}} \&}]{other }\end{DoxyParamCaption}) const}
+
+Compara dois pedidos. Dois pedidos são iguais se o tipo, os estudantes e a uc forem iguais 
+
+Definition at line \mbox{\hyperlink{Pedido_8cpp_source_l00116}{116}} of file \mbox{\hyperlink{Pedido_8cpp_source}{Pedido.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>estudante\ ==\ other.estudante\ \&\&\ this-\/>outroEstudante\ ==\ other.outroEstudante\ \&\&\ this-\/>uc\ ==\ other.uc\ \&\&\ this-\/>tipo\ ==\ other.tipo;}
+\DoxyCodeLine{00118\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classPedido_a0c83e29078985e743d4f34ce0e313989}\label{classPedido_a0c83e29078985e743d4f34ce0e313989} 
+\index{Pedido@{Pedido}!pedidosConcorrentes@{pedidosConcorrentes}}
+\index{pedidosConcorrentes@{pedidosConcorrentes}!Pedido@{Pedido}}
+\doxysubsubsection{\texorpdfstring{pedidosConcorrentes()}{pedidosConcorrentes()}}
+{\footnotesize\ttfamily bool Pedido\+::pedidos\+Concorrentes (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classPedido}{Pedido}} \&}]{pedido }\end{DoxyParamCaption})}
+
+Verifica se dois pedidos são concorrentes. Retorna true caso não sejam e false caso contrário 
+
+Definition at line \mbox{\hyperlink{Pedido_8cpp_source_l00087}{87}} of file \mbox{\hyperlink{Pedido_8cpp_source}{Pedido.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{switch}\ (pedido.tipo)\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ TipoAlteracao::R:\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Caso\ seja\ um\ pedido\ de\ remoção,\ é\ necessário\ verificar\ se\ já\ existe\ um\ pedido\ pendente\ igual.\ Caso\ existe\ não\ é\ permitido\ fazer\ outro\ igual\ da\ mesma\ UC}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ ==\ pedido.estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ \&\&\ this-\/>uc\ ==\ pedido.uc)\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Já\ existe\ um\ pedido\ para\ remover\ o\ estudante\ "{}}\ <<\ estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ <<\ \textcolor{stringliteral}{"{}\ da\ UC\ "{}}\ <<\ uc\ <<\ std::endl;}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ TipoAlteracao::H:\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Se\ um\ dos\ estudantes\ tiver\ um\ pedido\ de\ remoção\ desta\ UC\ em\ específico\ não\ podem\ trocar}}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>tipo\ ==\ TipoAlteracao::R)\ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ ==\ pedido.estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ \&\&\ this-\/>uc\ ==\ pedido.uc)\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}O\ estudante\ "{}}\ <<\ pedido.estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ <<\ \textcolor{stringliteral}{"{}\ tem\ um\ pedido\ para\ remover\ a\ UC\ "{}}\ <<\ this-\/>uc\ <<\ std::endl;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ ==\ pedido.outroEstudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ \&\&\ this-\/>uc\ ==\ pedido.uc)\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}O\ estudante\ "{}}\ <<\ pedido.outroEstudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ <<\ \textcolor{stringliteral}{"{}\ tem\ um\ pedido\ para\ remover\ a\ UC\ "{}}\ <<\ this-\/>uc\ <<\ std::endl;}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00111\ \ \ \ \ \}}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00113\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classPedido_a91f0a58dd961a6244d1be38c63e60424}\label{classPedido_a91f0a58dd961a6244d1be38c63e60424} 
+\index{Pedido@{Pedido}!pedidoToString@{pedidoToString}}
+\index{pedidoToString@{pedidoToString}!Pedido@{Pedido}}
+\doxysubsubsection{\texorpdfstring{pedidoToString()}{pedidoToString()}}
+{\footnotesize\ttfamily std\+::string Pedido\+::pedido\+To\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Faz a conversão do pedido para string 
+
+Definition at line \mbox{\hyperlink{Pedido_8cpp_source_l00067}{67}} of file \mbox{\hyperlink{Pedido_8cpp_source}{Pedido.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ std::string\ res;}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordflow}{switch}\ (this-\/>tipo)\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ TipoAlteracao::R:\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \textcolor{stringliteral}{"{}Removeu\ o\ estudante\ "{}}\ +\ this-\/>estudante.\mbox{\hyperlink{classEstudante_a901107b45b8949688b0945c37bef3690}{getStudentName}}()\ +\ \textcolor{stringliteral}{"{}\ com\ o\ número\ "{}}\ +\ std::to\_string(this-\/>estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}())\ +\ \textcolor{stringliteral}{"{}\ da\ UC\ "{}}\ +\ this-\/>uc\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ TipoAlteracao::A:\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \textcolor{stringliteral}{"{}Adicionou\ o\ estudante\ "{}}\ +\ this-\/>estudante.\mbox{\hyperlink{classEstudante_a901107b45b8949688b0945c37bef3690}{getStudentName}}()\ +\ \textcolor{stringliteral}{"{}\ com\ o\ número\ "{}}\ +\ std::to\_string(this-\/>estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}())\ +\ \textcolor{stringliteral}{"{}\ à\ UC\ "{}}\ +\ this-\/>uc\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ TipoAlteracao::H:\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \textcolor{stringliteral}{"{}Trocou\ a\ turma\ do\ estudante\ "{}}\ +\ this-\/>estudante.\mbox{\hyperlink{classEstudante_a901107b45b8949688b0945c37bef3690}{getStudentName}}()\ +\ \textcolor{stringliteral}{"{}\ com\ o\ número\ "{}}\ +\ std::to\_string(this-\/>estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}())\ +\ \textcolor{stringliteral}{"{}\ com\ o\ aluno\ "{}}\ +\ this-\/>outroEstudante.\mbox{\hyperlink{classEstudante_a901107b45b8949688b0945c37bef3690}{getStudentName}}()\ +\ \textcolor{stringliteral}{"{}\ com\ o\ número\ "{}}\ +\ std::to\_string(this-\/>outroEstudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}())\ +\ \textcolor{stringliteral}{"{}\ na\ UC\ "{}}\ +\ this-\/>uc\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00084\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classPedido_afc358847332f43fd0df921fdf12cb376}\label{classPedido_afc358847332f43fd0df921fdf12cb376} 
+\index{Pedido@{Pedido}!setTurma@{setTurma}}
+\index{setTurma@{setTurma}!Pedido@{Pedido}}
+\doxysubsubsection{\texorpdfstring{setTurma()}{setTurma()}}
+{\footnotesize\ttfamily void Pedido\+::set\+Turma (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{turma }\end{DoxyParamCaption})}
+
+Atribui um valor ao atributo turma 
+
+Definition at line \mbox{\hyperlink{Pedido_8cpp_source_l00042}{42}} of file \mbox{\hyperlink{Pedido_8cpp_source}{Pedido.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00043\ \ \ \ \ this-\/>turma\ =\ turma;}
+\DoxyCodeLine{00044\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Files\+Repository/Pedido.\+h\item 
+Files\+Repository/Pedido.\+cpp\end{DoxyCompactItemize}

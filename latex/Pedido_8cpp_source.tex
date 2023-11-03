@@ -1,0 +1,112 @@
+\doxysection{Pedido.\+cpp}
+\hypertarget{Pedido_8cpp_source}{}\label{Pedido_8cpp_source}\index{FilesRepository/Pedido.cpp@{FilesRepository/Pedido.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ Paulo\ Fidalgo\ on\ 23/10/2023.}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}Pedido.h"{}}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00008}00008\ TipoAlteracao\ stringToTipo(\textcolor{keyword}{const}\ std::string\ \&tipo)\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00009}00009\ \ \ \ \ \textcolor{keywordflow}{if}\ (tipo\ ==\ \textcolor{stringliteral}{"{}R"{}})\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00010}00010\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ TipoAlteracao::R;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00011}00011\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00013}00013\ \ \ \ \ \textcolor{keywordflow}{if}\ (tipo\ ==\ \textcolor{stringliteral}{"{}A"{}})\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00014}00014\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ TipoAlteracao::A;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00015}00015\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{keywordflow}{return}\ TipoAlteracao::H;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00018}00018\ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00021}\mbox{\hyperlink{classPedido_ace0651e55f8a0e0a05ca747ca64ce533}{00021}}\ \mbox{\hyperlink{classPedido_ace0651e55f8a0e0a05ca747ca64ce533}{Pedido::Pedido}}(\textcolor{keyword}{const}\ std::string\ \&uc,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \&estudante,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \&outroEstudante)\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00022}00022\ \ \ \ \ this-\/>uc\ =\ uc;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00023}00023\ \ \ \ \ this-\/>estudante\ =\ estudante;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00024}00024\ \ \ \ \ this-\/>outroEstudante\ =\ outroEstudante;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00025}00025\ \ \ \ \ this-\/>tipo\ =\ TipoAlteracao::H;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00026}00026\ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00029}\mbox{\hyperlink{classPedido_a861ae2915fb613d19c194e109a021d64}{00029}}\ \mbox{\hyperlink{classPedido_ace0651e55f8a0e0a05ca747ca64ce533}{Pedido::Pedido}}(\textcolor{keyword}{const}\ std::string\ \&uc,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \&estudante,\ \textcolor{keyword}{const}\ std::string\ \&tipo,\ \textcolor{keyword}{const}\ std::string\ \&turma)\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00030}00030\ \ \ \ \ this-\/>uc\ =\ uc;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00031}00031\ \ \ \ \ this-\/>estudante\ =\ estudante;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00032}00032\ \ \ \ \ this-\/>tipo\ =\ stringToTipo(tipo);}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00033}00033\ \ \ \ \ this-\/>turma\ =\ turma;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00034}00034\ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00037}\mbox{\hyperlink{classPedido_a564a848114d388fcbcc7951d5f45fc12}{00037}}\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \mbox{\hyperlink{classPedido_a564a848114d388fcbcc7951d5f45fc12}{Pedido::getEstudante}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00038}00038\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>estudante;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00039}00039\ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00042}\mbox{\hyperlink{classPedido_afc358847332f43fd0df921fdf12cb376}{00042}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPedido_afc358847332f43fd0df921fdf12cb376}{Pedido::setTurma}}(\textcolor{keyword}{const}\ std::string\ \&turma)\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00043}00043\ \ \ \ \ this-\/>turma\ =\ turma;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00044}00044\ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00047}\mbox{\hyperlink{classPedido_a338f926c6bffd730b684866c4d983497}{00047}}\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \mbox{\hyperlink{classPedido_a338f926c6bffd730b684866c4d983497}{Pedido::getOutroEstudante}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00048}00048\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>outroEstudante;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00049}00049\ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00052}\mbox{\hyperlink{classPedido_adeb2b116251619b8117a738202361f89}{00052}}\ std::string\ \mbox{\hyperlink{classPedido_adeb2b116251619b8117a738202361f89}{Pedido::getUc}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00053}00053\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>uc;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00054}00054\ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00057}\mbox{\hyperlink{classPedido_aabf629ce0d6b2eb60f81d28d373a294f}{00057}}\ std::string\ \mbox{\hyperlink{classPedido_aabf629ce0d6b2eb60f81d28d373a294f}{Pedido::getTurma}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>turma;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00059}00059\ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00062}\mbox{\hyperlink{classPedido_a6d14642a9f044b663377eecb53191ddf}{00062}}\ TipoAlteracao\ \mbox{\hyperlink{classPedido_a6d14642a9f044b663377eecb53191ddf}{Pedido::getTipoAlteracao}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00063}00063\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>tipo;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00064}00064\ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00067}\mbox{\hyperlink{classPedido_a91f0a58dd961a6244d1be38c63e60424}{00067}}\ std::string\ \mbox{\hyperlink{classPedido_a91f0a58dd961a6244d1be38c63e60424}{Pedido::pedidoToString}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00068}00068\ \ \ \ \ std::string\ res;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00069}00069\ \ \ \ \ \textcolor{keywordflow}{switch}\ (this-\/>tipo)\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ TipoAlteracao::R:\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \textcolor{stringliteral}{"{}Removeu\ o\ estudante\ "{}}\ +\ this-\/>estudante.\mbox{\hyperlink{classEstudante_a901107b45b8949688b0945c37bef3690}{getStudentName}}()\ +\ \textcolor{stringliteral}{"{}\ com\ o\ número\ "{}}\ +\ std::to\_string(this-\/>estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}())\ +\ \textcolor{stringliteral}{"{}\ da\ UC\ "{}}\ +\ this-\/>uc\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ TipoAlteracao::A:\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \textcolor{stringliteral}{"{}Adicionou\ o\ estudante\ "{}}\ +\ this-\/>estudante.\mbox{\hyperlink{classEstudante_a901107b45b8949688b0945c37bef3690}{getStudentName}}()\ +\ \textcolor{stringliteral}{"{}\ com\ o\ número\ "{}}\ +\ std::to\_string(this-\/>estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}())\ +\ \textcolor{stringliteral}{"{}\ à\ UC\ "{}}\ +\ this-\/>uc\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ TipoAlteracao::H:\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ res\ =\ \textcolor{stringliteral}{"{}Trocou\ a\ turma\ do\ estudante\ "{}}\ +\ this-\/>estudante.\mbox{\hyperlink{classEstudante_a901107b45b8949688b0945c37bef3690}{getStudentName}}()\ +\ \textcolor{stringliteral}{"{}\ com\ o\ número\ "{}}\ +\ std::to\_string(this-\/>estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}())\ +\ \textcolor{stringliteral}{"{}\ com\ o\ aluno\ "{}}\ +\ this-\/>outroEstudante.\mbox{\hyperlink{classEstudante_a901107b45b8949688b0945c37bef3690}{getStudentName}}()\ +\ \textcolor{stringliteral}{"{}\ com\ o\ número\ "{}}\ +\ std::to\_string(this-\/>outroEstudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}())\ +\ \textcolor{stringliteral}{"{}\ na\ UC\ "{}}\ +\ this-\/>uc\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00082}00082\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00083}00083\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00084}00084\ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00087}\mbox{\hyperlink{classPedido_a0c83e29078985e743d4f34ce0e313989}{00087}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classPedido_a0c83e29078985e743d4f34ce0e313989}{Pedido::pedidosConcorrentes}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classPedido}{Pedido}}\ \&pedido)\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00088}00088\ \ \ \ \ \textcolor{keywordflow}{switch}\ (pedido.tipo)\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ TipoAlteracao::R:\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Caso\ seja\ um\ pedido\ de\ remoção,\ é\ necessário\ verificar\ se\ já\ existe\ um\ pedido\ pendente\ igual.\ Caso\ existe\ não\ é\ permitido\ fazer\ outro\ igual\ da\ mesma\ UC}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ ==\ pedido.estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ \&\&\ this-\/>uc\ ==\ pedido.uc)\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Já\ existe\ um\ pedido\ para\ remover\ o\ estudante\ "{}}\ <<\ estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ <<\ \textcolor{stringliteral}{"{}\ da\ UC\ "{}}\ <<\ uc\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ TipoAlteracao::H:\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Se\ um\ dos\ estudantes\ tiver\ um\ pedido\ de\ remoção\ desta\ UC\ em\ específico\ não\ podem\ trocar}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>tipo\ ==\ TipoAlteracao::R)\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ ==\ pedido.estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ \&\&\ this-\/>uc\ ==\ pedido.uc)\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}O\ estudante\ "{}}\ <<\ pedido.estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ <<\ \textcolor{stringliteral}{"{}\ tem\ um\ pedido\ para\ remover\ a\ UC\ "{}}\ <<\ this-\/>uc\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>estudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ ==\ pedido.outroEstudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ \&\&\ this-\/>uc\ ==\ pedido.uc)\ \{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}O\ estudante\ "{}}\ <<\ pedido.outroEstudante.\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{getStudentNumber}}()\ <<\ \textcolor{stringliteral}{"{}\ tem\ um\ pedido\ para\ remover\ a\ UC\ "{}}\ <<\ this-\/>uc\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00111}00111\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00112}00112\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00113}00113\ \}}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00116}\mbox{\hyperlink{classPedido_a0d76dd9be251d6c5eda4b7f7e2e34590}{00116}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classPedido_a0d76dd9be251d6c5eda4b7f7e2e34590}{Pedido::operator==}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classPedido}{Pedido}}\ \&other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00117}00117\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>estudante\ ==\ other.estudante\ \&\&\ this-\/>outroEstudante\ ==\ other.outroEstudante\ \&\&\ this-\/>uc\ ==\ other.uc\ \&\&\ this-\/>tipo\ ==\ other.tipo;}
+\DoxyCodeLine{\Hypertarget{Pedido_8cpp_source_l00118}00118\ \}}
+
+\end{DoxyCode}

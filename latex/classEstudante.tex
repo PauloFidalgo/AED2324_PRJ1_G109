@@ -1,0 +1,283 @@
+\doxysection{Estudante Class Reference}
+\hypertarget{classEstudante}{}\label{classEstudante}\index{Estudante@{Estudante}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classEstudante_a091cf7ab2310fd8c16244d815e7a402b}{Estudante}} (const int \&numero)
+\item 
+\Hypertarget{classEstudante_a87f6d85948121442f40858ce04161bb8}\label{classEstudante_a87f6d85948121442f40858ce04161bb8} 
+{\bfseries Estudante} (const \mbox{\hyperlink{classEstudante}{Estudante}} \&estudante)
+\item 
+\mbox{\hyperlink{classEstudante_a57ea962455162966b213dc23095350ce}{Estudante}} (const int \&numero, const std\+::string \&nome, const std\+::set$<$ std\+::pair$<$ std\+::string, std\+::string $>$ $>$ \&turmas, const int \&ano)
+\item 
+const int \mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{get\+Student\+Number}} () const
+\item 
+const std\+::string \mbox{\hyperlink{classEstudante_a901107b45b8949688b0945c37bef3690}{get\+Student\+Name}} () const
+\item 
+const int \mbox{\hyperlink{classEstudante_a7459634c0ccccc5e835fc1d60771f4eb}{get\+Ano}} () const
+\item 
+const std\+::string \mbox{\hyperlink{classEstudante_ab2fb88c912c526b190f8a99cc4cd1411}{get\+Turma}} (const std\+::string \&uc) const
+\item 
+const std\+::set$<$ std\+::pair$<$ std\+::string, std\+::string $>$ $>$ \mbox{\hyperlink{classEstudante_ab730ca2e5e91d95d6463bc17bcc6c866}{get\+Turmas}} () const
+\item 
+void \mbox{\hyperlink{classEstudante_a8b6efc3d96645767be7c1c678731110a}{set\+Turmas}} (std\+::set$<$ std\+::pair$<$ std\+::string, std\+::string $>$ $>$ \&turmas)
+\item 
+void \mbox{\hyperlink{classEstudante_a28840ab6076e19628e13531222031277}{change\+Turma}} (const std\+::string \&uc, const std\+::string \&turma\+Nova)
+\item 
+\Hypertarget{classEstudante_a5b419d474c11548452eb66189a8e43c4}\label{classEstudante_a5b419d474c11548452eb66189a8e43c4} 
+void {\bfseries remover\+Uc} (const std\+::string \&uc)
+\item 
+void \mbox{\hyperlink{classEstudante_af86c0b78961d44a682851d22425285bb}{adicionar\+Uc}} (const std\+::string \&uc, const std\+::string \&turma)
+\item 
+bool \mbox{\hyperlink{classEstudante_a29eded1cb385dafe4a683363d6d5f2c7}{inscrito}} (std\+::string \&uc) const
+\item 
+bool \mbox{\hyperlink{classEstudante_a2ce8a920fbd048b272108a9c3a29b7ff}{operator==}} (const \mbox{\hyperlink{classEstudante}{Estudante}} \&estudante) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{Estudante_8h_source_l00011}{11}} of file \mbox{\hyperlink{Estudante_8h_source}{Estudante.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classEstudante_a26aa38bfd58015ae22b711f3be27aa22}\label{classEstudante_a26aa38bfd58015ae22b711f3be27aa22} 
+\index{Estudante@{Estudante}!Estudante@{Estudante}}
+\index{Estudante@{Estudante}!Estudante@{Estudante}}
+\doxysubsubsection{\texorpdfstring{Estudante()}{Estudante()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Estudante\+::\+Estudante (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Estudante_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{Estudante_8cpp_source}{Estudante.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00008\ \{\}}
+
+\end{DoxyCode}
+\Hypertarget{classEstudante_a091cf7ab2310fd8c16244d815e7a402b}\label{classEstudante_a091cf7ab2310fd8c16244d815e7a402b} 
+\index{Estudante@{Estudante}!Estudante@{Estudante}}
+\index{Estudante@{Estudante}!Estudante@{Estudante}}
+\doxysubsubsection{\texorpdfstring{Estudante()}{Estudante()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Estudante\+::\+Estudante (\begin{DoxyParamCaption}\item[{const int \&}]{numero }\end{DoxyParamCaption})}
+
+Construtor por número, utilizado para procurar estudantes por número 
+
+Definition at line \mbox{\hyperlink{Estudante_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{Estudante_8cpp_source}{Estudante.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00011\ :\ numero(numero)\ \{\}}
+
+\end{DoxyCode}
+\Hypertarget{classEstudante_a57ea962455162966b213dc23095350ce}\label{classEstudante_a57ea962455162966b213dc23095350ce} 
+\index{Estudante@{Estudante}!Estudante@{Estudante}}
+\index{Estudante@{Estudante}!Estudante@{Estudante}}
+\doxysubsubsection{\texorpdfstring{Estudante()}{Estudante()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Estudante\+::\+Estudante (\begin{DoxyParamCaption}\item[{const int \&}]{numero,  }\item[{const std\+::string \&}]{nome,  }\item[{const std\+::set$<$ std\+::pair$<$ std\+::string, std\+::string $>$ $>$ \&}]{turmas,  }\item[{const int \&}]{ano }\end{DoxyParamCaption})}
+
+Construtor por cópia Estudante\+::\+Estudante(const Estudante \&estudante) \{ this-\/\texorpdfstring{$>$}{>}numero = estudante.\+numero; this-\/\texorpdfstring{$>$}{>}nome = estudante.\+nome; this-\/\texorpdfstring{$>$}{>}turmas = estudante.\+turmas; this-\/\texorpdfstring{$>$}{>}ano = estudante.\+ano; \}
+
+/\texorpdfstring{$\ast$}{*}! Construtor com todos os parâmetros 
+
+Definition at line \mbox{\hyperlink{Estudante_8cpp_source_l00022}{22}} of file \mbox{\hyperlink{Estudante_8cpp_source}{Estudante.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00022\ :\ numero(numero),\ nome(nome),\ turmas(turmas),\ ano(ano)\ \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classEstudante_af86c0b78961d44a682851d22425285bb}\label{classEstudante_af86c0b78961d44a682851d22425285bb} 
+\index{Estudante@{Estudante}!adicionarUc@{adicionarUc}}
+\index{adicionarUc@{adicionarUc}!Estudante@{Estudante}}
+\doxysubsubsection{\texorpdfstring{adicionarUc()}{adicionarUc()}}
+{\footnotesize\ttfamily void Estudante\+::adicionar\+Uc (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{uc,  }\item[{const std\+::string \&}]{turma }\end{DoxyParamCaption})}
+
+Atribui uma nova \doxylink{classUC}{UC} ao estudante O(log(n)) 
+
+Definition at line \mbox{\hyperlink{Estudante_8cpp_source_l00073}{73}} of file \mbox{\hyperlink{Estudante_8cpp_source}{Estudante.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00074\ \ \ \ \ turmas.insert(\{uc,turma\});}
+\DoxyCodeLine{00075\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classEstudante_a28840ab6076e19628e13531222031277}\label{classEstudante_a28840ab6076e19628e13531222031277} 
+\index{Estudante@{Estudante}!changeTurma@{changeTurma}}
+\index{changeTurma@{changeTurma}!Estudante@{Estudante}}
+\doxysubsubsection{\texorpdfstring{changeTurma()}{changeTurma()}}
+{\footnotesize\ttfamily void Estudante\+::change\+Turma (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{uc,  }\item[{const std\+::string \&}]{turma\+Nova }\end{DoxyParamCaption})}
+
+Altera a turma do estudante na \doxylink{classUC}{UC} para a turma nova O(log(n)) 
+
+Definition at line \mbox{\hyperlink{Estudante_8cpp_source_l00080}{80}} of file \mbox{\hyperlink{Estudante_8cpp_source}{Estudante.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ this-\/>turmas.lower\_bound(\{uc,\textcolor{stringliteral}{"{}"{}}\});}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{if}\ (it-\/>first\ ==\ uc)\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ this-\/>turmas.erase(it);}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ this-\/>turmas.insert(\{uc,\ turmaNova\});}
+\DoxyCodeLine{00086\ \ \ \ \ \}}
+\DoxyCodeLine{00087\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classEstudante_a7459634c0ccccc5e835fc1d60771f4eb}\label{classEstudante_a7459634c0ccccc5e835fc1d60771f4eb} 
+\index{Estudante@{Estudante}!getAno@{getAno}}
+\index{getAno@{getAno}!Estudante@{Estudante}}
+\doxysubsubsection{\texorpdfstring{getAno()}{getAno()}}
+{\footnotesize\ttfamily const int Estudante\+::get\+Ano (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna o ano do estudante. O ano é determinado pela \doxylink{classUC}{UC} de ano superior 
+
+Definition at line \mbox{\hyperlink{Estudante_8cpp_source_l00052}{52}} of file \mbox{\hyperlink{Estudante_8cpp_source}{Estudante.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052\ \{\textcolor{keywordflow}{return}\ ano;\}}
+
+\end{DoxyCode}
+\Hypertarget{classEstudante_a901107b45b8949688b0945c37bef3690}\label{classEstudante_a901107b45b8949688b0945c37bef3690} 
+\index{Estudante@{Estudante}!getStudentName@{getStudentName}}
+\index{getStudentName@{getStudentName}!Estudante@{Estudante}}
+\doxysubsubsection{\texorpdfstring{getStudentName()}{getStudentName()}}
+{\footnotesize\ttfamily std\+::string const Estudante\+::get\+Student\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna o nome do estudante 
+
+Definition at line \mbox{\hyperlink{Estudante_8cpp_source_l00030}{30}} of file \mbox{\hyperlink{Estudante_8cpp_source}{Estudante.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>nome;}
+\DoxyCodeLine{00032\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}\label{classEstudante_a5a564f24038684586ee9fcb43f5f6abb} 
+\index{Estudante@{Estudante}!getStudentNumber@{getStudentNumber}}
+\index{getStudentNumber@{getStudentNumber}!Estudante@{Estudante}}
+\doxysubsubsection{\texorpdfstring{getStudentNumber()}{getStudentNumber()}}
+{\footnotesize\ttfamily int const Estudante\+::get\+Student\+Number (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna o número do estudante 
+
+Definition at line \mbox{\hyperlink{Estudante_8cpp_source_l00025}{25}} of file \mbox{\hyperlink{Estudante_8cpp_source}{Estudante.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>numero;}
+\DoxyCodeLine{00027\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classEstudante_ab2fb88c912c526b190f8a99cc4cd1411}\label{classEstudante_ab2fb88c912c526b190f8a99cc4cd1411} 
+\index{Estudante@{Estudante}!getTurma@{getTurma}}
+\index{getTurma@{getTurma}!Estudante@{Estudante}}
+\doxysubsubsection{\texorpdfstring{getTurma()}{getTurma()}}
+{\footnotesize\ttfamily const std\+::string Estudante\+::get\+Turma (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{uc }\end{DoxyParamCaption}) const}
+
+Retorna a turma do estudante numa \doxylink{classUC}{UC} O(log(n)) 
+
+Definition at line \mbox{\hyperlink{Estudante_8cpp_source_l00042}{42}} of file \mbox{\hyperlink{Estudante_8cpp_source}{Estudante.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ turmas.lower\_bound(\{uc,\textcolor{stringliteral}{"{}"{}}\});}
+\DoxyCodeLine{00044\ \ \ \ \ std::string\ res;}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordflow}{if}\ (it-\/>first\ ==\ uc)\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ res\ =\ it-\/>second;}
+\DoxyCodeLine{00047\ \ \ \ \ \}}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00049\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classEstudante_ab730ca2e5e91d95d6463bc17bcc6c866}\label{classEstudante_ab730ca2e5e91d95d6463bc17bcc6c866} 
+\index{Estudante@{Estudante}!getTurmas@{getTurmas}}
+\index{getTurmas@{getTurmas}!Estudante@{Estudante}}
+\doxysubsubsection{\texorpdfstring{getTurmas()}{getTurmas()}}
+{\footnotesize\ttfamily const std\+::set$<$ std\+::pair$<$ std\+::string, std\+::string $>$ $>$ Estudante\+::get\+Turmas (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna as \doxylink{classUC}{UC}\textquotesingle{}s e respetivas turmas do estudante 
+
+Definition at line \mbox{\hyperlink{Estudante_8cpp_source_l00035}{35}} of file \mbox{\hyperlink{Estudante_8cpp_source}{Estudante.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>turmas;}
+\DoxyCodeLine{00037\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classEstudante_a29eded1cb385dafe4a683363d6d5f2c7}\label{classEstudante_a29eded1cb385dafe4a683363d6d5f2c7} 
+\index{Estudante@{Estudante}!inscrito@{inscrito}}
+\index{inscrito@{inscrito}!Estudante@{Estudante}}
+\doxysubsubsection{\texorpdfstring{inscrito()}{inscrito()}}
+{\footnotesize\ttfamily bool Estudante\+::inscrito (\begin{DoxyParamCaption}\item[{std\+::string \&}]{uc }\end{DoxyParamCaption}) const}
+
+Verifica se o estudante está incrito numa \doxylink{classUC}{UC} 0(log(n)) 
+
+Definition at line \mbox{\hyperlink{Estudante_8cpp_source_l00092}{92}} of file \mbox{\hyperlink{Estudante_8cpp_source}{Estudante.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ turmas.lower\_bound(\{uc,\textcolor{stringliteral}{"{}"{}}\});}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordflow}{if}\ (it-\/>first\ ==\ uc)\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00096\ \ \ \ \ \}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00098\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classEstudante_a2ce8a920fbd048b272108a9c3a29b7ff}\label{classEstudante_a2ce8a920fbd048b272108a9c3a29b7ff} 
+\index{Estudante@{Estudante}!operator==@{operator==}}
+\index{operator==@{operator==}!Estudante@{Estudante}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily bool Estudante\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classEstudante}{Estudante}} \&}]{estudante }\end{DoxyParamCaption}) const}
+
+Dois estudantes são iguais se tiverem o mesmo número de estudante, nome, ano e turmas 
+
+Definition at line \mbox{\hyperlink{Estudante_8cpp_source_l00101}{101}} of file \mbox{\hyperlink{Estudante_8cpp_source}{Estudante.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordflow}{return}\ (this-\/>nome\ ==\ estudante.nome)\ \&\&\ (this-\/>numero\ ==\ estudante.numero)\ \&\&\ (this-\/>ano\ ==\ estudante.ano)\ \&\&\ (this-\/>turmas\ ==\ estudante.turmas);}
+\DoxyCodeLine{00103\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classEstudante_a8b6efc3d96645767be7c1c678731110a}\label{classEstudante_a8b6efc3d96645767be7c1c678731110a} 
+\index{Estudante@{Estudante}!setTurmas@{setTurmas}}
+\index{setTurmas@{setTurmas}!Estudante@{Estudante}}
+\doxysubsubsection{\texorpdfstring{setTurmas()}{setTurmas()}}
+{\footnotesize\ttfamily void Estudante\+::set\+Turmas (\begin{DoxyParamCaption}\item[{std\+::set$<$ std\+::pair$<$ std\+::string, std\+::string $>$ $>$ \&}]{turmas }\end{DoxyParamCaption})}
+
+Adiciona um conjunto de turmas e \doxylink{classUC}{UC}\textquotesingle{}s ao estudante 
+
+Definition at line \mbox{\hyperlink{Estudante_8cpp_source_l00055}{55}} of file \mbox{\hyperlink{Estudante_8cpp_source}{Estudante.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00056\ \ \ \ \ this-\/>turmas\ =\ turmas;}
+\DoxyCodeLine{00057\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Data\+Model/Estudante.\+h\item 
+Data\+Model/Estudante.\+cpp\end{DoxyCompactItemize}

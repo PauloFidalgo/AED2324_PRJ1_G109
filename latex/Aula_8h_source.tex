@@ -1,0 +1,41 @@
+\doxysection{Aula.\+h}
+\hypertarget{Aula_8h_source}{}\label{Aula_8h_source}\index{DataModel/Aula.h@{DataModel/Aula.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ Paulo\ Fidalgo\ on\ 05/10/2023.}}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00005}00005\ \textcolor{preprocessor}{\#ifndef\ AED2324\_PRJ1\_G\_109\_\_COURSEUNIT\_H}}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00006}00006\ \textcolor{preprocessor}{\#define\ AED2324\_PRJ1\_G\_109\_\_COURSEUNIT\_H}}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00010}\mbox{\hyperlink{classAula}{00010}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classAula}{Aula}}\ \{}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00011}00011\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00012}00012\ \ \ \ \ std::string\ dia;}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00013}00013\ \ \ \ \ \textcolor{keywordtype}{float}\ inicio,\ duracao;}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00014}00014\ \ \ \ \ std::string\ tipo;}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00016}00016\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00017}00017\ \ \ \ \ \textcolor{comment}{//\ Constructors}}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00018}00018\ \ \ \ \ \mbox{\hyperlink{classAula_a8d76c855afa3252523e4ba97535bd2db}{Aula}}();}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00019}00019\ \ \ \ \ \mbox{\hyperlink{classAula_a8d76c855afa3252523e4ba97535bd2db}{Aula}}(std::string\ dia,\ \textcolor{keywordtype}{float}\ inicio,\ \textcolor{keywordtype}{float}\ duracao,\ std::string\ tipo);}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00021}00021\ \ \ \ \ \textcolor{comment}{//\ Getters}}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00022}00022\ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \mbox{\hyperlink{classAula_ad7b74a16b27abbd827f884f55aad3800}{getTipo}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00023}00023\ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \mbox{\hyperlink{classAula_a4158cdc732bfc5401be6e4ba9344f690}{getDia}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00024}00024\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{classAula_a6cce25ebd6e7b6888b56628076d8981a}{getDuracao}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00025}00025\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{classAula_aa68508613bc3dd9974220b76bbd44b7e}{getInicio}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00027}00027\ \ \ \ \ \textcolor{comment}{//\ Validators}}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00028}00028\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classAula_af205c0b8a804d5c61b64b8bfca14aedb}{sobreposta}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classAula}{Aula}}\ \&aula)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00029}00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classAula_a343b88f55420b5ecf15506e135336b91}{mesmoHorario}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classAula}{Aula}}\ \&aula)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00030}00030\ \};}
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{Aula_8h_source_l00035}00035\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//AED2324\_PRJ1\_G\_109\_\_COURSEUNIT\_H}}
+
+\end{DoxyCode}

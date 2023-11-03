@@ -1,0 +1,442 @@
+\doxysection{UC Class Reference}
+\hypertarget{classUC}{}\label{classUC}\index{UC@{UC}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classUC_aeeca45c9dc71ad33adb8ab6414af3723}{UC}} (const std\+::string \&codigo\+Uc, const std\+::map$<$ std\+::string, \mbox{\hyperlink{structTurmaInfo}{Turma\+Info}} $>$ \&uc\+Turma, int media=0)
+\item 
+\mbox{\hyperlink{classUC_a7101a9e1dcc2abf74d3f58e9b45a6e90}{UC}} (std\+::string codigo\+Uc)
+\item 
+\mbox{\hyperlink{classUC_a2aedc664cf048d9b95f9c2263f3d3d6d}{UC}} (const \mbox{\hyperlink{classUC}{UC}} \&other)
+\item 
+std\+::map$<$ std\+::string, \mbox{\hyperlink{structTurmaInfo}{Turma\+Info}} $>$ \mbox{\hyperlink{classUC_a7bae831b9b63064eeff1ac1f921ef474}{get\+Uc\+Turma}} () const
+\item 
+std\+::list$<$ \mbox{\hyperlink{classAula}{Aula}} $>$ \mbox{\hyperlink{classUC_aeb928e223c04b56e8f58f38cba528373}{get\+Aulas\+Turma}} (const std\+::string \&turma) const
+\item 
+std\+::vector$<$ std\+::pair$<$ std\+::string, std\+::pair$<$ std\+::string, \mbox{\hyperlink{classAula}{Aula}} $>$ $>$ $>$ \mbox{\hyperlink{classUC_af083b5d5cac499be6788101f3d9d86be}{get\+Aulas\+Uc}} () const
+\item 
+std\+::string \mbox{\hyperlink{classUC_aa73f694c740af45b0a8eb9727a830e14}{get\+Codigo\+Uc}} () const
+\item 
+\mbox{\hyperlink{classAula}{Aula}} \mbox{\hyperlink{classUC_a7f389975e3aa7c94dea3de0a911b4a0d}{get\+Pratica}} (const std\+::string \&turma) const
+\item 
+int \mbox{\hyperlink{classUC_aba7ec3ba70adbc071d4209a3ea42d223}{get\+Numero\+Alunos}} (const std\+::string \&turma) const
+\item 
+int \mbox{\hyperlink{classUC_a1945b0161492a0664356c5cd5dd06173}{get\+Minimum}} () const
+\item 
+int \mbox{\hyperlink{classUC_ac6c585b21fe6f6a41a809a6842a980f0}{get\+Ano}} () const
+\item 
+int \mbox{\hyperlink{classUC_a65f21da1f6cb31868e8145872d13e413}{get\+Numero\+Alunos\+Total}} () const
+\item 
+int \mbox{\hyperlink{classUC_a0f9f147018fb7929c52bf3a1296aa168}{get\+Numero\+Turmas}} () const
+\item 
+float \mbox{\hyperlink{classUC_adc3346d573d709a2974b8987067d9334}{get\+Media}} () const
+\item 
+\Hypertarget{classUC_ab76686daf88b5ff87637914f33ad70a7}\label{classUC_ab76686daf88b5ff87637914f33ad70a7} 
+void {\bfseries add\+Turma} (const std\+::string \&turma, const \mbox{\hyperlink{structTurmaInfo}{Turma\+Info}} \&turma\+Info)
+\item 
+\Hypertarget{classUC_a3997894fe03b32ee248a6db716cb47a9}\label{classUC_a3997894fe03b32ee248a6db716cb47a9} 
+void {\bfseries add\+Estudantes} (const std\+::string \&turma, const std\+::list$<$ std\+::pair$<$ int, std\+::string $>$ $>$ \&estudantes)
+\item 
+void \mbox{\hyperlink{classUC_ae3a501e780670864c67a4d0aad0c5383}{add\+Estudante}} (const std\+::string \&turma, const int \&estudante, const std\+::string \&nome)
+\item 
+void \mbox{\hyperlink{classUC_a21d5f052561bd0d67e43664d97f4253e}{remove\+Estudante}} (const std\+::string \&turma, const int \&numero, const std\+::string \&nome)
+\item 
+\Hypertarget{classUC_a767d6528298869ced408074975002738}\label{classUC_a767d6528298869ced408074975002738} 
+bool {\bfseries verificar\+Turma} (const std\+::string \&turma) const
+\item 
+bool \mbox{\hyperlink{classUC_a5d8750b2ba2144690af69ec3fdd7bbee}{check\+Balance}} (const std\+::string \&turma) const
+\item 
+bool \mbox{\hyperlink{classUC_af8c79ec0b2b9de45729608d311621285}{operator$<$}} (const \mbox{\hyperlink{classUC}{UC}} uc) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{UC_8h_source_l00022}{22}} of file \mbox{\hyperlink{UC_8h_source}{UC.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classUC_aeeca45c9dc71ad33adb8ab6414af3723}\label{classUC_aeeca45c9dc71ad33adb8ab6414af3723} 
+\index{UC@{UC}!UC@{UC}}
+\index{UC@{UC}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{UC()}{UC()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily UC\+::\+UC (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{codigo\+Uc,  }\item[{const std\+::map$<$ std\+::string, \mbox{\hyperlink{structTurmaInfo}{Turma\+Info}} $>$ \&}]{uc\+Turma,  }\item[{int}]{media = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+Construtor com todos os parâmetros 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00018}{18}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00019\ \ \ \ \ this-\/>codigoUC\ =\ codigoUc;}
+\DoxyCodeLine{00020\ \ \ \ \ this-\/>ucTurma\ =\ ucTurma;}
+\DoxyCodeLine{00021\ \ \ \ \ this-\/>media\ =\ media;}
+\DoxyCodeLine{00022\ \ \ \ \ this-\/>nAlunos\ =\ 0;}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ ucTurma.begin();}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ ucTurma.end())\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ this-\/>ano\ =\ std::stoi(it-\/>first.substr(0,1));}
+\DoxyCodeLine{00027\ \ \ \ \ \}}
+\DoxyCodeLine{00028\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_a7101a9e1dcc2abf74d3f58e9b45a6e90}\label{classUC_a7101a9e1dcc2abf74d3f58e9b45a6e90} 
+\index{UC@{UC}!UC@{UC}}
+\index{UC@{UC}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{UC()}{UC()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily UC\+::\+UC (\begin{DoxyParamCaption}\item[{std\+::string}]{codigo\+Uc }\end{DoxyParamCaption})}
+
+Construtor com código, usado para procurar \doxylink{classUC}{UC}\textquotesingle{}s pelo código 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031\ :\ codigoUC(codigoUc)\ \{\}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_a2aedc664cf048d9b95f9c2263f3d3d6d}\label{classUC_a2aedc664cf048d9b95f9c2263f3d3d6d} 
+\index{UC@{UC}!UC@{UC}}
+\index{UC@{UC}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{UC()}{UC()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily UC\+::\+UC (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUC}{UC}} \&}]{other }\end{DoxyParamCaption})}
+
+Construtor por cópia 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00009}{9}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00009\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00010\ \ \ \ \ this-\/>codigoUC\ =\ other.codigoUC;}
+\DoxyCodeLine{00011\ \ \ \ \ this-\/>ucTurma\ =\ other.ucTurma;}
+\DoxyCodeLine{00012\ \ \ \ \ this-\/>media\ =\ other.media;}
+\DoxyCodeLine{00013\ \ \ \ \ this-\/>ano\ =\ other.ano;}
+\DoxyCodeLine{00014\ \ \ \ \ this-\/>nAlunos\ =\ other.nAlunos;}
+\DoxyCodeLine{00015\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classUC_ae3a501e780670864c67a4d0aad0c5383}\label{classUC_ae3a501e780670864c67a4d0aad0c5383} 
+\index{UC@{UC}!addEstudante@{addEstudante}}
+\index{addEstudante@{addEstudante}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{addEstudante()}{addEstudante()}}
+{\footnotesize\ttfamily void UC\+::add\+Estudante (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{turma,  }\item[{const int \&}]{estudante,  }\item[{const std\+::string \&}]{nome }\end{DoxyParamCaption})}
+
+Adiciona um estudante a uma turma O(log(n)) 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00122}{122}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ ucTurma.find(turma);}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ ucTurma.end())\ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ it\ -\/>\ second.estudantes.insert(\{estudante,nome\});}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ this-\/>nAlunos++;}
+\DoxyCodeLine{00128\ \ \ \ \ \}}
+\DoxyCodeLine{00129\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_a5d8750b2ba2144690af69ec3fdd7bbee}\label{classUC_a5d8750b2ba2144690af69ec3fdd7bbee} 
+\index{UC@{UC}!checkBalance@{checkBalance}}
+\index{checkBalance@{checkBalance}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{checkBalance()}{checkBalance()}}
+{\footnotesize\ttfamily bool UC\+::check\+Balance (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{turma }\end{DoxyParamCaption}) const}
+
+Verifica se ao adicionar um aluno novo à turma, não é comprometido o equilíbrio entre turmas O(n) 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00168}{168}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00169\ \ \ \ \textcolor{keywordtype}{int}\ min\ =\ this-\/>\mbox{\hyperlink{classUC_a1945b0161492a0664356c5cd5dd06173}{getMinimum}}();}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \ \textcolor{keyword}{auto}\ it\ =\ ucTurma.find(turma);}
+\DoxyCodeLine{00172\ \ \ \ \textcolor{keywordflow}{if}\ ((it-\/>second.estudantes.size()\ +\ 1)\ -\/\ min\ >\ 4)\ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00174\ \ \ \ \}}
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00176\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_ac6c585b21fe6f6a41a809a6842a980f0}\label{classUC_ac6c585b21fe6f6a41a809a6842a980f0} 
+\index{UC@{UC}!getAno@{getAno}}
+\index{getAno@{getAno}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{getAno()}{getAno()}}
+{\footnotesize\ttfamily int UC\+::get\+Ano (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna o ano da \doxylink{classUC}{UC} 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00044}{44}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>ano;}
+\DoxyCodeLine{00046\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_aeb928e223c04b56e8f58f38cba528373}\label{classUC_aeb928e223c04b56e8f58f38cba528373} 
+\index{UC@{UC}!getAulasTurma@{getAulasTurma}}
+\index{getAulasTurma@{getAulasTurma}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{getAulasTurma()}{getAulasTurma()}}
+{\footnotesize\ttfamily std\+::list$<$ \mbox{\hyperlink{classAula}{Aula}} $>$ UC\+::get\+Aulas\+Turma (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{turma }\end{DoxyParamCaption}) const}
+
+Retorna uma lista de aulas de uma determinada turma O(log(n)) 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00094}{94}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ ucTurma.find(turma);}
+\DoxyCodeLine{00096\ \ \ \ \ std::list<Aula>\ res;}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ ucTurma.end())\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ res\ =\ it-\/>second.aulasTeoricas;}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ res.push\_back(it-\/>second.pratica);}
+\DoxyCodeLine{00101\ \ \ \ \ \}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00104\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_af083b5d5cac499be6788101f3d9d86be}\label{classUC_af083b5d5cac499be6788101f3d9d86be} 
+\index{UC@{UC}!getAulasUc@{getAulasUc}}
+\index{getAulasUc@{getAulasUc}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{getAulasUc()}{getAulasUc()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::pair$<$ std\+::string, std\+::pair$<$ std\+::string, \mbox{\hyperlink{classAula}{Aula}} $>$ $>$ $>$ UC\+::get\+Aulas\+Uc (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna um vetor formado por pares, em que o primeiro elemento é o nome da \doxylink{classUC}{UC} e o segundo é um par com o nome da turma e uma aula dessa turma O(n \texorpdfstring{$\ast$}{*} m) 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00075}{75}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00076\ \ \ \ \ std::vector<std::pair<std::string,std::pair<std::string,Aula>>>\ res;}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ turma\ :\ ucTurma)\ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ aula\ :\ turma.second.aulasTeoricas)\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ res.push\_back(\{codigoUC,\ \{turma.first,\ aula\}\});}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ res.push\_back(\{codigoUC,\ \{turma.first,\ turma.second.pratica\}\});}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00084\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_aa73f694c740af45b0a8eb9727a830e14}\label{classUC_aa73f694c740af45b0a8eb9727a830e14} 
+\index{UC@{UC}!getCodigoUc@{getCodigoUc}}
+\index{getCodigoUc@{getCodigoUc}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{getCodigoUc()}{getCodigoUc()}}
+{\footnotesize\ttfamily std\+::string UC\+::get\+Codigo\+Uc (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna o código da \doxylink{classUC}{UC} 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00087}{87}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>codigoUC;}
+\DoxyCodeLine{00089\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_adc3346d573d709a2974b8987067d9334}\label{classUC_adc3346d573d709a2974b8987067d9334} 
+\index{UC@{UC}!getMedia@{getMedia}}
+\index{getMedia@{getMedia}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{getMedia()}{getMedia()}}
+{\footnotesize\ttfamily float UC\+::get\+Media (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna o valor que divide os dois turnos das teóricas 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00039}{39}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>media;}
+\DoxyCodeLine{00041\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_a1945b0161492a0664356c5cd5dd06173}\label{classUC_a1945b0161492a0664356c5cd5dd06173} 
+\index{UC@{UC}!getMinimum@{getMinimum}}
+\index{getMinimum@{getMinimum}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{getMinimum()}{getMinimum()}}
+{\footnotesize\ttfamily int UC\+::get\+Minimum (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna o número de alunos da turma com menos alunos O(n) 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00147}{147}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordtype}{bool}\ first\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{int}\ min;}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ t\ :\ ucTurma)\ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (first)\ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ min\ =\ t.second.estudantes.size();}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ first\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (t.second.estudantes.size()\ <\ min)\ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ min\ =\ t.second.estudantes.size();}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00161\ \ \ \ \ \}}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordflow}{return}\ min;}
+\DoxyCodeLine{00163\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_aba7ec3ba70adbc071d4209a3ea42d223}\label{classUC_aba7ec3ba70adbc071d4209a3ea42d223} 
+\index{UC@{UC}!getNumeroAlunos@{getNumeroAlunos}}
+\index{getNumeroAlunos@{getNumeroAlunos}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{getNumeroAlunos()}{getNumeroAlunos()}}
+{\footnotesize\ttfamily int UC\+::get\+Numero\+Alunos (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{turma }\end{DoxyParamCaption}) const}
+
+Retorna o número de alunos de uma determinada turma O(log(n)) 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00109}{109}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ ucTurma.find(turma);}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{int}\ res\ =\ 0;}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ ucTurma.end())\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ res\ =\ it-\/>second.estudantes.size();}
+\DoxyCodeLine{00115\ \ \ \ \ \}}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00117\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_a65f21da1f6cb31868e8145872d13e413}\label{classUC_a65f21da1f6cb31868e8145872d13e413} 
+\index{UC@{UC}!getNumeroAlunosTotal@{getNumeroAlunosTotal}}
+\index{getNumeroAlunosTotal@{getNumeroAlunosTotal}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{getNumeroAlunosTotal()}{getNumeroAlunosTotal()}}
+{\footnotesize\ttfamily int UC\+::get\+Numero\+Alunos\+Total (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna o número de alunos total da \doxylink{classUC}{UC} O(1) 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00051}{51}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>nAlunos;}
+\DoxyCodeLine{00053\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_a0f9f147018fb7929c52bf3a1296aa168}\label{classUC_a0f9f147018fb7929c52bf3a1296aa168} 
+\index{UC@{UC}!getNumeroTurmas@{getNumeroTurmas}}
+\index{getNumeroTurmas@{getNumeroTurmas}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{getNumeroTurmas()}{getNumeroTurmas()}}
+{\footnotesize\ttfamily int UC\+::get\+Numero\+Turmas (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna o número de turmas da \doxylink{classUC}{UC} 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00068}{68}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordflow}{return}\ ucTurma.size();}
+\DoxyCodeLine{00070\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_a7f389975e3aa7c94dea3de0a911b4a0d}\label{classUC_a7f389975e3aa7c94dea3de0a911b4a0d} 
+\index{UC@{UC}!getPratica@{getPratica}}
+\index{getPratica@{getPratica}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{getPratica()}{getPratica()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classAula}{Aula}} UC\+::get\+Pratica (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{turma }\end{DoxyParamCaption}) const}
+
+Retorna a aula prática da turma O(log(n)) 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00058}{58}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{classAula}{Aula}}\ res;}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ this-\/>ucTurma.find(turma);}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ this-\/>ucTurma.end())\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ res\ =\ it-\/>second.pratica;}
+\DoxyCodeLine{00063\ \ \ \ \ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00065\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_a7bae831b9b63064eeff1ac1f921ef474}\label{classUC_a7bae831b9b63064eeff1ac1f921ef474} 
+\index{UC@{UC}!getUcTurma@{getUcTurma}}
+\index{getUcTurma@{getUcTurma}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{getUcTurma()}{getUcTurma()}}
+{\footnotesize\ttfamily std\+::map$<$ std\+::string, \mbox{\hyperlink{structTurmaInfo}{Turma\+Info}} $>$ UC\+::get\+Uc\+Turma (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Retorna o map uc\+Turma 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00034}{34}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>ucTurma;}
+\DoxyCodeLine{00036\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_af8c79ec0b2b9de45729608d311621285}\label{classUC_af8c79ec0b2b9de45729608d311621285} 
+\index{UC@{UC}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{operator$<$()}{operator<()}}
+{\footnotesize\ttfamily bool UC\+::operator$<$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUC}{UC}}}]{uc }\end{DoxyParamCaption}) const}
+
+Compara \doxylink{classUC}{UC}\textquotesingle{}s, pelo seu código 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00179}{179}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>codigoUC\ <\ uc.codigoUC;}
+\DoxyCodeLine{00181\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classUC_a21d5f052561bd0d67e43664d97f4253e}\label{classUC_a21d5f052561bd0d67e43664d97f4253e} 
+\index{UC@{UC}!removeEstudante@{removeEstudante}}
+\index{removeEstudante@{removeEstudante}!UC@{UC}}
+\doxysubsubsection{\texorpdfstring{removeEstudante()}{removeEstudante()}}
+{\footnotesize\ttfamily void UC\+::remove\+Estudante (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{turma,  }\item[{const int \&}]{numero,  }\item[{const std\+::string \&}]{nome }\end{DoxyParamCaption})}
+
+Remove um estudante de uma turma O(log(n)) 
+
+Definition at line \mbox{\hyperlink{UC_8cpp_source_l00134}{134}} of file \mbox{\hyperlink{UC_8cpp_source}{UC.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ ucTurma.find(turma);\ \textcolor{comment}{//\ O(log(n))}}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keyword}{auto}\ estudante\ \ =\ it-\/>second.estudantes.find(\{numero,nome\});}
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordflow}{if}\ (estudante\ !=\ it-\/>second.estudantes.end())\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ it-\/>second.estudantes.erase(estudante);}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ this-\/>nAlunos-\/-\/;}
+\DoxyCodeLine{00141\ \ \ \ \ \}}
+\DoxyCodeLine{00142\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Data\+Model/UC.\+h\item 
+Data\+Model/UC.\+cpp\end{DoxyCompactItemize}
