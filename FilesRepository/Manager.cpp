@@ -1139,12 +1139,12 @@ void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, c
 
                     int totalWidth = 28;
 
+                    /*
                     if (studentName == "Verónica"){
                         totalWidth = 29 ;
-                    }
+                    }*/
 
                     cout << "|"<< string(16,' ') << studentNumber << ' ' << studentName << string(totalWidth-studentName.length(),' ') << "|" << endl;
-
                 }
             }
         }
@@ -1155,8 +1155,10 @@ void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, c
                     std::string studentNumber = to_string(i->getStudentNumber());
                     std::string studentName = i->getStudentName();
 
-                    int totalWidth =28;
+                    int totalWidth = 28;
+
                     if (studentName == "Verónica"){
+
                         totalWidth = 29 ;
                     }
                     cout << "|"<< string(16,' ') << studentNumber << ' ' << studentName << string(totalWidth-studentName.length(),' ') << "|" << endl;
