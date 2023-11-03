@@ -7,9 +7,6 @@
 #include <string>
 #include <iostream>
 
-//! Enum que define o tipo de Aula, T - Teórica, P - Prática, - PL - Prática Laboratorial
-enum Type {TP, P, PL};
-
 class Aula {
 private:
     std::string dia;

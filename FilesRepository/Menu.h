@@ -108,7 +108,7 @@ public:
     void menuAno(Tipo tipo);
     void escolhaOrdenado(const bool& first);
     void menuOpcoesTurmas(map<string,list<Aula>> turmas);
-    void vereficarHorario();
+    void verificarHorario();
 
     //Ordenações
 
