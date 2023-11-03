@@ -1,6 +1,5 @@
 /main
 *.csv#
-/dconfig
 .idea
 *.o
 cmake-build-debug/
