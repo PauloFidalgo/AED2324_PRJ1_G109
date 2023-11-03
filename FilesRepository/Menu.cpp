@@ -32,6 +32,34 @@ Menu::~Menu() {
 }
 
 //! Getters
+void Menu::getStudentName(){
+    while (true) {
+        cout << "Nome do Aluno (Escreva 'sair' para voltar atrás): ";
+        string line;
+        cin >> line;
+
+        // Se o input, em vez de um nome de um estudante, for 'sair' então retorna ao menu anterior.
+        if (line == "sair") {
+            this->sair = true;
+            return;
+        }
+
+        try {
+            if(!manager.nomeValido(line)) {
+                cout << "Não existem estudantes com o nome " << line << endl;
+                continue;
+            }
+            this->nome = line;
+            break;
+        }
+        catch (exception e) {
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.clear();
+            cout << "Número inválido" << endl;
+        }
+    }
+}
+
 //! Pede ao utilizador para dar input de um 2º estudante e verifica se o estudante é valido
 void Menu::getSecondStudent(){
     while (true) {
@@ -1587,17 +1615,15 @@ void Menu::ordenaçãoParcial(OrdenacaoParcial ord, string uc) {
                 switch (userInput) {
                     case '1':
                     {
-                        string nome;
-                        cout << "Introduza o Nome do Estudante: ";
-                        cin >> nome;
+                        getStudentName();
+                        if (sair) return;
                         manager.printEstudantesPorNome(nome, true);
                         break;
                     }
                     case '2':
                     {
-                        string nome;
-                        cout << "Introduza o Nome do Estudante: ";
-                        cin >> nome;
+                        getStudentName();
+                        if (sair) return;
                         manager.printEstudantesPorNome(nome, false);
                         break;
                     }

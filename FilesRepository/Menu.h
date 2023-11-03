@@ -71,8 +71,8 @@ private:
     int numero_estudante;
     string uc;
     string turma;
+    string nome;
     int ano;
-    std::vector<std::function<void(Menu&)>> menuHistory;
 
 public:
     //Construtor
@@ -90,7 +90,7 @@ public:
     void getNuc();
     void getTurma();
     void getAno();
-
+    void getStudentName();
 
     //Menus
 

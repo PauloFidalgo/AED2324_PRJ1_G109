@@ -1,5 +1,3 @@
-
-
-Construir menu com opções:
-    - Menu:
-        - Pedidos para Adicionar (Ano / Opções para adicionar) (horario ?) - Paulo
+- arranjar solução pra veronica
+- rever os comentarios
+-

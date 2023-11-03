@@ -910,10 +910,21 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
                     for (const auto& element : studentList){
 
                         int totalWidth = 26;
-
                         if (element.second == "Verónica"){
-                            totalWidth = 27 ;
+                            for (int i = 0; i < element.second.length(); i++) {
+                                if (!isalpha(element.second[i])){
+                                    cout << 1;
+                                    totalWidth++;
+                                    i++;
+                                }
+                            }
+                            cout << endl;
                         }
+
+                        /*
+                        if (element.second == "Verónica" || element.second == "Ambrósio"){
+                            totalWidth = 27 ;
+                        }*/
 
                         cout << '|'<< string(18,' ') << element.first << ' ' << element.second << string(totalWidth-element.second.length(),' ') << '|' << endl;
                     }
@@ -923,7 +934,7 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
                     for (auto i = studentList.rbegin(); i != studentList.rend(); ++i){
                         int totalWidth = 26;
 
-                        if (i->second == "Verónica"){
+                        if (i->second == "Verónica" || i->second == "Ambrósio"){
                             totalWidth = 27 ;
                         }
 
@@ -938,7 +949,7 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
 
                         int totalWidth = 26;
 
-                        if (element.second == "Verónica"){
+                        if (element.second == "Verónica" || element.second == "Ambrósio"){
                             totalWidth = 27 ;
                         }
 
@@ -950,7 +961,7 @@ void Manager::printEstudantesPorTurmaNaUc(const string &uc, const string &turma,
                     for (auto i = studentList.rbegin(); i != studentList.rend(); ++i){
                         int totalWidth = 26;
 
-                        if (i->second == "Verónica"){
+                        if (i->second == "Verónica" || i->second == "Ambrósio"){
                             totalWidth = 27 ;
                         }
 
@@ -1033,11 +1044,10 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
             for (const auto& element : studentList){
                 int totalWidth = 28;
 
-                if (element.second == "Verónica"){
+                if (element.second == "Verónica" || element.second == "Ambŕosio"){
                     totalWidth = 29 ;
                 }
-
-                cout<< "|"<< string (16,' ') << element.first << ' ' << element.second << string(totalWidth-element.second.length(),' ') << "|" <<endl;
+                cout << '|' << string (16,' ') << element.first << " " << element.second << string(totalWidth-element.second.length(),' ') << "|" <<endl;
             }
         }
         // Ordem decrescente
@@ -1045,11 +1055,10 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
             for (auto i = studentList.rbegin(); i != studentList.rend(); ++i){
                 int totalWidth = 28;
 
-                if (i->second == "Verónica"){
+                if (i->second == "Verónica" || i->second == "Ambŕosio"){
                     totalWidth = 29 ;
                 }
-
-                cout<< "|"<< string (16,' ') << i->first << ' ' << i->second << string(totalWidth-i->second.length(),' ') << "|" <<endl;
+                cout << '|' << string (16,' ') << i->first << " " << i->second << string(totalWidth - i->second.length(),' ') << "|" <<endl;
             }
         }
         cout << string (56,'-')  << endl;
@@ -1084,7 +1093,7 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
 
                 int totalWidth = 28;
 
-                if (element.second == "Verónica"){
+                if (element.second == "Verónica" || element.second == "Ambrósio"){
                     totalWidth = 29 ;
                 }
 
@@ -1096,7 +1105,7 @@ void Manager::printEstudantesPorUC(const string &uc, const bool& orderByNumber, 
             for (auto i = studentList.rbegin(); i != studentList.rend(); ++i){
                 int totalWidth = 28;
 
-                if (i->second == "Verónica"){
+                if (i->second == "Verónica" || i->second == "Ambrósio"){
                     totalWidth = 29 ;
                 }
 
@@ -1125,7 +1134,7 @@ void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, c
 
                     int totalWidth = 28;
 
-                    if (studentName == "Verónica"){
+                    if (studentName == "Verónica" || studentName == "Ambrósio"){
                         totalWidth = 29 ;
                     }
 
@@ -1142,7 +1151,7 @@ void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, c
                     std::string studentName = i->getStudentName();
 
                     int totalWidth =28;
-                    if (studentName == "Verónica"){
+                    if (studentName == "Verónica" || studentName == "Ambrósio") {
                         totalWidth = 29 ;
                     }
                     cout << "|"<< string(16,' ') << studentNumber << ' ' << studentName << string(totalWidth-studentName.length(),' ') << "|" << endl;
@@ -1162,7 +1171,7 @@ void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, c
 
                     int totalWidth = 28;
 
-                    if (studentName == "Verónica"){
+                    if (studentName == "Verónica" || studentName == "Ambrósio"){
                         totalWidth = 29 ;
                     }
 
@@ -1178,7 +1187,7 @@ void Manager::printEstudantesPorAno(const int &ano, const bool &orderByNumber, c
                     std::string studentName = i->getStudentName();
 
                     int totalWidth =28;
-                    if (studentName == "Verónica"){
+                    if (studentName == "Verónica" || studentName == "Ambrósio"){
                         totalWidth = 29 ;
                     }
                     cout << "|"<< string(16,' ') << studentNumber << ' ' << studentName << string(totalWidth-studentName.length(),' ') << "|" << endl;
@@ -1234,7 +1243,7 @@ void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& order
                     string studentName = estudante.getStudentName();
                     int totalWidth = 48;
 
-                    if (studentName == "Verónica"){
+                    if (studentName == "Verónica" || studentName == "Ambrósio"){
                         totalWidth = 49 ;
                     }
 
@@ -1251,7 +1260,7 @@ void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& order
 
                     int totalWidth = 48;
 
-                    if (studentName == "Verónica"){
+                    if (studentName == "Verónica" || studentName == "Ambrósio"){
                         totalWidth = 49 ;
                     }
 
@@ -1271,7 +1280,7 @@ void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& order
                     string studentName = estudante.getStudentName();
                     int totalWidth = 48;
 
-                    if (studentName == "Verónica"){
+                    if (studentName == "Verónica" || studentName == "Ambrósio"){
                         totalWidth = 49 ;
                     }
 
@@ -1289,7 +1298,7 @@ void Manager::numeroEstudantesEmPeloMenosNUCS(const int &nUcs, const bool& order
 
                     int totalWidth = 48;
 
-                    if (studentName == "Verónica"){
+                    if (studentName == "Verónica" || studentName == "Ambrósio"){
                         totalWidth = 49 ;
                     }
 
@@ -1467,6 +1476,7 @@ void Manager::printInfoEstudante(const int &numero) const {
 
 
     int len, lenf;
+    int nameSpace = 27;
     auto it = lista.begin();
     cout << string(57 , '-') << endl;
     cout << "|" << string(34,' ') << "|    UC    |  Turma  |" << endl;
@@ -1474,7 +1484,8 @@ void Manager::printInfoEstudante(const int &numero) const {
         if (i == 0){
             len = (10 - it->first.length()) / 2;
             lenf = (10 - it->first.length()) % 2 == 0 ? len : len + 1;
-            cout << "| Nome: " << estudante.getStudentName() << string(27 - estudante.getStudentName().length(), ' ') << '|';
+            if (estudante.getStudentName() == "Verónica" || estudante.getStudentName() == "Ambrósio") nameSpace++;
+            cout << "| Nome: " << estudante.getStudentName() << string(nameSpace - estudante.getStudentName().length(), ' ') << '|';
             cout << string(len, ' ') << it -> first << string(lenf, ' ') << '|';
             cout << ' ' << it->second << " |" << endl;
             it++;
@@ -1518,14 +1529,29 @@ void Manager::printInfoEstudante(const int &numero) const {
     }
     cout << "---------------------------------------------------------" << endl;
 }
+bool Manager::nomeValido(string& nome) const {
+    bool first = true;
+    for (auto& ch : nome) { // O(n)
+        ch = first ? toupper(ch) : tolower(ch);
+        break;
+    }
+
+    for (const auto& estudante: estudantesNome) { // O(n log(n))
+        if(estudante.getStudentName().find(nome) != string::npos) {
+            return true;
+        }
+    }
+    return false;
+}
 
 //! Faz uma busca por todos os estudantes com determinada string (nome) incluída no seu nome e mostra o seu nome, número e ano.
 //! O(n log(n))
 void Manager::printEstudantesPorNome(string& nome, const bool& ascending) const {
+
     bool first = true;
     for (auto& ch : nome) { // O(n)
         ch = first ? toupper(ch) : tolower(ch);
-        first = false;
+        break;
     }
 
     vector<Estudante> students;
@@ -1534,33 +1560,28 @@ void Manager::printEstudantesPorNome(string& nome, const bool& ascending) const 
             students.push_back(estudante);
         }
     }
-    if (!students.empty()) {
-        cout << string(47,'-')<< endl;
-        cout << "|            Nome            |  Número   | Ano |" << endl;
-        cout << string(47,'-')<< endl;
-
-        if (ascending) {
-            for (const auto &elem: students) {
-                int len = (28 - elem.getStudentName().length()) / 2;
-                int lenf = (28 - elem.getStudentName().length()) % 2 == 0 ? len : len + 1;
-                cout << "|" << string(len, ' ') << elem.getStudentName() << string(lenf, ' ') << "| "
-                     << elem.getStudentNumber() << " |  " << elem.getAno() << "  |" << endl;
-                cout << "------------------------------------------------" << endl;
-            }
-        } else {
-            for (auto elem = students.rbegin(); elem < students.rend(); elem++) {
-                int len = (28 - elem->getStudentName().length()) / 2;
-                int lenf = (28 - elem->getStudentName().length()) % 2 == 0 ? len : len + 1;
-                cout << "|" << string(len, ' ') << elem->getStudentName() << string(lenf, ' ') << "| "
-                     << elem->getStudentNumber() << " |  " << elem->getAno() << "  |" << endl;
-                cout << "------------------------------------------------" << endl;
-            }
+    int nameSpace = 28;
+    cout << string(47,'-')<< endl;
+    cout << "|            Nome            |  Número   | Ano |" << endl;
+    cout << string(47,'-')<< endl;
+    if (ascending) {
+        for (const auto &elem: students) {
+            if (elem.getStudentName() == "Verónica" || elem.getStudentName() == "Ambrósio") nameSpace++;
+            int len = (nameSpace - elem.getStudentName().length()) / 2;
+            int lenf = (nameSpace - elem.getStudentName().length()) % 2 == 0 ? len : len + 1;
+            cout << "|" << string(len, ' ') << elem.getStudentName() << string(lenf, ' ') << "| "
+            << elem.getStudentNumber() << " |  " << elem.getAno() << "  |" << endl;
+            cout << "------------------------------------------------" << endl;
         }
-    }
-    else {
-        cout << string(47,'-')<< endl;
-        cout <<'|' << string(3,' ') <<  "Não existem estudantes com o nome " << nome << string(8 - nome.length(),' ') << '|' << endl;
-        cout << string(47,'-')<< endl;
+    } else {
+        for (auto elem = students.rbegin(); elem < students.rend(); elem++) {
+            if (elem->getStudentName() == "Verónica" || elem->getStudentName() == "Ambrósio") nameSpace++;
+            int len = (28 - elem->getStudentName().length()) / 2;
+            int lenf = (28 - elem->getStudentName().length()) % 2 == 0 ? len : len + 1;
+            cout << "|" << string(len, ' ') << elem->getStudentName() << string(lenf, ' ') << "| "
+            << elem->getStudentNumber() << " |  " << elem->getAno() << "  |" << endl;
+            cout << "------------------------------------------------" << endl;
+        }
     }
 }
 

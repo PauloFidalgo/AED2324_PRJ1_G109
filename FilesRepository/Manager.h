@@ -102,6 +102,7 @@ public:
     bool checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pair<string,pair<string,Aula>> &aula) const;
     bool verificarPedidosRepetidos(const Pedido &pedido);
     bool inputToPedido(const string& uc, const int &estudante, const string &tipo, const int outro = 0, const string &turma = "");
+    bool nomeValido(string &nome) const;
 
     //! Execution
     void executarPedidoTrocaHorario(Pedido &pedido);
@@ -114,6 +115,8 @@ public:
     void verHorarioAntesDeConfirmar(const int &numero, const string &uc, const string &turma, const list<Aula> &aulas) const;
 
     string ucToString(const string &uc) const ;
+
+
 };
 
 #endif //PROJECT_MANAGER_H
