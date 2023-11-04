@@ -22,11 +22,6 @@ enum Tipo {
     turmasEstatisticaMenos
 };
 
-enum Cadeiras {
-    estatistica,
-    escolha,
-};
-
 enum OrdenacaoParcial {
     pesquisaEstudantePorNome,
     printTurmasPorUc,
@@ -64,15 +59,13 @@ private:
     bool sair;
     Manager manager;
     int estudante2;
-    int nTurma;
     int pedidosAtivo;
     int nU;
     char userInput;
     int numero_estudante;
     string uc;
-    string turma;
     string nome;
-    int ano;
+    int turma;
 
 public:
     //Construtor
@@ -88,9 +81,8 @@ public:
     void getStudentNumber();
     void getUC();
     void getNuc();
-    void getTurma();
-    void getAno();
     void getStudentName();
+    void getNTurma(const string& Uc);
 
     //Menus
 
@@ -99,9 +91,6 @@ public:
     void menuListagens();
     void menuOpcoesPedidos();
     void menuEstatistica();
-    void menuOpçoes1Ano(Cadeiras cadeira, const bool &mais = true);
-    void menuOpçoes2Ano(Cadeiras cadeira, const bool &mais = true);
-    void menuOpçoes3Ano(Cadeiras cadeira, const bool &mais = true);
     void menuTurmaPorAno(const int &ano);
     void menuListagemTurmasPorUc(const string& uc);
     void menuListagemUc(const int &ano, ListagemUc listagem);

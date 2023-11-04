@@ -107,143 +107,133 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    turmasEstatisticaMenos</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>};</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">enum</span> Cadeiras {</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    estatistica,</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    escolha,</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>};</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">enum</span> OrdenacaoParcial {</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    pesquisaEstudantePorNome,</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    printTurmasPorUc,</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    estatisticaAno,</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    estisticaInscricoes,</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>};</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">enum</span> ListagemUc {</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    turma,</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    uc,</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    numeroUc,</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    printTurmas,</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    horário,</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    nTurmasMais,</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    nTurmasMenos,</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>};</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">enum</span> OrdenacaoTotal {</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    estudantesPorAno,</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    estudantesPorUc,</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    estudantesNucs,</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    numeroEstuntesPorTurmaPorUc,</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    estudantesPorTurmaNaUc,</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>};</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="foldopen" id="foldopen00055" data-start="{" data-end="};">
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="classMenu.html">   55</a></span><span class="keyword">class </span><a class="code hl_class" href="classMenu.html">Menu</a> {</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    time_t data = std::time(0);</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    tm* hora = localtime(&amp;data);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    thread timeThread;</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    thread pedidoThread;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordtype">bool</span> exitTimeThread;</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordtype">bool</span> exitPedidoThread;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keywordtype">bool</span> menu;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordtype">bool</span> sair;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <a class="code hl_class" href="classManager.html">Manager</a> manager;</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keywordtype">int</span> estudante2;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordtype">int</span> nTurma;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordtype">int</span> pedidosAtivo;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keywordtype">int</span> nU;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keywordtype">char</span> userInput;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keywordtype">int</span> numero_estudante;</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keywordtype">string</span> uc;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <span class="keywordtype">string</span> turma;</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="keywordtype">string</span> nome;</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordtype">int</span> ano;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">enum</span> OrdenacaoParcial {</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    pesquisaEstudantePorNome,</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    printTurmasPorUc,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    estatisticaAno,</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    estisticaInscricoes,</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>};</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">enum</span> ListagemUc {</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    turma,</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    uc,</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    numeroUc,</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    printTurmas,</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    horário,</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    nTurmasMais,</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    nTurmasMenos,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>};</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keyword">enum</span> OrdenacaoTotal {</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    estudantesPorAno,</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    estudantesPorUc,</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    estudantesNucs,</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    numeroEstuntesPorTurmaPorUc,</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    estudantesPorTurmaNaUc,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>};</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="foldopen" id="foldopen00050" data-start="{" data-end="};">
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="classMenu.html">   50</a></span><span class="keyword">class </span><a class="code hl_class" href="classMenu.html">Menu</a> {</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    time_t data = std::time(0);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    tm* hora = localtime(&amp;data);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    thread timeThread;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    thread pedidoThread;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keywordtype">bool</span> exitTimeThread;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordtype">bool</span> exitPedidoThread;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordtype">bool</span> menu;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keywordtype">bool</span> sair;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <a class="code hl_class" href="classManager.html">Manager</a> manager;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordtype">int</span> estudante2;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordtype">int</span> pedidosAtivo;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keywordtype">int</span> nU;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordtype">char</span> userInput;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keywordtype">int</span> numero_estudante;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keywordtype">string</span> uc;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordtype">string</span> nome;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordtype">int</span> turma;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="comment">//Construtor</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <a class="code hl_function" href="classMenu.html#ad466dd83355124a6ed958430450bfe94">Menu</a>();</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="comment">//Destrutor</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <a class="code hl_function" href="classMenu.html#a831387f51358cfb88cd018e1777bc980">~Menu</a>();</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="comment">//Construtor</span></div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <a class="code hl_function" href="classMenu.html#ad466dd83355124a6ed958430450bfe94">Menu</a>();</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="comment">//Destrutor</span></div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <a class="code hl_function" href="classMenu.html#a831387f51358cfb88cd018e1777bc980">~Menu</a>();</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="comment">//Getters</span></div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a9b8020367b847b786d12048598fba121">getSecondStudent</a>();</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a0c9fcd476df6ee7e7128d17e09733452">getUserInput</a>();</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a3590ac94e34cdab2739aea83324e9d8f">getStudentNumber</a>();</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#aa8a746c9e337a8d9f6f6cc7e2039a8eb">getUC</a>();</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a0b59df5efb8cb79de4fb5ffb01c62c60">getNuc</a>();</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <span class="keywordtype">void</span> getTurma();</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keywordtype">void</span> getAno();</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ae19a16ac8eaff18f38275dd6a6e3bb9f">getStudentName</a>();</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="comment">//Menus</span></div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a317366db74fda5d1257e2c6bb0dea9b8">iniciar</a>();</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ac00628839e2fc5e0f30f0049ede94646">menuInicial</a>(<span class="keyword">const</span> tm* hora);</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a1549f557e7e26cb258667f1ad9875755">menuListagens</a>();</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a8878b9b452278c308c5f7e862dbcc995">menuOpcoesPedidos</a>();</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ac463469ccad4b605b7fba6d51b2dfe37">menuEstatistica</a>();</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keywordtype">void</span> menuOpçoes1Ano(Cadeiras cadeira, <span class="keyword">const</span> <span class="keywordtype">bool</span> &amp;mais = <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="keywordtype">void</span> menuOpçoes2Ano(Cadeiras cadeira, <span class="keyword">const</span> <span class="keywordtype">bool</span> &amp;mais = <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordtype">void</span> menuOpçoes3Ano(Cadeiras cadeira, <span class="keyword">const</span> <span class="keywordtype">bool</span> &amp;mais = <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#affc1784c0ca1e5110595bd16dcd264eb">menuTurmaPorAno</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;ano);</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a25b922c39f1620192add62ef6de22294">menuListagemTurmasPorUc</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; uc);</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#af87032042666bb2febec78e3509963a7">menuListagemUc</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;ano, ListagemUc listagem);</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a555a0f80aabc31d8c4e42609c740847b">menuAno</a>(Tipo tipo);</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a57f5b3fea9d0e2f1f7061212803a109f">escolhaOrdenado</a>(<span class="keyword">const</span> <span class="keywordtype">bool</span>&amp; first);</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ad7ee939fc9b15496dc1a8a5e196dc564">menuOpcoesTurmas</a>(map&lt;<span class="keywordtype">string</span>,list&lt;Aula&gt;&gt; turmas);</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ab75b58a5be8c729fba38265f12e9a132">verificarHorario</a>();</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="comment">//Ordenações</span></div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ae07b045b9055650e9c31bf41415716a2">ordenaçãoParcial</a>(OrdenacaoParcial ord, <span class="keywordtype">string</span> uc = <span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#acbb271cc72cbbc288954633029f78cda">ordernaçãoTotal</a>(OrdenacaoTotal ord, <span class="keywordtype">int</span> ano = 1, <span class="keywordtype">string</span> uc = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">string</span> turma = <span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="comment">//Execuções</span></div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a6cc8730b3ddbd3b76563628d0d2d0e07">horarioEstudante</a>();</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ae312f412ccf12d23efa8dfd25db09d95">trocarHorarioUc</a>();</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ac48c3d0baaff08455e0a38805171d9dc">adicionarUc</a>();</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#abdfbb9d2385d53181d1179f908fc57d5">removerUc</a>();</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a3928427f1ddd5eba9617a1ca6c965eea">updateTime</a>();</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a10c69a61d6046fe1ce7a58f42ace5cc9">updatePedidos</a>();</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>};</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="comment">//Getters</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a9b8020367b847b786d12048598fba121">getSecondStudent</a>();</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a0c9fcd476df6ee7e7128d17e09733452">getUserInput</a>();</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a3590ac94e34cdab2739aea83324e9d8f">getStudentNumber</a>();</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#aa8a746c9e337a8d9f6f6cc7e2039a8eb">getUC</a>();</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a0b59df5efb8cb79de4fb5ffb01c62c60">getNuc</a>();</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ae19a16ac8eaff18f38275dd6a6e3bb9f">getStudentName</a>();</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a657ee97c4991fc00ab203df775e608bc">getNTurma</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; Uc);</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="comment">//Menus</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a317366db74fda5d1257e2c6bb0dea9b8">iniciar</a>();</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ac00628839e2fc5e0f30f0049ede94646">menuInicial</a>(<span class="keyword">const</span> tm* hora);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a1549f557e7e26cb258667f1ad9875755">menuListagens</a>();</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a8878b9b452278c308c5f7e862dbcc995">menuOpcoesPedidos</a>();</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ac463469ccad4b605b7fba6d51b2dfe37">menuEstatistica</a>();</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#affc1784c0ca1e5110595bd16dcd264eb">menuTurmaPorAno</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;ano);</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a25b922c39f1620192add62ef6de22294">menuListagemTurmasPorUc</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; uc);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#af87032042666bb2febec78e3509963a7">menuListagemUc</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;ano, ListagemUc listagem);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a555a0f80aabc31d8c4e42609c740847b">menuAno</a>(Tipo tipo);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a57f5b3fea9d0e2f1f7061212803a109f">escolhaOrdenado</a>(<span class="keyword">const</span> <span class="keywordtype">bool</span>&amp; first);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ad7ee939fc9b15496dc1a8a5e196dc564">menuOpcoesTurmas</a>(map&lt;<span class="keywordtype">string</span>,list&lt;Aula&gt;&gt; turmas);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ab75b58a5be8c729fba38265f12e9a132">verificarHorario</a>();</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="comment">//Ordenações</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ae07b045b9055650e9c31bf41415716a2">ordenaçãoParcial</a>(OrdenacaoParcial ord, <span class="keywordtype">string</span> uc = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#acbb271cc72cbbc288954633029f78cda">ordernaçãoTotal</a>(OrdenacaoTotal ord, <span class="keywordtype">int</span> ano = 1, <span class="keywordtype">string</span> uc = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">string</span> turma = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="comment">//Execuções</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a6cc8730b3ddbd3b76563628d0d2d0e07">horarioEstudante</a>();</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ae312f412ccf12d23efa8dfd25db09d95">trocarHorarioUc</a>();</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#ac48c3d0baaff08455e0a38805171d9dc">adicionarUc</a>();</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#abdfbb9d2385d53181d1179f908fc57d5">removerUc</a>();</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a3928427f1ddd5eba9617a1ca6c965eea">updateTime</a>();</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classMenu.html#a10c69a61d6046fe1ce7a58f42ace5cc9">updatePedidos</a>();</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>};</div>
 </div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="preprocessor">#endif </span><span class="comment">// PROJECT_MENU_H</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="preprocessor">#endif </span><span class="comment">// PROJECT_MENU_H</span></div>
 <div class="ttc" id="aclassManager_html"><div class="ttname"><a href="classManager.html">Manager</a></div><div class="ttdef"><b>Definition</b> <a href="Manager_8h_source.html#l00032">Manager.h:32</a></div></div>
-<div class="ttc" id="aclassMenu_html"><div class="ttname"><a href="classMenu.html">Menu</a></div><div class="ttdef"><b>Definition</b> <a href="#l00055">Menu.h:55</a></div></div>
+<div class="ttc" id="aclassMenu_html"><div class="ttname"><a href="classMenu.html">Menu</a></div><div class="ttdef"><b>Definition</b> <a href="#l00050">Menu.h:50</a></div></div>
 <div class="ttc" id="aclassMenu_html_a0b59df5efb8cb79de4fb5ffb01c62c60"><div class="ttname"><a href="classMenu.html#a0b59df5efb8cb79de4fb5ffb01c62c60">Menu::getNuc</a></div><div class="ttdeci">void getNuc()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00173">Menu.cpp:173</a></div></div>
 <div class="ttc" id="aclassMenu_html_a0c9fcd476df6ee7e7128d17e09733452"><div class="ttname"><a href="classMenu.html#a0c9fcd476df6ee7e7128d17e09733452">Menu::getUserInput</a></div><div class="ttdeci">void getUserInput()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00095">Menu.cpp:95</a></div></div>
-<div class="ttc" id="aclassMenu_html_a10c69a61d6046fe1ce7a58f42ace5cc9"><div class="ttname"><a href="classMenu.html#a10c69a61d6046fe1ce7a58f42ace5cc9">Menu::updatePedidos</a></div><div class="ttdeci">void updatePedidos()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01381">Menu.cpp:1381</a></div></div>
-<div class="ttc" id="aclassMenu_html_a1549f557e7e26cb258667f1ad9875755"><div class="ttname"><a href="classMenu.html#a1549f557e7e26cb258667f1ad9875755">Menu::menuListagens</a></div><div class="ttdeci">void menuListagens()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00278">Menu.cpp:278</a></div></div>
-<div class="ttc" id="aclassMenu_html_a25b922c39f1620192add62ef6de22294"><div class="ttname"><a href="classMenu.html#a25b922c39f1620192add62ef6de22294">Menu::menuListagemTurmasPorUc</a></div><div class="ttdeci">void menuListagemTurmasPorUc(const string &amp;uc)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00513">Menu.cpp:513</a></div></div>
-<div class="ttc" id="aclassMenu_html_a317366db74fda5d1257e2c6bb0dea9b8"><div class="ttname"><a href="classMenu.html#a317366db74fda5d1257e2c6bb0dea9b8">Menu::iniciar</a></div><div class="ttdeci">void iniciar()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00204">Menu.cpp:204</a></div></div>
+<div class="ttc" id="aclassMenu_html_a10c69a61d6046fe1ce7a58f42ace5cc9"><div class="ttname"><a href="classMenu.html#a10c69a61d6046fe1ce7a58f42ace5cc9">Menu::updatePedidos</a></div><div class="ttdeci">void updatePedidos()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01413">Menu.cpp:1413</a></div></div>
+<div class="ttc" id="aclassMenu_html_a1549f557e7e26cb258667f1ad9875755"><div class="ttname"><a href="classMenu.html#a1549f557e7e26cb258667f1ad9875755">Menu::menuListagens</a></div><div class="ttdeci">void menuListagens()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00307">Menu.cpp:307</a></div></div>
+<div class="ttc" id="aclassMenu_html_a25b922c39f1620192add62ef6de22294"><div class="ttname"><a href="classMenu.html#a25b922c39f1620192add62ef6de22294">Menu::menuListagemTurmasPorUc</a></div><div class="ttdeci">void menuListagemTurmasPorUc(const string &amp;uc)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00543">Menu.cpp:543</a></div></div>
+<div class="ttc" id="aclassMenu_html_a317366db74fda5d1257e2c6bb0dea9b8"><div class="ttname"><a href="classMenu.html#a317366db74fda5d1257e2c6bb0dea9b8">Menu::iniciar</a></div><div class="ttdeci">void iniciar()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00233">Menu.cpp:233</a></div></div>
 <div class="ttc" id="aclassMenu_html_a3590ac94e34cdab2739aea83324e9d8f"><div class="ttname"><a href="classMenu.html#a3590ac94e34cdab2739aea83324e9d8f">Menu::getStudentNumber</a></div><div class="ttdeci">void getStudentNumber()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00114">Menu.cpp:114</a></div></div>
-<div class="ttc" id="aclassMenu_html_a3928427f1ddd5eba9617a1ca6c965eea"><div class="ttname"><a href="classMenu.html#a3928427f1ddd5eba9617a1ca6c965eea">Menu::updateTime</a></div><div class="ttdeci">void updateTime()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01370">Menu.cpp:1370</a></div></div>
-<div class="ttc" id="aclassMenu_html_a555a0f80aabc31d8c4e42609c740847b"><div class="ttname"><a href="classMenu.html#a555a0f80aabc31d8c4e42609c740847b">Menu::menuAno</a></div><div class="ttdeci">void menuAno(Tipo tipo)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00664">Menu.cpp:664</a></div></div>
-<div class="ttc" id="aclassMenu_html_a57f5b3fea9d0e2f1f7061212803a109f"><div class="ttname"><a href="classMenu.html#a57f5b3fea9d0e2f1f7061212803a109f">Menu::escolhaOrdenado</a></div><div class="ttdeci">void escolhaOrdenado(const bool &amp;first)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00939">Menu.cpp:939</a></div></div>
-<div class="ttc" id="aclassMenu_html_a6cc8730b3ddbd3b76563628d0d2d0e07"><div class="ttname"><a href="classMenu.html#a6cc8730b3ddbd3b76563628d0d2d0e07">Menu::horarioEstudante</a></div><div class="ttdeci">void horarioEstudante()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01362">Menu.cpp:1362</a></div></div>
+<div class="ttc" id="aclassMenu_html_a3928427f1ddd5eba9617a1ca6c965eea"><div class="ttname"><a href="classMenu.html#a3928427f1ddd5eba9617a1ca6c965eea">Menu::updateTime</a></div><div class="ttdeci">void updateTime()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01402">Menu.cpp:1402</a></div></div>
+<div class="ttc" id="aclassMenu_html_a555a0f80aabc31d8c4e42609c740847b"><div class="ttname"><a href="classMenu.html#a555a0f80aabc31d8c4e42609c740847b">Menu::menuAno</a></div><div class="ttdeci">void menuAno(Tipo tipo)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00696">Menu.cpp:696</a></div></div>
+<div class="ttc" id="aclassMenu_html_a57f5b3fea9d0e2f1f7061212803a109f"><div class="ttname"><a href="classMenu.html#a57f5b3fea9d0e2f1f7061212803a109f">Menu::escolhaOrdenado</a></div><div class="ttdeci">void escolhaOrdenado(const bool &amp;first)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00971">Menu.cpp:971</a></div></div>
+<div class="ttc" id="aclassMenu_html_a657ee97c4991fc00ab203df775e608bc"><div class="ttname"><a href="classMenu.html#a657ee97c4991fc00ab203df775e608bc">Menu::getNTurma</a></div><div class="ttdeci">void getNTurma(const string &amp;Uc)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00202">Menu.cpp:202</a></div></div>
+<div class="ttc" id="aclassMenu_html_a6cc8730b3ddbd3b76563628d0d2d0e07"><div class="ttname"><a href="classMenu.html#a6cc8730b3ddbd3b76563628d0d2d0e07">Menu::horarioEstudante</a></div><div class="ttdeci">void horarioEstudante()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01394">Menu.cpp:1394</a></div></div>
 <div class="ttc" id="aclassMenu_html_a831387f51358cfb88cd018e1777bc980"><div class="ttname"><a href="classMenu.html#a831387f51358cfb88cd018e1777bc980">Menu::~Menu</a></div><div class="ttdeci">~Menu()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00022">Menu.cpp:22</a></div></div>
-<div class="ttc" id="aclassMenu_html_a8878b9b452278c308c5f7e862dbcc995"><div class="ttname"><a href="classMenu.html#a8878b9b452278c308c5f7e862dbcc995">Menu::menuOpcoesPedidos</a></div><div class="ttdeci">void menuOpcoesPedidos()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00348">Menu.cpp:348</a></div></div>
+<div class="ttc" id="aclassMenu_html_a8878b9b452278c308c5f7e862dbcc995"><div class="ttname"><a href="classMenu.html#a8878b9b452278c308c5f7e862dbcc995">Menu::menuOpcoesPedidos</a></div><div class="ttdeci">void menuOpcoesPedidos()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00377">Menu.cpp:377</a></div></div>
 <div class="ttc" id="aclassMenu_html_a9b8020367b847b786d12048598fba121"><div class="ttname"><a href="classMenu.html#a9b8020367b847b786d12048598fba121">Menu::getSecondStudent</a></div><div class="ttdeci">void getSecondStudent()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00062">Menu.cpp:62</a></div></div>
 <div class="ttc" id="aclassMenu_html_aa8a746c9e337a8d9f6f6cc7e2039a8eb"><div class="ttname"><a href="classMenu.html#aa8a746c9e337a8d9f6f6cc7e2039a8eb">Menu::getUC</a></div><div class="ttdeci">void getUC()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00152">Menu.cpp:152</a></div></div>
-<div class="ttc" id="aclassMenu_html_ab75b58a5be8c729fba38265f12e9a132"><div class="ttname"><a href="classMenu.html#ab75b58a5be8c729fba38265f12e9a132">Menu::verificarHorario</a></div><div class="ttdeci">void verificarHorario()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01031">Menu.cpp:1031</a></div></div>
-<div class="ttc" id="aclassMenu_html_abdfbb9d2385d53181d1179f908fc57d5"><div class="ttname"><a href="classMenu.html#abdfbb9d2385d53181d1179f908fc57d5">Menu::removerUc</a></div><div class="ttdeci">void removerUc()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01493">Menu.cpp:1493</a></div></div>
-<div class="ttc" id="aclassMenu_html_ac00628839e2fc5e0f30f0049ede94646"><div class="ttname"><a href="classMenu.html#ac00628839e2fc5e0f30f0049ede94646">Menu::menuInicial</a></div><div class="ttdeci">void menuInicial(const tm *hora)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00252">Menu.cpp:252</a></div></div>
-<div class="ttc" id="aclassMenu_html_ac463469ccad4b605b7fba6d51b2dfe37"><div class="ttname"><a href="classMenu.html#ac463469ccad4b605b7fba6d51b2dfe37">Menu::menuEstatistica</a></div><div class="ttdeci">void menuEstatistica()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00390">Menu.cpp:390</a></div></div>
-<div class="ttc" id="aclassMenu_html_ac48c3d0baaff08455e0a38805171d9dc"><div class="ttname"><a href="classMenu.html#ac48c3d0baaff08455e0a38805171d9dc">Menu::adicionarUc</a></div><div class="ttdeci">void adicionarUc()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01407">Menu.cpp:1407</a></div></div>
-<div class="ttc" id="aclassMenu_html_acbb271cc72cbbc288954633029f78cda"><div class="ttname"><a href="classMenu.html#acbb271cc72cbbc288954633029f78cda">Menu::ordernaçãoTotal</a></div><div class="ttdeci">void ordernaçãoTotal(OrdenacaoTotal ord, int ano=1, string uc=&quot;&quot;, string turma=&quot;&quot;)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01075">Menu.cpp:1075</a></div></div>
+<div class="ttc" id="aclassMenu_html_ab75b58a5be8c729fba38265f12e9a132"><div class="ttname"><a href="classMenu.html#ab75b58a5be8c729fba38265f12e9a132">Menu::verificarHorario</a></div><div class="ttdeci">void verificarHorario()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01063">Menu.cpp:1063</a></div></div>
+<div class="ttc" id="aclassMenu_html_abdfbb9d2385d53181d1179f908fc57d5"><div class="ttname"><a href="classMenu.html#abdfbb9d2385d53181d1179f908fc57d5">Menu::removerUc</a></div><div class="ttdeci">void removerUc()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01525">Menu.cpp:1525</a></div></div>
+<div class="ttc" id="aclassMenu_html_ac00628839e2fc5e0f30f0049ede94646"><div class="ttname"><a href="classMenu.html#ac00628839e2fc5e0f30f0049ede94646">Menu::menuInicial</a></div><div class="ttdeci">void menuInicial(const tm *hora)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00281">Menu.cpp:281</a></div></div>
+<div class="ttc" id="aclassMenu_html_ac463469ccad4b605b7fba6d51b2dfe37"><div class="ttname"><a href="classMenu.html#ac463469ccad4b605b7fba6d51b2dfe37">Menu::menuEstatistica</a></div><div class="ttdeci">void menuEstatistica()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00419">Menu.cpp:419</a></div></div>
+<div class="ttc" id="aclassMenu_html_ac48c3d0baaff08455e0a38805171d9dc"><div class="ttname"><a href="classMenu.html#ac48c3d0baaff08455e0a38805171d9dc">Menu::adicionarUc</a></div><div class="ttdeci">void adicionarUc()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01439">Menu.cpp:1439</a></div></div>
+<div class="ttc" id="aclassMenu_html_acbb271cc72cbbc288954633029f78cda"><div class="ttname"><a href="classMenu.html#acbb271cc72cbbc288954633029f78cda">Menu::ordernaçãoTotal</a></div><div class="ttdeci">void ordernaçãoTotal(OrdenacaoTotal ord, int ano=1, string uc=&quot;&quot;, string turma=&quot;&quot;)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01107">Menu.cpp:1107</a></div></div>
 <div class="ttc" id="aclassMenu_html_ad466dd83355124a6ed958430450bfe94"><div class="ttname"><a href="classMenu.html#ad466dd83355124a6ed958430450bfe94">Menu::Menu</a></div><div class="ttdeci">Menu()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00010">Menu.cpp:10</a></div></div>
-<div class="ttc" id="aclassMenu_html_ad7ee939fc9b15496dc1a8a5e196dc564"><div class="ttname"><a href="classMenu.html#ad7ee939fc9b15496dc1a8a5e196dc564">Menu::menuOpcoesTurmas</a></div><div class="ttdeci">void menuOpcoesTurmas(map&lt; string, list&lt; Aula &gt; &gt; turmas)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01009">Menu.cpp:1009</a></div></div>
-<div class="ttc" id="aclassMenu_html_ae07b045b9055650e9c31bf41415716a2"><div class="ttname"><a href="classMenu.html#ae07b045b9055650e9c31bf41415716a2">Menu::ordenaçãoParcial</a></div><div class="ttdeci">void ordenaçãoParcial(OrdenacaoParcial ord, string uc=&quot;&quot;)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01249">Menu.cpp:1249</a></div></div>
+<div class="ttc" id="aclassMenu_html_ad7ee939fc9b15496dc1a8a5e196dc564"><div class="ttname"><a href="classMenu.html#ad7ee939fc9b15496dc1a8a5e196dc564">Menu::menuOpcoesTurmas</a></div><div class="ttdeci">void menuOpcoesTurmas(map&lt; string, list&lt; Aula &gt; &gt; turmas)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01041">Menu.cpp:1041</a></div></div>
+<div class="ttc" id="aclassMenu_html_ae07b045b9055650e9c31bf41415716a2"><div class="ttname"><a href="classMenu.html#ae07b045b9055650e9c31bf41415716a2">Menu::ordenaçãoParcial</a></div><div class="ttdeci">void ordenaçãoParcial(OrdenacaoParcial ord, string uc=&quot;&quot;)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01281">Menu.cpp:1281</a></div></div>
 <div class="ttc" id="aclassMenu_html_ae19a16ac8eaff18f38275dd6a6e3bb9f"><div class="ttname"><a href="classMenu.html#ae19a16ac8eaff18f38275dd6a6e3bb9f">Menu::getStudentName</a></div><div class="ttdeci">void getStudentName()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00033">Menu.cpp:33</a></div></div>
-<div class="ttc" id="aclassMenu_html_ae312f412ccf12d23efa8dfd25db09d95"><div class="ttname"><a href="classMenu.html#ae312f412ccf12d23efa8dfd25db09d95">Menu::trocarHorarioUc</a></div><div class="ttdeci">void trocarHorarioUc()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01388">Menu.cpp:1388</a></div></div>
-<div class="ttc" id="aclassMenu_html_af87032042666bb2febec78e3509963a7"><div class="ttname"><a href="classMenu.html#af87032042666bb2febec78e3509963a7">Menu::menuListagemUc</a></div><div class="ttdeci">void menuListagemUc(const int &amp;ano, ListagemUc listagem)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00569">Menu.cpp:569</a></div></div>
-<div class="ttc" id="aclassMenu_html_affc1784c0ca1e5110595bd16dcd264eb"><div class="ttname"><a href="classMenu.html#affc1784c0ca1e5110595bd16dcd264eb">Menu::menuTurmaPorAno</a></div><div class="ttdeci">void menuTurmaPorAno(const int &amp;ano)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00458">Menu.cpp:458</a></div></div>
+<div class="ttc" id="aclassMenu_html_ae312f412ccf12d23efa8dfd25db09d95"><div class="ttname"><a href="classMenu.html#ae312f412ccf12d23efa8dfd25db09d95">Menu::trocarHorarioUc</a></div><div class="ttdeci">void trocarHorarioUc()</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l01420">Menu.cpp:1420</a></div></div>
+<div class="ttc" id="aclassMenu_html_af87032042666bb2febec78e3509963a7"><div class="ttname"><a href="classMenu.html#af87032042666bb2febec78e3509963a7">Menu::menuListagemUc</a></div><div class="ttdeci">void menuListagemUc(const int &amp;ano, ListagemUc listagem)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00600">Menu.cpp:600</a></div></div>
+<div class="ttc" id="aclassMenu_html_affc1784c0ca1e5110595bd16dcd264eb"><div class="ttname"><a href="classMenu.html#affc1784c0ca1e5110595bd16dcd264eb">Menu::menuTurmaPorAno</a></div><div class="ttdeci">void menuTurmaPorAno(const int &amp;ano)</div><div class="ttdef"><b>Definition</b> <a href="Menu_8cpp_source.html#l00487">Menu.cpp:487</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

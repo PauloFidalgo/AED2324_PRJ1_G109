@@ -64,11 +64,6 @@ Aula UC::getPratica(const std::string &turma) const {
     return res;
 }
 
-/*!Retorna o número de turmas da UC */
-int UC::getNumeroTurmas() const {
-    return ucTurma.size();
-}
-
 /*!Retorna um vetor formado por pares, em que o primeiro elemento é o nome da UC e o segundo é um par com o nome da turma e uma aula dessa turma
  * O(n * m)
  * */

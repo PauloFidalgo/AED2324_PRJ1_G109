@@ -43,17 +43,13 @@ public:
     int getMinimum() const;
     int getAno() const;
     int getNumeroAlunosTotal() const;
-    int getNumeroTurmas() const;
     float getMedia() const;
 
     // Setters
-    void addTurma(const std::string &turma, const TurmaInfo &turmaInfo);
-    void addEstudantes(const std::string &turma, const std::list<std::pair<int,std::string>> &estudantes);
     void addEstudante(const std::string &turma, const int &estudante,const std::string &nome);
     void removeEstudante(const std::string &turma, const int &numero, const std::string &nome);
 
     // Validators
-    bool verificarTurma(const std::string &turma) const;
     bool checkBalance(const std::string &turma) const;
     bool operator<(const UC uc) const;
 

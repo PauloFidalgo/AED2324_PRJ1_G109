@@ -1,5 +1,5 @@
 /main
-*.csv#
+*.csv
 .idea
 *.o
 cmake-build-debug/

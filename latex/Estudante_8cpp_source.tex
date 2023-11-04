@@ -13,13 +13,13 @@
 \DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00009}00009\ }
 \DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00011}\mbox{\hyperlink{classEstudante_a091cf7ab2310fd8c16244d815e7a402b}{00011}}\ Estudante::Estudante(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\&\ numero)\ :\ numero(numero)\ \{\}}
 \DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00012}00012\ }
-
-
-
-
-
-
-
+\DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00014}\mbox{\hyperlink{classEstudante_a87f6d85948121442f40858ce04161bb8}{00014}}\ Estudante::Estudante(\textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \&estudante)\ \{}
+\DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00015}00015\ \ \ \ \ this-\/>numero\ =\ estudante.numero;}
+\DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00016}00016\ \ \ \ \ this-\/>nome\ =\ estudante.nome;}
+\DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00017}00017\ \ \ \ \ this-\/>turmas\ =\ estudante.turmas;}
+\DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00018}00018\ \ \ \ \ this-\/>ano\ =\ estudante.ano;}
+\DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00019}00019\ \}}
+\DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00020}00020\ }
 \DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00022}\mbox{\hyperlink{classEstudante_a57ea962455162966b213dc23095350ce}{00022}}\ Estudante::Estudante(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\&\ numero,\ \textcolor{keyword}{const}\ std::string\&\ nome,\ \textcolor{keyword}{const}\ std::set<std::pair<std::string,\ std::string>>\ \&turmas,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\&\ ano)\ \ :\ numero(numero),\ nome(nome),\ turmas(turmas),\ ano(ano)\ \{\}}
 \DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00023}00023\ }
 \DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00025}\mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{00025}}\ \textcolor{keywordtype}{int}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante_a5a564f24038684586ee9fcb43f5f6abb}{Estudante::getStudentNumber}}()\textcolor{keyword}{\ const\ }\{}
@@ -51,9 +51,9 @@
 \DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00056}00056\ \ \ \ \ this-\/>turmas\ =\ turmas;}
 \DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00057}00057\ \}}
 \DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00058}00058\ }
-\DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00060}00060\ \ *\ O(log(n))}
-\DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00061}00061\ \ */}
-\DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00062}00062\ \textcolor{keywordtype}{void}\ Estudante::removerUc(\textcolor{keyword}{const}\ std::string\ \&uc)\ \{}
+
+
+\DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00062}\mbox{\hyperlink{classEstudante_a5b419d474c11548452eb66189a8e43c4}{00062}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEstudante_a5b419d474c11548452eb66189a8e43c4}{Estudante::removerUc}}(\textcolor{keyword}{const}\ std::string\ \&uc)\ \{}
 \DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00063}00063\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ turmas.lower\_bound(\{uc,\textcolor{stringliteral}{"{}"{}}\});}
 \DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00064}00064\ }
 \DoxyCodeLine{\Hypertarget{Estudante_8cpp_source_l00065}00065\ \ \ \ \ \textcolor{keywordflow}{if}\ (it-\/>first\ ==\ uc)\ \{}

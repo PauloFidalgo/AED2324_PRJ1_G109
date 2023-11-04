@@ -20,7 +20,7 @@ void Manager::readFiles()
         iff.open("../CSV/classes.csv", ios::in);
         string line, uc, turma, dia, tipo, lastUc, inicio, duracao;
         bool first = true;
-        float i = 0, n = 0;
+        float i = 0.0, n = 0.0;
 
         getline(iff, line);
 
@@ -60,7 +60,7 @@ void Manager::readFiles()
             }
 
             else {
-                float media = round(n / i);
+                float media = floor(n / i);
                 ucs.insert(UC(lastUc,turmaUc, media));
                 i = 0;
                 n = 0;
@@ -586,18 +586,6 @@ vector<pair<int, int>> Manager::getNumeroDeAlunosPorAno() const {
     return result;
 }
 
-/*!Retorna o número de turmas de uma UC
- * O(log(n))
- */
-int Manager::getNumeroTurmas(const string& uc) {
-    auto it = ucs.find(uc); //! O(log(n))
-    int res = 0;
-    if (it != ucs.end()) {
-        res = it->getNumeroTurmas();
-    }
-    return res;
-}
-
 //Auxiliares
 /*! Verifica se um nome introduzido é válido */
 bool Manager::nomeValido(string& nome) const {
@@ -691,8 +679,19 @@ bool Manager::verificarPedidosRepetidos(const Pedido &pedido) {
     }
     return true;
 }
+/*!Verifica se o número de turmas é válido para uma determinada uc
+ * O(log(n))
+ */
+bool Manager::nTurmasValidas(const int& turma, const string& uc) {
+    auto it = ucs.find(uc);
 
-/*!Adiciona um pedido novo à fila de pedidos e ao vetor de pedidos pendentes, se o pedido não for concorrente com os pedidos em espera e se for válido, dependendo do tipo de pedido. Retorna true no caso de ter adicionado e false no caso contrário
+    if (it != ucs.end()) {
+        return turma > 0 && turma <= it->getUcTurma().size();
+    }
+    return false;
+}
+/*!Adiciona um pedido novo à fila de pedidos e ao vetor de pedidos pendentes, se o pedido não for concorrente com os pedidos em espera e se for válido, dependendo do tipo de pedido.
+ * Retorna true no caso de ter adicionado e false no caso contrário
  * O(n * m)
  */
 bool Manager::addPedido(Pedido pedido) {
@@ -736,7 +735,8 @@ bool Manager::removerValida(Pedido &pedido) {
     return true;
 }
 
-/*!Verifica se a troca de turma entre dois estudantes é válida, não sendo quando um deles não está inscrito na UC, quando ambos já estão na mesma turma ou quando não existe compatibilidade de horário (Aulas PL e P sobrepostas). Retorna true no caso de ser válida e false no outro caso
+/*!Verifica se a troca de turma entre dois estudantes é válida, não sendo quando um deles não está inscrito na UC, quando ambos já estão na mesma turma ou quando não existe compatibilidade de horário (Aulas PL e P sobrepostas).
+ * Retorna true no caso de ser válida e false no outro caso
  * O(n log(m))
  */
 bool Manager::trocaValida(Pedido &pedido) const {
@@ -793,7 +793,8 @@ bool Manager::verificarAulaSobreposta(const list<Aula> &horario, const Aula &aul
     return true;
 }
 
-/*!Verificar se o estudante tem possibilidade de se inscrever na nova turma. Para isso não pode estar já inscrito nessa UC, não pode estar inscrito a 7 UC's e tem de ter compatibilidade de horário com as auals da UC. Retorna true se a nova UC é válida e false no caso contrário
+/*!Verificar se o estudante tem possibilidade de se inscrever na nova turma.
+ * Para isso não pode estar já inscrito nessa UC, não pode estar inscrito a 7 UC's e tem de ter compatibilidade de horário com as auals da UC. Retorna true se a nova UC é válida e false no caso contrário
  * O(n * m)
  */
 bool Manager::validarNovaUc(const string &uc, const int &student) {
@@ -867,7 +868,8 @@ bool Manager::ucValida(const string &uc) const {
     return (ucs.find(uc) != ucs.end());
 }
 
-/*!Função utilizada para verificar se uma aula já foi contabilizada no horário. Retorna true caso a aula já esteja no horário e false caso contrário
+/*!Função utilizada para verificar se uma aula já foi contabilizada no horário.
+ * Retorna true caso a aula já esteja no horário e false caso contrário
  * O(n)
  */
 bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pair<string,pair<string,Aula>> &aula) const {
@@ -880,9 +882,8 @@ bool Manager::checkAlreadyIn(vector<pair<string,pair<string,Aula>>> &horario, pa
     float turno = stof(aula.second.first.substr(5));
 
     auto it = ucs.find(aula.first);
-
     // O primeiro turno é atribuído às turmas com o número inferior ao valor médio de turmas dessa UC e o segundo às turmas com valor superior
-    if (turno <= it->getMedia()) {
+    if (turno < it->getMedia()) {
         line = "Turno 1";
     }
     else {

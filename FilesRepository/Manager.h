@@ -85,11 +85,11 @@ public:
     set<pair<int, string>> getOcupacaoUcs() const;
     vector<pair<int, int>> getNumeroDeAlunosPorAno() const;
     vector<pair<int, int>> getAlunosPorNIncscricoes() const;
-    int getNumeroTurmas(const string& uc);
 
 
 
     // Validators
+    bool nTurmasValidas(const int &turma, const string& uc);
     bool nUcValido(const int &n) const;
     bool addPedido(Pedido pedido);
     bool estudanteValido(const int &numero) const;
@@ -113,6 +113,7 @@ public:
     vector<pair<string,pair<string,Aula>>> createSobrepostas (vector<pair<string,pair<string,Aula>>> &horario) const;
     void verHorarioAntesDeConfirmar(const int &numero, const string &uc, const string &turma, const list<Aula> &aulas) const;
     string ucToString(const string &uc) const;
+
 
 
 };

@@ -10,7 +10,7 @@ Estudante::Estudante() {}
 /*! Construtor por número, utilizado para procurar estudantes por número */
 Estudante::Estudante(const int& numero) : numero(numero) {}
 
-/*! Construtor por cópia
+/*! Construtor por cópia */
 Estudante::Estudante(const Estudante &estudante) {
     this->numero = estudante.numero;
     this->nome = estudante.nome;
@@ -56,7 +56,7 @@ void Estudante::setTurmas(std::set<std::pair<std::string, std::string>> &turmas)
     this->turmas = turmas;
 }
 
-/*! Remove o estudante de uma UC */
+/*! Remove o estudante de uma UC
  * O(log(n))
  */
 void Estudante::removerUc(const std::string &uc) {

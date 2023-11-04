@@ -185,9 +185,38 @@ void Menu::getNuc() {
         cin.clear();
 
         try {
-            // Verifica se o número inserido pelo utilizador de uc's é válido
+            // Verifica se o número de uc's inserido pelo utilizador é válido
             this->nU = stoi(line);
             if (!manager.nUcValido(this->nU)) {
+                cout << "Número inválido, tente novamente" << endl;
+                continue;
+            }
+            break;
+        }
+        catch (exception e) {
+            cout << "Número inválido, tente novamente" << endl;
+        }
+    }
+}
+/*! Pede ao utilizador para inserir a quantidade de Turmas de modo a mostrar o número de alunos inscritos no número de Turmas que o user inserir */
+void Menu::getNTurma(const string& Uc) {
+    while (true) {
+        cout << "Número de Turmas (Escreva 'sair' para voltar atrás): ";
+        string line;
+        cin >> line;
+
+        if (line == "sair") {
+            this->sair = true;
+            return;
+        }
+
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.clear();
+
+        try {
+            // Verifica se o número de turmas inserido pelo utilizador é válido
+            this->turma = stoi(line);
+            if (!manager.nTurmasValidas(this->turma, Uc)) {
                 cout << "Número inválido, tente novamente" << endl;
                 continue;
             }
@@ -500,6 +529,7 @@ void Menu::menuTurmaPorAno(const int &ano) {
                     break;
                 }
             }
+            else cout << "Opção Inválida, tente novamente" << endl;
         }
         catch (exception e) {
             cin.ignore();
@@ -556,6 +586,7 @@ void Menu::menuListagemTurmasPorUc(const string& uc) {
                     break;
                 }
             }
+            else cout << "Opção Inválida, tente novamente" << endl;
         }
         catch (exception e) {
             cin.ignore();
@@ -630,27 +661,28 @@ void Menu::menuListagemUc(const int &ano, ListagemUc listagem) {
                             break;
                         }
                         case ListagemUc::nTurmasMais: {
-                            getNuc();
+                            getNTurma(*it);
                             if (sair) {
                                 sair = false;
                                 return;
                             }
-                            manager.printSets(this->nU, *it, true);
+                            manager.printSets(this->turma, *it, true);
                             break;
                         }
                         case ListagemUc::nTurmasMenos: {
-                            getNuc();
+                            getNTurma(*it);
                             if (sair) {
                                 sair = false;
                                 return;
                             }
-                            manager.printSets(this->nU, *it, false);
+                            manager.printSets(this->turma, *it, false);
                             break;
                             }
                     }
                     break;
                 }
             }
+            else cout << "Opção inválida, tente novamente" << endl;
         }
         catch (exception e) {
             cin.ignore();
@@ -1245,7 +1277,7 @@ void Menu::ordernaçãoTotal(OrdenacaoTotal ord, int ano, string uc, string turm
 
 }
 
-/*! Menu onde permite ao utilizador escolher como a informação é ordenada ( ordem crescente e ordem decrescente) */
+/*! Menu onde permite ao utilizador escolher como a informação é ordenada (ordem crescente e ordem decrescente) */
 void Menu::ordenaçãoParcial(OrdenacaoParcial ord, string uc) {
     while(true){
 
